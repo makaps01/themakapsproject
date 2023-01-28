@@ -7,16 +7,13 @@ const  { rmSync } = require('fs');
 /////////////////////// CONFIGURATIONS
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname + "/public"));
-PORT = 5000;
+PORT = 4000;
 app.listen(PORT);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
-
-
 /////////////////////////////////////////////////////////////////ROUTES///////////////////////////////////////////////
 // client route
-app.get("/login",(req, res)=>{
+app.get('/',(req, res)=>{
     res.render("index")
 });
