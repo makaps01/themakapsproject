@@ -13,7 +13,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 /////////////////////////////////////////////////////////////////ROUTES///////////////////////////////////////////////
-// client route
+// index route
 app.get('/',(req, res)=>{
     res.render("index")
+});
+
+//route to client page
+app.get('/client-portal', (req, res)=> {
+    res.render("client")
+});
+// route to server page
+app.get('/server-portal',(req, res)=> {
+    res.render("server")
+} );    
+
+// registration form
+app.get('/register', (req, res)=> {
+    res.render("register")
 });
