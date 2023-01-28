@@ -1,0 +1,25 @@
+{
+  "name": "themakapsproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start" : "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makaps01/themakapsproject.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/makaps01/themakapsproject/issues"
+  },
+  "homepage": "https://github.com/makaps01/themakapsproject#readme",
+  "dependencies": {
+    "init": "^0.1.2",
+    "start": "^5.1.0"
+  }
+}
