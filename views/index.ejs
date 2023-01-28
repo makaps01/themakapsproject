@@ -6,22 +6,27 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #406882;
-        }
+            background-image: url(https://cdn.discordapp.com/attachments/1036248048390651906/1068858409102880850/sti.jpg);
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: inherit;
+        }   
         .container {
-            width: 300px;
+            width: 400px;
             height: auto;
             padding: 20px;
             border-radius: 10px;
-            background: rgba( 105, 152, 171, 0.05 );
-            box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-            backdrop-filter: blur( 20px );
-            -webkit-backdrop-filter: blur( 20px );  
-            border-radius: 10px;
-            border: 1px solid rgba( 255, 255, 255, 0.18 );
+            background: rgba( 26, 55, 77, 0.15 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 4px );
+-webkit-backdrop-filter: blur( 4px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
         }
         .head{
             padding: 0;
@@ -39,18 +44,23 @@
         }
         button{
             margin-top: 30px;
-        }
-        button:hover{
+            width: auto;
             background-color: #6998ab;
             color: white;
+            border: none;
+            border-radius: 10px;
+        }
+        button:hover{
+            color: #1a374d;
+            background-color: white;
         }
         .row a{
-            color: black;
+            color: white;
             text-decoration: none;
         }
         .row a:hover{
             text-decoration: underline;
-            color: white;
+            color: black;
         }
     </style>
 </head>
@@ -68,16 +78,15 @@
           </div>
           <div class="row">
             <div class="col-12">
-                <label for="course">Course</label>
-                <input type="text" name="course" class="form-control">
+                <label for="contact_no">Contact Number</label>
+                <input type="number" name="contact_no" class="form-control">
             </div>
           </div>
           <div class="row">
-            <div class="col-6">
-                <button type="submit" name="submit" class="form-control">LOGIIN</button>
-            </div>
-            <div class="col-6">
-                <button class="form-control"><a href="/register">SIGNUP</a></button>
+            <div class="d-grid col-4 mx-auto">
+                <button type="button">LOG-IN</button>
+                <button type="button"><a href="/register">SIGN-UP</a></button>
+                </div>
             </div>
           </div>
       </div>
