@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const  { rmSync } = require('fs');
 const { request } = require('http');
 const e= require('express');
-const MySQLStore  = require('express-mysql-session')(session);
+const MySQLStore  = require('express-mysql-session');
 const session = require('express-session');
 /////////////////////// CONFIGURATIONS
 app.set("view engine", "ejs");
@@ -16,7 +16,7 @@ PORT = 4000;
 app.listen(PORT);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+/*
 var pool = mysql2.createPool({
     host: process.env.mysql_host,
     port: process.env.mysql_port,
@@ -26,7 +26,7 @@ var pool = mysql2.createPool({
     multipleStatements: true,
     timezone: "+00:00",
 });
-
+*/
 /////////////////////////////////////////////////////////////////ROUTES///////////////////////////////////////////////
 // index route
 app.get('/',(req, res)=>{
