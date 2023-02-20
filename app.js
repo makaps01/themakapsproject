@@ -35,7 +35,6 @@ app.get('/',(req, res)=>{
 
 // login- find in database
 
-
 //route to client page
 app.get('/client-portal', (req, res)=> {
     res.render("client")
