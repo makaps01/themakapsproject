@@ -1,13 +1,21 @@
 /////////////////// DEPENDENCIES
+var dotenv = require('dotenv');
 const express = require("express");
 const path = require("path");
 const app = express();
+const mysql2 = require('mysql2');
 const bodyParser = require('body-parser');
-const  { rmSync } = require('fs');
-const { request } = require('http');
-const e= require('express');
-const MySQLStore  = require('express-mysql-session');
+const text = require('body-parser/lib/types/text');
+const { connected } = require('process');
 const session = require('express-session');
+const { rmSync } = require('fs');
+const { request } = require('express');
+const e = require('express');
+const { reset } = require('nodemon');
+const mySQLStore = require('express-mysql-session')(session);
+
+dotenv.config({path:"config.env"})
+app.set("view engine", "ejs");
 /////////////////////// CONFIGURATIONS
 // SET FOLDER FILES WHERE EJS IS STORED
 app.set("views", path.join(__dirname, "views"));
@@ -32,6 +40,6 @@ var pool = mysql2.createPool({
 */
 /////////////////////////////////////////////////////////////////ROUTES///////////////////////////////////////////////
 // login page 
-app.get('login', (req, res)=>{
+app.get('/login', (req, res)=>{
     res.render("login");
 });
