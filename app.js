@@ -53,3 +53,8 @@ app.get('/register', (req, res)=> {
 app.get('/forgot-password', (req, res)=>{
     res.render("forgot-password");
 });
+
+// /////////////////admin dashboard // //////////////////////////
+app.get('/dashboard', (req, res)=>{
+    res.render("index");
+});
