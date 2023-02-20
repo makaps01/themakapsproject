@@ -31,45 +31,7 @@ var pool = mysql2.createPool({
 });
 */
 /////////////////////////////////////////////////////////////////ROUTES///////////////////////////////////////////////
-// index route
-app.get('/',(req, res)=>{
-    res.render("index")
-});
-
-// login- find in database
-
-//route to client page
-app.get('/client-portal', (req, res)=> {
-    res.render("client")
-});
-// route to server page
-app.get('/server-portal',(req, res)=> {
-    res.render("server")
-} );    
-
-// registration form
-app.get('/register', (req, res)=> {
-    res.render("register")
-});
-
-
-//registration post request form
-app.post('/register',(req, res)=>{    
-    var {sy, contact_no, course } = req.body;
-
-    let reg = {
-        fname: fname,
-        lname: lname,
-        sy: sy,
-        contact_no: contact_no,
-        course: course
-    }
-
-    pool.getConnection((err, con)=> {
-        if(err) throw err;
-        con.query(sql, reg, (err, result)=>{
-            if(err) throw err;
-            res.redirect("/register")
-        });
-    });
+// login page 
+app.get('login', (req, res)=>{
+    res.render("login");
 });
