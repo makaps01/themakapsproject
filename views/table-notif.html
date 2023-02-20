@@ -1,0 +1,38 @@
+<!-- HTML table with some data -->
+<table id="myTable">
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+    </tr>
+    <tr>
+      <td>John</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>Jane</td>
+      <td>30</td>
+    </tr>
+  </table>
+  
+  <!-- JavaScript code that will periodically check for new data and display a notification -->
+  <script>
+    // Get a reference to the table
+    const table = document.getElementById('myTable');
+  
+    // Store the number of rows in the table initially
+    let previousRowCount = table.rows.length - 1;
+  
+    // Check for new data every 5 seconds (adjust as needed)
+    setInterval(() => {
+      // Get the current number of rows in the table
+      const currentRowCount = table.rows.length - 1;
+  
+      // If there are more rows than before, show a notification with the number of new rows
+      if (currentRowCount > previousRowCount) {
+        const numNewRows = currentRowCount - previousRowCount;
+        alert(`There are ${numNewRows} new rows in the table!`);
+        previousRowCount = currentRowCount; // Update the previous row count
+      }
+    }, 5000); // 5 seconds in milliseconds (adjust as needed)
+  </script>
+  

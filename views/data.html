@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Display Total Pending Data in a Table</title>
+</head>
+<body>
+	<table id="data-table">
+		<thead>
+			<tr>
+				<th>Data</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Data 1</td>
+				<td>Pending</td>
+			</tr>
+			<tr>
+				<td>Data 2</td>
+				<td>Pending</td>
+			</tr>
+			<tr>
+				<td>Data 3</td>
+				<td>Completed</td>
+			</tr>
+			<tr>
+				<td>Data 4</td>
+				<td>Pending</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p>Total Pending Data: <span id="total-pending"></span></p>
+
+	<script>
+		// Get the table and the rows
+		const table = document.getElementById('data-table');
+		const rows = table.getElementsByTagName('tr');
+
+		// Initialize the total variable
+		let totalPending = 0;
+
+		// Loop through the rows and count the pending data
+		for (let i = 1; i < rows.length; i++) {
+			const status = rows[i].getElementsByTagName('td')[1].innerHTML;
+			if (status === 'Pending') {
+				totalPending++;
+			}
+		}
+
+		// Display the total pending data
+		document.getElementById('total-pending').innerHTML = totalPending;
+	</script>
+</body>
+</html>
