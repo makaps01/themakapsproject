@@ -43,3 +43,13 @@ var pool = mysql2.createPool({
 app.get('/login', (req, res)=>{
     res.render("login");
 });
+
+// register-user page
+app.get('/register', (req, res)=> {
+    res.render("register");
+});
+
+// forgot password page
+app.get('/forgot-password', (req, res)=>{
+    res.render("forgot-password");
+});

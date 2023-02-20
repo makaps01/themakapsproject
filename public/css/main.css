@@ -10860,7 +10860,7 @@ a:focus {
 }
 
 .bg-login-image {
-  /*background: url("https://www.sti.edu/images/2022/prospectus/Simulation_IT.jpg");*/
+  background: url("https://www.sti.edu/images/2022/prospectus/Simulation_IT.jpg");
   background-position: center;
   background-size: cover;
 }
