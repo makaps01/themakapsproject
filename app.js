@@ -9,9 +9,12 @@ const e= require('express');
 const MySQLStore  = require('express-mysql-session');
 const session = require('express-session');
 /////////////////////// CONFIGURATIONS
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname + "/views"));
-app.set("public", path.join(__dirname + "/public"));
+// SET FOLDER FILES WHERE EJS IS STORED
+app.set("views", path.join(__dirname, "views"));
+// STATIC FOLDER || LOADS ALL ASSETS FROM PUBLIC FOLDER
+app.use(express.static(__dirname + "/public"));
+
+
 PORT = 4000;
 app.listen(PORT);
 app.use(bodyParser.urlencoded({ extended: false }));
