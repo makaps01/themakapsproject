@@ -14,6 +14,7 @@ const e = require('express');
 const { reset } = require('nodemon');
 const mySQLStore = require('express-mysql-session')(session);
 
+
 dotenv.config({path:"config.env"})
 app.set("view engine", "ejs");
 /////////////////////// CONFIGURATIONS
@@ -27,17 +28,17 @@ PORT = 4000;
 app.listen(PORT);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-/*
+
 var pool = mysql2.createPool({
     host: process.env.mysql_host,
     port: process.env.mysql_port,
     user: process.env.mysql_user,
     password: process.env.mysql_password,
-    dataase: process.env.mysql_dbname,
+    database: process.env.mysql_dbname,
     multipleStatements: true,
     timezone: "+00:00",
 });
-*/
+
 /////////////////////////////////////////////////////////////////ROUTES///////////////////////////////////////////////
 // login page 
 app.get('/login', (req, res)=>{
@@ -48,6 +49,7 @@ app.get('/login', (req, res)=>{
 app.get('/register', (req, res)=> {
     res.render("register");
 });
+
 
 // forgot password page
 app.get('/forgot-password', (req, res)=>{
