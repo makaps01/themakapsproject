@@ -39,36 +39,39 @@
                             <form class="user" method="post" action="/register">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" name="schoolid" class="form-control form-control-user" id="exampleSchoolid"
-                                            placeholder="Enter School id">
+                                        <input type="text" name="school_id" class="form-control form-control-user" id="exampleSchoolid"
+                                            placeholder="Enter School id" required>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" name="grad_year" class="form-control form-control-user" id="exampleYearGrad"
-                                            placeholder="Year Graduated...">
+                                        <input type="date" name="grad_year" class="form-control form-control-user" id="exampleYearGrad"
+                                            placeholder="Year Graduated..." required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" name="first_name" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="First Name">
+                                            placeholder="First Name" required>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" name="last_name" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Last Name">
+                                            placeholder="Last Name" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Email Address">
+                                        placeholder="Email Address" required>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
                                         <input type="password" name="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
+                                            id="exampleInputPassword" placeholder="Password" required>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <input type="password" name="password_rpt" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
+                                            id="exampleRepeatPassword" placeholder="Repeat Password" required>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="role" value="alumni" class="form-control form-control-user" readonly>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">Create Account</button>

@@ -6,7 +6,7 @@ const app = express();
 const mysql2 = require('mysql2');
 const bodyParser = require('body-parser');
 const text = require('body-parser/lib/types/text');
-const { connected } = require('process');
+const { connected, emit } = require('process');
 const session = require('express-session');
 const { rmSync } = require('fs');
 const { request } = require('express');
@@ -49,14 +49,56 @@ app.get('/login', (req, res)=>{
 app.get('/register', (req, res)=> {
     res.render("register");
 });
+// POST REQUEST FOR REGISTRATION
+app.post('/register', (req, res)=>{
+    var {school_id, grad_year, first_name, last_name, email, password, role} = req.body;
+    var password_rpt = req.body;
+    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
+        if(err) throw err;
+        if(password =! password_rpt){
+            console.log("password mismatch..")
+            res.redirect("/register")
+        }else{
+            if(result.length == 0) {
+                const sql = `INSERT INTO tbl_sti_register set ?`;
+                let sti_register ={
+                    school_id: school_id,
+                    grad_year: grad_year,
+                    first_name: first_name,
+                    last_name: last_name,
+                    email: email,
+                    password: password,
+                    role: role
+                }
+                pool.query(sql, sti_register,(err, result)=>{
+                    if(err) throw err;
+                    res.redirect("/login")
+                });
+            }else{
+                console.log("user already exist")
+                res.redirect("/register")
+            }
+        }
+    });
 
+});
 
 // forgot password page
 app.get('/forgot-password', (req, res)=>{
     res.render("forgot-password");
 });
 
-// /////////////////admin dashboard // //////////////////////////
+///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard', (req, res)=>{
     res.render("index");
+});
+
+
+
+
+
+
+////////////////////////// CLIENT DASHBOARD //////////////////////
+app.get('/client-dashboard', (req, res)=>{
+    res.render("client");
 });
