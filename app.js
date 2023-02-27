@@ -51,7 +51,7 @@ app.get('/register', (req, res)=> {
 });
 // POST REQUEST FOR REGISTRATION
 app.post('/register', (req, res)=>{
-    var {school_id, grad_year, full_name, email, password, role} = req.body;
+    var {school_id, grad_year, full_name, email, birthday, password, role} = req.body;
     var password_rpt = req.body;
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
         if(err) throw err;
@@ -66,6 +66,7 @@ app.post('/register', (req, res)=>{
                     grad_year: grad_year,
                     full_name: full_name,
                     email: email,
+                    birthday: birthday,
                     password: password,
                     role: role
                 }
