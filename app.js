@@ -51,14 +51,9 @@ app.get('/register', (req, res)=> {
 });
 // POST REQUEST FOR REGISTRATION
 app.post('/register', (req, res)=>{
-    var {school_id, grad_year, full_name, email, birthday, password, role} = req.body;
-    var password_rpt = req.body;
+    var {school_id, grad_year, full_name, email, birthday, p_word, role} = req.body;
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
         if(err) throw err;
-        if(password =! password_rpt){
-            console.log("password mismatch..")
-            res.redirect("/register")
-        }else{
             if(result.length == 0) {
                 const sql = `INSERT INTO tbl_sti_register set ?`;
                 let sti_register ={
@@ -67,7 +62,7 @@ app.post('/register', (req, res)=>{
                     full_name: full_name,
                     email: email,
                     birthday: birthday,
-                    password: password,
+                    p_word: p_word,
                     role: role
                 }
                 pool.query(sql, sti_register,(err, result)=>{
@@ -78,7 +73,6 @@ app.post('/register', (req, res)=>{
                 console.log("user already exist")
                 res.redirect("/register")
             }
-        }
     });
 
 });
