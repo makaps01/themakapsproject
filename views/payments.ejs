@@ -187,8 +187,34 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-1">
-                            <button class="btn-primary mb-2">Add Invoice</button>
+
+                            <!---modal button-->
+                            <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#paymentModal">Add Invoice</button>
+                            <!----------------->
+                            <!---modal form-->
+                            <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="title">Create payment</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                                <Span aria-hidden="true">&times;</Span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" id="payment">
+                                            <!---content of modal here-->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!------------>
                         </div>
+                        
+                        <!---Data table example-->
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table" id="dataTable" cellspacing="0">
