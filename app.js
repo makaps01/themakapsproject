@@ -44,6 +44,22 @@ var pool = mysql2.createPool({
 app.get('/login', (req, res)=>{
     res.render("login");
 });
+// POST REQUEST FOR LOGIN
+app.post('/login', (req, res)=>{
+    var {school_id, email, p_word} = req.body;
+    pool.query("SELECT * FROM tbl_sti_register WHERE email=? , role=?",[email, role],(err, result)=>{
+        if(err) throw err;
+        if(result.length= 0){
+            console.log("User does not exist..")
+            res.redirect("/login")
+        }else{
+            if(p_word == result[0].p_word){
+                console.log("login to dashboard")
+                res.render("/client")
+            }
+        }
+    });
+});
 
 // register-user page
 app.get('/register', (req, res)=> {
