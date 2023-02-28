@@ -108,13 +108,15 @@ app.get('/forgot-password', (req, res)=>{
 
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard', (req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_register",(req, res)=>{
         res.render("index");
-    });
-    
 });
 
 
+
+// PAYMENT PAGE
+app.get('/payments', (req, res)=>{
+    res.render("payments");
+});
 
 
 

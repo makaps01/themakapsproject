@@ -46,7 +46,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Payments</span></a>
             </li>
 
             <!-- Divider -->
@@ -56,7 +56,6 @@
             <div class="sidebar-heading">
                 Documents
             </div>
-
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -74,7 +73,6 @@
                     </div>
                 </div>
             </li>
-
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -85,7 +83,7 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/payments">Payments</a>
+                        <a class="collapse-item" href="#">Payments</a>
                         <a class="collapse-item" href="#">Audit-log</a>
                         <a class="collapse-item" href="#">Accounts</a>
                     </div>
@@ -185,100 +183,54 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
-                    </div>
-
-                    <!-- Content Row-->
-                    <div class="row">
-                        
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total Documents</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">1,500</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                         <!-- Pending Requests Card Example -->
-                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Completed Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">15,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                                  <!-- Earnings (Monthly) Card Example -->
-                                  <div class="col-xl-3 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                        Total number of users</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">500</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                    </div>
-
-                    <!-- Content Row -->
-
-                    <div class="row">
-
-                        <!-- CONTENT ROW -->
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row">
-
-                    </div>
-
+                     <!-- Page Heading -->
+                     <h1 class="h3 mb-2 text-gray-800">Requested Documents</h1>
+ 
+                     <!-- DataTales Example -->
+                     <div class="card shadow mb-4">
+                         <div class="card-body">
+                             <div class="table-responsive">
+                                 <table class="table table-bordered" id="payments" width="100%" cellspacing="0">
+                                     <thead>
+                                         <tr>
+                                             <th>Document Type</th>
+                                             <th>Full name</th>
+                                             <th>Year Graduated</th>
+                                             <th></th>
+                                             <th>Start date</th>
+                                             <th>Salary</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody>
+                                         <tr>
+                                             <td>Tiger Nixon</td>
+                                             <td>System Architect</td>
+                                             <td>Edinburgh</td>
+                                             <td>61</td>
+                                             <td>2011/04/25</td>
+                                             <td>$320,800</td>
+                                         </tr>
+                                         <tr>
+                                             <td>Yuri Berry</td>
+                                             <td>Chief Marketing Officer (CMO)</td>
+                                             <td>New York</td>
+                                             <td>40</td>
+                                             <td>2009/06/25</td>
+                                             <td>$675,000</td>
+                                         </tr>
+                                         <tr>
+                                             <td>Caesar Vance</td>
+                                             <td>Pre-Sales Support</td>
+                                             <td>New York</td>
+                                             <td>21</td>
+                                             <td>2011/12/12</td>
+                                             <td>$106,450</td>
+                                         </tr>
+                                     </tbody>
+                                 </table>
+                             </div>
+                         </div>
+                     </div>
                 </div>
                 <!-- /.container-fluid -->
 
