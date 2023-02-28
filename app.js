@@ -108,7 +108,7 @@ app.get('/forgot-password', (req, res)=>{
 
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard', (req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_register",[full_name],(res, result)=>{
+    pool.query("SELECT * FROM tbl_sti_register",(req, res)=>{
         res.render("index");
     });
     
