@@ -47,22 +47,22 @@ app.get('/login', (req, res)=>{
 // POST REQUEST FOR LOGIN
 app.post('/login', (req, res)=>{
     var {school_id, email, p_word} = req.body;
-    pool.query("SELECT * FROM tbl_sti_register WHERE email=?, role=?",[email, role],(err, result)=>{
+    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
         if(err) throw err;
-        if(result.length= 0){
-            console.log("User does not exist..")
-            res.redirect("/login")
+        if(result.length==0){
+            console.log("user doesn't exist...")
+            res.redirect("/login");
         }else{
             if(p_word == result[0].p_word){
-                console.log("login - client")
-                res.redirect("/client")
+                console.log("Login Successful")
+                res.redirect("/dashboard");
             }else{
-                if(result[0].role == 'admin'){
-                    console.log("Welcome!!")
-                    res.redirect("/dashboard")
+                if(school_id =! result[0].school_id){
+                console.log("school id doesnt exist")
+                res.redirect("/login");
                 }else{
-                    console.log("user doesn't exist")
-                    res.redirect("/login")
+                    console.log("wrong password")
+                    res.redirect("/login");
                 }
             }
         }
@@ -108,7 +108,10 @@ app.get('/forgot-password', (req, res)=>{
 
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard', (req, res)=>{
-    res.render("index");
+    pool.query("SELECT * FROM tbl_sti_register",[full_name],(res, result)=>{
+        res.render("index");
+    });
+    
 });
 
 
