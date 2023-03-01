@@ -55,7 +55,12 @@ app.post('/login', (req, res)=>{
         }else{
             if(p_word == result[0].p_word){
                 console.log("Login Successful")
-                res.redirect("/dashboard");
+                pool.query("SELECT * FROM tbl_sti_register", (err, regform)=>{
+                    if(err) throw err;
+                    res.render("fill-up",{
+                        regform,
+                    });
+                });
             }else{
                 if(school_id =! result[0].school_id){
                 console.log("school id doesnt exist")
@@ -117,13 +122,7 @@ app.get('/dashboard', (req, res)=>{
         res.render("index");
 });
 
-
-
 ////////////////////////// CLIENT DASHBOARD //////////////////////
 app.get('/start', (req, res)=>{
     res.render("start");
-});
-
-app.get('/fill-up', (req, res)=>{
-    res.render("fill-up");
 });
