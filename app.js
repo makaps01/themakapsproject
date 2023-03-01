@@ -119,15 +119,7 @@ app.get('/dashboard', (req, res)=>{
 
 
 
-// PAYMENT PAGE
-app.get('/payments', (req, res)=>{
-    res.render("payments");
-});
-
-
-
-
 ////////////////////////// CLIENT DASHBOARD //////////////////////
-app.get('/client-dashboard', (req, res)=>{
-    res.render("client");
+app.get('/start', (req, res)=>{
+    res.render("start");
 });
