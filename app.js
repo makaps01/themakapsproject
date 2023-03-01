@@ -101,6 +101,12 @@ app.post('/register', (req, res)=>{
 
 });
 
+// select documents to request
+app.get('/select-document', (req, res)=>{
+    res.render("select-docs");
+});
+
+
 // forgot password page
 app.get('/forgot-password', (req, res)=>{
     res.render("forgot-password");
