@@ -54,19 +54,22 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <label for="form-group" class="form-block">School Id</label>
                                                 <input type="number" maxlength="10" name="school_id" class="form-control form-control-user" id="exampleSchoolid"
                                                     value="<%= regform[0].school_id %>" readonly>
                                             </div>
                                             <div class="col-sm-6">
+                                                <label for="form-control" class="form-block">Graduate Year</label>
                                                 <input type="number" name="grad_year" class="form-control form-control-user" id="exampleYearGrad"
                                                     value="<%= regform[0].grad_year %>" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label for="form-group" class="from-block">Full Name</label>
                                                 <input type="text" name="full_name" class="form-control form-control-user" id="exampleFullName"
                                                     value="<%= regform[0].full_name %>" readonly>
                                         </div>
-                                        <div class="form-group mb-sm-0">
+                                        <div class="form-group">
                                             <label for="form-group" class="form-block">Email</label>
                                             <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
                                                 value="<%= regform[0].email %>" readonly>
@@ -76,10 +79,14 @@
                                             <input type="date" name="birthday" class="form-control form-control-user" id="exampleInputBirthday"
                                                 value="<%= regform[0].birthday %>" readonly>
                                         </div>
+                                        <div class="form-group" style="display: none;">
+                                            <label for="form-group" class="form-block">Status</label>
+                                            <input type="text" name="status" class="form-control form-control-user" value="Pending">
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">Create Account</button>
                                         <hr>
                                         <hr>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Submit</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
