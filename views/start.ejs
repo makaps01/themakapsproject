@@ -38,16 +38,18 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Here some steps to guide you throughout the process</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Here are some steps to guide you throughout the process</h1>
                                     </div>
             
-                                        <div class="form-group">
-                                          <!--content here-->
-                                        </div>
-                                        <div class="form-group">
-                                            <hr>
-                                            <hr>
-                                        </div>
+                                    <div id="list-example" class="list-group">
+                                        <a class="list-group-item" href="#list-item-1">Choose document type</a>
+                                        <a class="list-group-item" href="#list-item-2">Fill-up necessary Information</a>
+                                        <a class="list-group-item" href="#list-item-3">Enter your email</a>
+                                        <a class="list-group-item" href="#list-item-4">Submit</a>
+                                      </div>
+                                      <div class="text-center m-4">
+                                        <h6>Let's proceed</h6>
+                                      </div>
                                         <a>
                                             <button onclick="fill_up()" class="btn btn-primary btn-user btn-block">Fill-up form</button>
                                             <script>
@@ -84,7 +86,10 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <script>
-
+        $('body').scrollspy({ target: '#navbar-example' })
+        $('[data-spy="scroll"]').each(function () {
+  var $spy = $(this).scrollspy('refresh')
+})
     </script>
 </body>
 

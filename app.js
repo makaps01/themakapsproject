@@ -123,3 +123,7 @@ app.get('/dashboard', (req, res)=>{
 app.get('/start', (req, res)=>{
     res.render("start");
 });
+
+app.get('/fill-up', (req, res)=>{
+    res.render("fill-up");
+});
