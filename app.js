@@ -53,22 +53,17 @@ app.post('/login', (req, res)=>{
             console.log("user doesn't exist...")
             res.redirect("/login");
         }else{
-            if(p_word == result[0].p_word){
+            if(p_word == result[0].email){
                 console.log("Login Successful")
                 pool.query("SELECT * FROM tbl_sti_register", (err, regform)=>{
                     if(err) throw err;
-                    res.render("fill-up",{
+                    res.render("fill-up", {
                         regform,
                     });
                 });
             }else{
-                if(school_id =! result[0].school_id){
-                console.log("school id doesnt exist")
+                console.log("Wrong password")
                 res.redirect("/login");
-                }else{
-                    console.log("wrong password")
-                    res.redirect("/login");
-                }
             }
         }
     });
