@@ -47,13 +47,13 @@ app.get('/login', (req, res)=>{
 // POST REQUEST FOR LOGIN
 app.post('/login', (req, res)=>{
     var {school_id, email, p_word} = req.body;
-    pool.query("SELECT * FROM tbl_sti_register where email=?",[email], (req, result)=>{
+    pool.query("SELECT * FROM tbl_sti_register where email=?",[email], (err, result)=>{
         if(err) throw err;
         if(result.length==0){
             console.log("user doesn't exist...")
             res.redirect("/login");
         }else{
-            if(p_word == result[0].email){
+            if(p_word == result[0].p_word){
                 console.log("Login Successful")
                 pool.query("SELECT * FROM tbl_sti_register", (err, regform)=>{
                     if(err) throw err;
@@ -62,20 +62,21 @@ app.post('/login', (req, res)=>{
                     });
                 });
             }else{
-                console.log("Wrong password")
                 res.redirect("/login");
+                console.log("Wrong password")
             }
         }
     });
 });
-
 // register-user page
 app.get('/register', (req, res)=> {
     res.render("register");
 });
 // POST REQUEST FOR REGISTRATION
 app.post('/register', (req, res)=>{
-    var {school_id, grad_year, full_name, email, birthday, p_word, role} = req.body;
+    var {school_id, grad_year, full_name, email, birthday, p_word} = req.body;
+    var role = 'student';
+
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
         if(err) throw err;
             if(result.length == 0) {
