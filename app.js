@@ -57,7 +57,7 @@ app.post('/login', (req, res)=>{
             if(p_word == result[0].p_word){
                 console.log("Login Successful")
                 
-                res.redirect("/fill-up", {
+                res.render("/fill-up", {
                     regform : result,
                 });
             }else{
