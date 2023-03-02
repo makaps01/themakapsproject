@@ -68,10 +68,14 @@ app.post('/login', (req, res)=>{
    });
 });
 
+// get request for fill up
 app.get('/fill-up', (req, res)=>{
     res.render("fill-up");
 });
+// post request for new documents
+app.post('/fill-up', (req, res)=>{
 
+});
 
 // register-user page
 app.get('/register', (req, res)=> {
