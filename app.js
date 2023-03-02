@@ -74,7 +74,7 @@ app.get('/register', (req, res)=> {
 });
 // POST REQUEST FOR REGISTRATION
 app.post('/register', (req, res)=>{
-    var {school_id, grad_year, full_name, email, birthday, p_word} = req.body;
+    var {school_id, grad_year, full_name, email, birthday, p_word, campus} = req.body;
     var role = 'student';
 
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
@@ -88,6 +88,7 @@ app.post('/register', (req, res)=>{
                     email: email,
                     birthday: birthday,
                     p_word: p_word,
+                    campus: campus,
                     role: role
                 }
                 pool.query(sql, sti_register,(err, result)=>{
@@ -99,7 +100,6 @@ app.post('/register', (req, res)=>{
                 res.redirect("/register")
             }
     });
-
 });
 
 // select documents to request
