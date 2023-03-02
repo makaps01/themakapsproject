@@ -57,7 +57,6 @@ app.post('/login', (req, res)=>{
 
         if(p_word == result[0].p_word){
             console.log("Mission failed successfully!")
-
             res.render("fill-up", {
                 regform: result
             });
@@ -68,6 +67,7 @@ app.post('/login', (req, res)=>{
     }
    });
 });
+
 app.get('/fill-up', (req, res)=>{
     res.render("fill-up");
 });

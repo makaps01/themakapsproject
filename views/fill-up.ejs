@@ -40,7 +40,6 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Enter Information</h1>
                                     </div>
-
                                     <form action="/fill-up" method="post">
                                         <div class="form-group">
                                             <label for="formControlSelectDocs">Select Document type</label>
@@ -75,14 +74,23 @@
                                             value="<%= regform[0].email %>" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label for="form-group" class="form-block">Birthday</label>
-                                            <input type="date" name="birthday" class="form-control form-control-user" id="exampleInputBirthday"
-                                            value="<%= regform[[0].birthday %>" readonly>
+                                            <label for="form-group" class="form-block">Date</label>
+                                            <select name="date" id="datetime" class="form-control" aria-readonly="false">
+                                                <option value="">
+                                                    <span>
+                                                        <script>
+                                                            document.write(new Date());
+                                                        </script>
+                                                        </span>
+                                                </option>
+                                            </select>
                                         </div>
-                                        <hr>
-                                        <hr>
+                                            <hr>
+                                            <hr>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">Submit</button>
-                                        </div>
+                                        <hr>
+                                        <hr>
+                                        
                                     </form>
                                 </div>
                             </div>
@@ -106,12 +114,10 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
     <script>
-        $('body').scrollspy({ target: '#navbar-example' })
-        $('[data-spy="scroll"]').each(function () {
-  var $spy = $(this).scrollspy('refresh')
-})
+        const date = document.getElementById('today');
+        const e = document.write(newDate());
+
     </script>
 </body>
 
