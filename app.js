@@ -47,7 +47,7 @@ app.get('/login', (req, res)=>{
 // POST REQUEST FOR LOGIN
 app.post('/login', (req, res)=>{
     var {school_id, email, p_word} = req.body;
-    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
+    pool.query("SELECT * FROM tbl_sti_register where email=?",[email], (req, result)=>{
         if(err) throw err;
         if(result.length==0){
             console.log("user doesn't exist...")
