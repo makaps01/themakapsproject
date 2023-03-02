@@ -49,13 +49,17 @@ app.post('/login', (req, res)=>{
     var {school_id, email, p_word} = req.body;
     pool.query("SELECT * FROM tbl_sti_register where email=?",[email], (err, result)=>{
         if(err) throw err;
+        console.log(result)
         if(result.length==0){
             console.log("user doesn't exist...")
             res.redirect("/login");
         }else{
             if(p_word == result[0].p_word){
                 console.log("Login Successful")
-                res.redirect("/fill-up")
+                
+                res.redirect("/fill-up", {
+                    regform : result
+                });
             }else{
                 res.redirect("/login");
                 console.log("Wrong password")
@@ -114,13 +118,6 @@ app.get('/dashboard', (req, res)=>{
 });
 
 ////////////////////////// CLIENT DASHBOARD //////////////////////
-app.get('/fill-up/student-info', (req, res)=>{
-    console.log("GET student info, pid" + req.query.pid)
-    var school_id = req.query.pid;
-    pool.query("SELECT * FROM tbl_sti_register WHERE school_id=?", [school_id],(err, regform)=>{
-        if(err) throw err;
-        res.render('fill-up',{
-            regform,
-        });
-    });
+app.get('/fill-up', (req, res)=>{
+    res.render("fill-up");
 });
