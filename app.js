@@ -58,7 +58,7 @@ app.post('/login', (req, res)=>{
                 console.log("Login Successful")
                 
                 res.redirect("/fill-up", {
-                    regform : result
+                    regform : result,
                 });
             }else{
                 res.redirect("/login");
