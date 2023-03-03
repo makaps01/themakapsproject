@@ -70,7 +70,7 @@ app.post('/login', (req, res)=>{
 
 // get request for fill up
 app.get('/fill-up', (req, res)=>{
-    res.render("fill-up");
+        res.render("fill-up");
 });
 // post request for new documents
 app.post('/fill-up', (req, res)=>{
