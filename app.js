@@ -129,7 +129,7 @@ app.post('/register', (req, res)=>{
 
 // select documents to request
 app.get('/select-document', (req, res)=>{
-    res.render("select-docs");
+    res.render("view");
 });
 // forgot password page
 app.get('/forgot-password', (req, res)=>{
