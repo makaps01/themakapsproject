@@ -89,8 +89,11 @@ app.post('/fill-up', (req, res)=>{
     }
     pool.query(sql, document,(err, result)=>{
         if(err) throw err;
+        console.log(result)
+        res.redirect("views");
     });
 });
+
 
 // register-user page
 app.get('/register', (req, res)=> {
