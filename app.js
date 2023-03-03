@@ -131,13 +131,10 @@ app.post('/register', (req, res)=>{
 app.get('/select-document', (req, res)=>{
     res.render("select-docs");
 });
-
-
 // forgot password page
 app.get('/forgot-password', (req, res)=>{
     res.render("forgot-password");
 });
-
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard', (req, res)=>{
         res.render("index");
