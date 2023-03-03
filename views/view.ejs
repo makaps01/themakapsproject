@@ -38,10 +38,41 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back! Lets get started...</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Search for requested documents</h1>
                                     </div>
                                     <form action="/select-document" method="post">
                                         <!--content here-->
+                                        <div class="form-group row">
+                                            <div class="col-sm-8">
+                                                <input type="number" name="school_id" class="form-control form-user" id="formExampleSchoolId"
+                                                placeholder="Enter school_id">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button class="btn btn-primary">Search</button>
+                                            </div>
+                                        </div>
+                                         <div class="card-body">
+                                            <div class="table-responsive">
+                                            <table class="table" id="dataTable" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Document type</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Certificate of grades</td>
+                                                        <td>Pending</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Transcript of records</td>
+                                                        <td>Pending</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                         </div>    
                                     </form>
                                     <hr>
                                     <div class="text-center">
