@@ -123,7 +123,7 @@ app.post('/register', (req, res)=>{
             }else{
                 console.log("user already exist")
                 res.redirect("/register")
-            }
+            } 
     });
 });
 
@@ -137,7 +137,6 @@ app.get('/forgot-password', (req, res)=>{
 });
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard', (req, res)=>{
-        res.render("index");
+    res.render("index");
 });
-
 ////////////////////////// CLIENT DASHBOARD //////////////////////
