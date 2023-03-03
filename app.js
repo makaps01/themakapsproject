@@ -94,7 +94,6 @@ app.post('/fill-up', (req, res)=>{
     });
 });
 
-
 // register-user page
 app.get('/register', (req, res)=> {
     res.render("register");
@@ -103,7 +102,6 @@ app.get('/register', (req, res)=> {
 app.post('/register', (req, res)=>{
     var {school_id, grad_year, full_name, email, birthday, p_word, campus} = req.body;
     var role = 'student';
-
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
         if(err) throw err;
             if(result.length == 0) {
