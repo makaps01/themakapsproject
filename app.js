@@ -47,25 +47,24 @@ app.get('/login', (req, res)=>{
 // POST REQUEST FOR LOGIN
 app.post('/login', (req, res)=>{
     var {school_id, email, p_word} = req.body;
-   pool.query("SELECT * date_format(birthday, %m/%d/%Y) AS birthday_format FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
-    if(err) throw err;
-    console.log(result)
-    if(result.length==0){
-        console.log("user doesn't exist...")
-        res.redirect("/login");
-    }else{
-
-        if(p_word == result[0].p_word){
-            console.log("Mission failed successfully!")
-            res.render("fill-up", {
-                regform: result
-            });
-        }else{
-            console.log("Wrong Password")
+    pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [email], (err, result)=>{
+        if(err) throw err;
+        console.log(result)
+        if(result.length==0){
+            console.log("user doesn't exist...")
             res.redirect("/login");
+        }else{
+            if(p_word==result[0].p_word){
+                console.log("Mission failed successfully!")
+                res.render("fill-up", {
+                    regform: result
+                });
+            }else{
+                console.log("wrong password")
+                res.redirect("/login");
+            }
         }
-    }
-   });
+    });
 });
 
 // get request for fill up
