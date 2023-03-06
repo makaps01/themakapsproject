@@ -12,6 +12,7 @@ const { rmSync } = require('fs');
 const { request } = require('express');
 const e = require('express');
 const { reset } = require('nodemon');
+const MySQLStore = require('express-mysql-session');
 const mySQLStore = require('express-mysql-session')(session);
 
 
@@ -38,7 +39,31 @@ var pool = mysql2.createPool({
     multipleStatements: true,
     timezone: "+00:00",
 });
+const{
+    user_isLoggedIn,
+    user_isAdmin,
+    role_client
+} = require("./js/demo/middleware");
 
+
+// save session logs
+
+var sessionOptions ={
+    host: process.env.mysql_host,
+    port: process.env.mysql_port,
+    user: process.env.mysql_user,
+    password: process.env.mysql_password,
+    database: process.env.mysql_dbname,
+}
+
+var sessionStore = new MySQLStore(sessionOptions);
+app.use(session({
+    key: 'session_cookie_name',
+    secret: 'session_cookie_secret',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
+}));
 /////////////////////////////////////////////////////////////////ROUTES///////////////////////////////////////////////
 // login page 
 app.get('/login', (req, res)=>{
