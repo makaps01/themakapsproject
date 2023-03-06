@@ -126,8 +126,8 @@ let document={
 pool.query(sql, document,(err, result)=>{
     if(err) throw err;
     console.log(result)
-    res.render("view",{
-        docs: result        
+    res.render("view", {
+        docs: result
     });
 });
 });
@@ -135,6 +135,16 @@ pool.query(sql, document,(err, result)=>{
 app.get('/view-documents', (req, res)=>{
     res.render("view");
 });
+app.post('/select-document', (req, result)=>{
+    pool.query("SELECT * FROM tbl_sti_documents WHERE school_id=?",[school_id],(req, result)=>{
+        if(err) throw err;
+        console.log(result)
+        res.render("view",{
+            docs: result
+        });
+    });
+});
+
 // register-user page
 app.get('/register', (req, res)=> {
     res.render("register");
