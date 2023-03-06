@@ -48,7 +48,6 @@ var sessionOptions ={
     password: process.env.mysql_password,
     database: process.env.mysql_dbname,
 }
-
 var sessionStore = new MySQLStore(sessionOptions);
 app.use(session({
     key: 'session_cookie_name',
@@ -63,8 +62,7 @@ app.get('/login', (req, res)=>{
     res.render("login");
 });
 // POST REQUEST FOR LOGIN
-app.post('/login', role_client, (req, res)=>{
-    
+app.post('/login', (req, res)=>{   
     var {school_id, email, p_word} = req.body;
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [email], (err, result)=>{
         if(err) throw err;
@@ -96,39 +94,53 @@ app.post('/login', role_client, (req, res)=>{
         }
     });
 });
-
+// forgot password page
+app.get('/forgot-password', (req, res)=>{
+    res.render("forgot-password");
+});
+///////////////////admin dashboard // //////////////////////////
+app.get('/dashboard', (req, res)=>{
+    res.render("index");
+});
+////////////////////////// CLIENT DASHBOARD //////////////////////
 // get request for fill up
 app.get('/fill-up', (req, res)=>{
-        res.render("fill-up");
+    res.render("fill-up");
 });
+
 // post request for new documents
 app.post('/fill-up', (req, res)=>{
-    var {doc_type, school_id, grad_year, full_name, email, date} = req.body;
-    var status= 'pending';
-    const sql = `INSERT INTO tbl_sti_documents set ?`;
+var {doc_type, school_id, grad_year, full_name, email, date} = req.body;
+var status= 'pending';
+const sql = `INSERT INTO tbl_sti_documents set ?`;
 
-    let document={
-        doc_type: doc_type,
-        school_id: school_id,
-        grad_year: grad_year,
-        full_name: full_name,
-        email: email,
-        date: date,
-        status: status
-    }
-    pool.query(sql, document,(err, result)=>{
-        if(err) throw err;
-        console.log(result)
-        res.redirect("views");
+let document={
+    doc_type: doc_type,
+    school_id: school_id,
+    grad_year: grad_year,
+    full_name: full_name,
+    email: email,
+    date: date,
+    status: status
+}
+pool.query(sql, document,(err, result)=>{
+    if(err) throw err;
+    console.log(result)
+    res.render("view",{
+        docs: result        
     });
 });
-
+});
+// get request to view documents
+app.get('/view-documents', (req, res)=>{
+    res.render("view");
+});
 // register-user page
 app.get('/register', (req, res)=> {
     res.render("register");
 });
 // POST REQUEST FOR REGISTRATION
-app.post('/register', user_isLoggedIn, (req, res)=>{
+app.post('/register', (req, res)=>{
     var {school_id, grad_year, full_name, email, birthday, p_word, campus} = req.body;
     var role = 'student';
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
@@ -155,16 +167,4 @@ app.post('/register', user_isLoggedIn, (req, res)=>{
             } 
     });
 });
-// select documents to request
-app.get('/select-document', (req, res)=>{
-    res.render("view");
-});
-// forgot password page
-app.get('/forgot-password', (req, res)=>{
-    res.render("forgot-password");
-});
-///////////////////admin dashboard // //////////////////////////
-app.get('/dashboard', (req, res)=>{
-    res.render("index");
-});
-////////////////////////// CLIENT DASHBOARD //////////////////////
+

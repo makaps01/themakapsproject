@@ -61,25 +61,21 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Certificate of grades</td>
-                                                        <td>Pending</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Transcript of records</td>
-                                                        <td>Pending</td>
-                                                    </tr>
+                                                    <% for (var i=0; i < docs.length; i++) { %>
+                                                        <tr>
+                                                            <td><%= docs[i].doc_type %></td>
+                                                            <td><%= docs[i].status %></td>
+                                                        </tr>
+                                                   <% } %>
                                                 </tbody>
                                             </table>
                                             </div>
                                          </div>    
                                     </form>
                                     <hr>
+                                    
                                     <div class="text-center">
-                                        <a class="small" href="/forgot-password">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="/register">Create an Account!</a>
+                                        <a class="small" href="/log-out">Logout</a>
                                     </div>
                                 </div>
                             </div>
