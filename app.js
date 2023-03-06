@@ -6,15 +6,15 @@ const app = express();
 const mysql2 = require('mysql2');
 const bodyParser = require('body-parser');
 const text = require('body-parser/lib/types/text');
-const { connected, emit } = require('process');
+const { connected } = require('process');
 const session = require('express-session');
+const res = require('express/lib/response');
 const { rmSync } = require('fs');
-const { request } = require('express');
-const e = require('express');
-const { reset } = require('nodemon');
-const MySQLStore = require('express-mysql-session');
-const mySQLStore = require('express-mysql-session')(session);
-
+const MySQLStore = require('express-mysql-session')(session);
+const {
+    user_isLoggedIn,
+    role_client
+} = require("./js/middleware");
 
 dotenv.config({path:"config.env"})
 app.set("view engine", "ejs");
@@ -29,7 +29,6 @@ PORT = 4000;
 app.listen(PORT);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 var pool = mysql2.createPool({
     host: process.env.mysql_host,
     port: process.env.mysql_port,
@@ -39,14 +38,8 @@ var pool = mysql2.createPool({
     multipleStatements: true,
     timezone: "+00:00",
 });
-const{
-    user_isLoggedIn,
-    user_isAdmin,
-    role_client
-} = require("./js/demo/middleware");
 
-
-// save session logs
+// save session log 
 
 var sessionOptions ={
     host: process.env.mysql_host,
@@ -70,7 +63,8 @@ app.get('/login', (req, res)=>{
     res.render("login");
 });
 // POST REQUEST FOR LOGIN
-app.post('/login', (req, res)=>{
+app.post('/login', role_client, (req, res)=>{
+    
     var {school_id, email, p_word} = req.body;
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [email], (err, result)=>{
         if(err) throw err;
@@ -80,6 +74,17 @@ app.post('/login', (req, res)=>{
             res.redirect("/login");
         }else{
             if(p_word==result[0].p_word){
+                req.session.user_isLoggedIn = true;
+                req.session.school_id = result[0].school_id;
+                req.session.email = result[0].email;
+                req.session.role = result[0].role;
+                req.session.campus = result[0].campus;
+                req.session.birthday = result[0].birthday;
+                console.log("LOGIN SET TO: "+ req.session.user_isLoggedIn)
+                console.log("USER :"+ req.session.full_name)
+                console.log("EMAIL: "+ req.session.email)
+                console.log("BIRTHDAY: "+ req.session.birthday)
+                console.log("ROLE: "+ req.session.role)
                 console.log("Mission failed successfully!")
                 res.render("fill-up", {
                     regform: result
@@ -123,7 +128,7 @@ app.get('/register', (req, res)=> {
     res.render("register");
 });
 // POST REQUEST FOR REGISTRATION
-app.post('/register', (req, res)=>{
+app.post('/register', user_isLoggedIn, (req, res)=>{
     var {school_id, grad_year, full_name, email, birthday, p_word, campus} = req.body;
     var role = 'student';
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
@@ -150,7 +155,6 @@ app.post('/register', (req, res)=>{
             } 
     });
 });
-
 // select documents to request
 app.get('/select-document', (req, res)=>{
     res.render("view");

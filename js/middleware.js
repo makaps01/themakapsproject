@@ -14,7 +14,7 @@ function user_isLoggedIn() {
 function role_client() {
     return function(req, res, next) {
         if(req.session.role == "admin"){
-            next();
+            res.redirect("/dashboard")
         }else if (req.session.role == "student"){
            res.redirect("/fill-up")
         }
@@ -23,6 +23,5 @@ function role_client() {
 
 module.exports = {
     user_isLoggedIn,
-    user_isAdmin,
     role_client
 };
