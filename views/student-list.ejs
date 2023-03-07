@@ -192,6 +192,7 @@
                             <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddStudentModal">Add Students</button>
                             <!----------------->
                             <!---modal form-->
+                            <form action="/students/add-new" method="post" onsubmit="confirm('Add new student?')">
                             <div class="modal fade" id="AddStudentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
@@ -214,7 +215,7 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="last-name" class="mb-sm-0">Middle initial</label>
-                                                    <input type="text" name="last_name" class="form-control form-control-user" placeholder="D" required>
+                                                    <input type="text" name="middle" class="form-control form-control-user" placeholder="D" required>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -262,6 +263,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
                             <!------------>
                         </div>
                         
@@ -271,49 +273,16 @@
                                 <table class="table" id="dataTable" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>Full Name</th>
+                                            <th>birthday</th>
+                                            <th>Course</th>
+                                            <th>Year Admitted</th>
+                                            <th>Year level</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Yuri Berry</td>
-                                            <td>Chief Marketing Officer (CMO)</td>
-                                            <td>New York</td>
-                                            <td>40</td>
-                                            <td>2009/06/25</td>
-                                            <td>$675,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Caesar Vance</td>
-                                            <td>Pre-Sales Support</td>
-                                            <td>New York</td>
-                                            <td>21</td>
-                                            <td>2011/12/12</td>
-                                            <td>$106,450</td>
-                                        </tr>
+            
                                     </tbody>
                                 </table>
                             </div>

@@ -9,7 +9,7 @@ const text = require('body-parser/lib/types/text');
 const { connected } = require('process');
 const session = require('express-session');
 const res = require('express/lib/response');
-const { rmSync } = require('fs');
+const { rmSync, stat } = require('fs');
 const MySQLStore = require('express-mysql-session')(session);
 const {
     user_isLoggedIn,
@@ -180,5 +180,28 @@ app.post('/register', (req, res)=>{
 
 // student list - get and post request
 app.get('/students', (req, res)=>{
-    res.render("student-list");
+    pool.query("SELECT * FROM tbl_sti_students",(err, student)=>{
+        if(err) throw err;
+        res.render("student-list",{
+            student,
+        });
+    });
+});
+app.post('/students/add-new',(req, res)=>{
+    var {last_name, first_name, middle, month, day, year, course, y_level, y_admitted, status} = req.body;
+    var full_name = first_name + "" + middle + "" + last_name;
+
+    const sql = `INSERT INTO tbl_sti_students set ?`;
+    let new_student={
+        full_name: full_name,
+        birthday: birthday,
+        course: course,
+        y_level: y_level,
+        y_admitted: y_admitted,
+        status: status
+    }
+    pool.query(sql, new_student,(err, student)=>{
+        if(err) throw err;
+        res.redirect("/students")
+    });
 });
