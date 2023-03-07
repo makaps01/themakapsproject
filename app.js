@@ -178,3 +178,7 @@ app.post('/register', (req, res)=>{
     });
 });
 
+// student list - get and post request
+app.get('/students', (req, res)=>{
+    res.render("student-list");
+});

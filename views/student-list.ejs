@@ -16,7 +16,8 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+        <!-- Custom styles for this page -->
+        <link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="/css/main.min.css" rel="stylesheet">
@@ -46,7 +47,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Payments</span></a>
             </li>
 
             <!-- Divider -->
@@ -56,7 +57,6 @@
             <div class="sidebar-heading">
                 Documents
             </div>
-
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -74,7 +74,6 @@
                     </div>
                 </div>
             </li>
-
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -85,7 +84,7 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/students">Student List</a>
+                        <a class="collapse-item" href="#">Payments</a>
                         <a class="collapse-item" href="#">Audit-log</a>
                         <a class="collapse-item" href="#">Accounts</a>
                     </div>
@@ -185,101 +184,141 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-1">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
-                    </div>
-
-                    <!-- Content Row-->
-                    <div class="row">
-                        
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total Documents</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">1,500</div>
+                            <!---modal button-->
+                            <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddStudentModal">Add Students</button>
+                            <!----------------->
+                            <!---modal form-->
+                            <div class="modal fade" id="AddStudentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="title">Add new Student</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                                <Span aria-hidden="true">&times;</Span>
+                                            </button>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                         <!-- Pending Requests Card Example -->
-                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Completed Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">15,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                                  <!-- Earnings (Monthly) Card Example -->
-                                  <div class="col-xl-3 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                        Total number of users</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">500</div>
+                                        <div class="modal-body" id="payment">
+                                            <!---content of modal here-->
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <label for="last-name" class="mb-sm-0">Last name</label>
+                                                    <input type="text" name="last_name" class="form-control form-control-user" placeholder="Dela Cruz" required>
                                                 </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                                <div class="col-md-5">
+                                                    <label for="last-name" class="mb-sm-0">First name</label>
+                                                    <input type="text" name="first_name" class="form-control form-control-user" placeholder="Juan" required>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="last-name" class="mb-sm-0">Middle initial</label>
+                                                    <input type="text" name="last_name" class="form-control form-control-user" placeholder="D" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label for="birthday" class="mb-sm-0">Birthday</label>
+                                                    <input type="number" name="month" class="form-control form-control-user" placeholder="MM" required>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="" class="mb-sm-0"></label>
+                                                    <input type="number" name="day" class="form-control form-control-user" placeholder="DD" required>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="" class="mb-sm-0"></label>
+                                                    <input type="number" name="year" class="form-control form-control-user" placeholder="YYYY" required>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="course" class="mb-sm-0">Course</label>
+                                                    <input type="text" name="course" class="form-control form-control-user" placeholder="BSIS" required>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="y-level">Year level</label>
+                                                    <input type="number" name="y_level" class="form-control form-control-user" placeholder="2023" required>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="y-admitted">Year admitted</label>
+                                                    <input type="number" name="y_admitted" class="form-control form-control-user" placeholder="2019" required>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="status">Status</label>
+                                                    <select name="status" class="form-control form-control-user">
+                                                        <option>Graduated</option>
+                                                        <option>Discontinued</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save</button>
+                                          </div>
                                     </div>
                                 </div>
+                            </div>
+                            <!------------>
+                        </div>
+                        
+                        <!---Data table example-->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="dataTable" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Age</th>
+                                            <th>Start date</th>
+                                            <th>Salary</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Age</th>
+                                            <th>Start date</th>
+                                            <th>Salary</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                            <td>$320,800</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Yuri Berry</td>
+                                            <td>Chief Marketing Officer (CMO)</td>
+                                            <td>New York</td>
+                                            <td>40</td>
+                                            <td>2009/06/25</td>
+                                            <td>$675,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Caesar Vance</td>
+                                            <td>Pre-Sales Support</td>
+                                            <td>New York</td>
+                                            <td>21</td>
+                                            <td>2011/12/12</td>
+                                            <td>$106,450</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- Content Row -->
-
-                    <div class="row">
-
-                        <!-- CONTENT ROW -->
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row">
-
-                    </div>
-
-                </div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -289,7 +328,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy;<script>document.write(new Date());</script></span>
+                        <span>Copyright &copy;<script>document.write(new Date().getFullYear());</script></span>
                     </div>
                 </div>
             </footer>
@@ -326,23 +365,21 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+   <!-- Bootstrap core JavaScript-->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+   <!-- Core plugin JavaScript-->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
-
+   <!-- Custom scripts for all pages-->
+   <script src="js/sb-admin-2.min.js"></script>
     <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
+    <script src="js/demo/datatables-demo.js"></script>
 
+   <!-- Page level plugins -->
+   <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+   <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>
 </body>
 
 </html>
