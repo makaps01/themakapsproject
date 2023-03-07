@@ -47,7 +47,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Student list</span></a>
+                    <span>Pending Document</span></a>
             </li>
 
             <!-- Divider -->
@@ -67,7 +67,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/pending">Pending</a>
-                        <a class="collapse-item" href="/completed">Completed</a>
+                        <a class="collapse-item" href="completed">Completed</a>
                     </div>
                 </div>
             </li>
@@ -186,7 +186,7 @@
                         <div class="card-header py-1">
 
                             <!---modal button-->
-                            <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddStudentModal">Add Students</button>
+                            <!--<button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddStudentModal">Add Students</button>
                             <!----------------->
                             <!---modal form-->
                             <form action="/students/add-new" method="post" onsubmit="confirm('Add new student?')">
@@ -266,25 +266,22 @@
                                 <table class="table" id="dataTable" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Full Name</th>
-                                            <th>birthday</th>
-                                            <th>Course</th>
-                                            <th>Year Admitted</th>
+                                            <th>Document type</th>
+                                            <th>Full name</th>
+                                            <th>Email</th>
+                                            <th>Date</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
-                                        <% for(var i=0; i < student.length; i++) { %>
+                                        <% for(var i=0; i < complete.length; i++) { %>
                                             <tr>
-                                            <td><%= student[i].full_name %></td>
-                                            <td><%= student[i].birthday %></td>
-                                            <td><%= student[i].course %></td>
-                                            <td><%= student[i].y_admitted %></td>
-                                            <% if(student[i].status=="Discontinued") { %>
-                                                <td style="color: orangered;"><%= student[i].status %></td>
-                                           <% } else { %>
-                                            <td style="color: green;"><%= student[i].status %></td>
+                                            <% if(complete[i].status=="completed"){ %>
+                                                <td><%= complete[i].doc_type %></td>
+                                                <td><%= complete[i].full_name %></td>
+                                                <td><%= complete[i].email %></td>
+                                                <td><%= complete[i].date %></td>
+                                                <td><%= complete[i].status %></td>
                                            <% } %>
                                             </tr>
                                        <% } %>

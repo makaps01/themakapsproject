@@ -230,3 +230,13 @@ app.get('/pending', (req, res)=>{
         });
     });
 });
+
+//check completed documents
+app.get('/completed',(req, res)=>{
+    pool.query("SELECT * FROM tbl_sti_documents",(err, complete)=>{
+        if(err) throw err;
+        res.render("completed",{
+            complete,
+        });
+    });
+});

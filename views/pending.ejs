@@ -67,7 +67,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/pending">Pending</a>
-                        <a class="collapse-item" href="completed">Completed</a>
+                        <a class="collapse-item" href="/completed">Completed</a>
                     </div>
                 </div>
             </li>
@@ -185,10 +185,10 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-1">
 
-                            <!---modal button-->
-                            <!--<button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddStudentModal">Add Students</button>
-                            <!----------------->
-                            <!---modal form-->
+                            <!--modal button
+                            <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddStudentModal">Add Students</button>-->
+                         
+                            <!--modal form-->
                             <form action="/students/add-new" method="post" onsubmit="confirm('Add new student?')">
                             <div class="modal fade" id="AddStudentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
@@ -262,7 +262,7 @@
                         
                         <!---Data table example-->
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="table-responsive table-wrapper-scroll-y">
                                 <table class="table" id="dataTable" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -271,14 +271,22 @@
                                             <th>Email</th>
                                             <th>Date</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            <th>action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <% for(var i=0; i < pending.length; i++) { %>
                                             <tr>
-                                            <% if(pending[i].status=='pending'){
-                                            
+                                            <% if(pending[i].status=="pending"){ %>
+                                                <td><%= pending[i].doc_type %></td>
+                                                <td><%= pending[i].full_name %></td>
+                                                <td><%= pending[i].email %></td>
+                                                <td><%= pending[i].date %></td>
+                                                <td style="color: orangered;"><%= pending[i].status %></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary">edit</button>
+                                                    <button type="button" class="btn btn-danger">delete</button>
+                                                </td>
                                            <% } %>
                                             </tr>
                                        <% } %>
