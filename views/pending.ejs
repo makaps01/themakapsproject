@@ -275,7 +275,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+                                        <% for(var i=0; i < pending.length; i++) { %>
+                                            <tr>
+                                            <% if(pending[i].status=='pending'){
+                                            
+                                           <% } %>
+                                            </tr>
+                                       <% } %>
                                     </tbody>
                                 </table>
                             </div>
