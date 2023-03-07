@@ -67,7 +67,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="#">Pending</a>
-                        <a class="collapse-item" href="#">Completed</a>
+                        <a class="collapse-item" href="#">Released</a>
                     </div>
                 </div>
             </li>
@@ -81,7 +81,7 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/accounts">Students</a>
+                        <a class="collapse-item" href="/students">Students</a>
                         <a class="collapse-item" href="#">Audit-log</a>
                         <a class="collapse-item" href="#">Accounts</a>
                     </div>
@@ -236,7 +236,11 @@
                                                     <label for="course" class="mb-sm-0">Course</label>
                                                     <input type="text" name="course" class="form-control form-control-user" placeholder="BSIS" required>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
+                                                    <label for="y-level">Year level</label>
+                                                    <input type="number" name="y_level" class="form-control form-control-user" placeholder="2023" required>
+                                                </div>
+                                                <div class="col-md-2">
                                                     <label for="y-admitted">Year admitted</label>
                                                     <input type="number" name="y_admitted" class="form-control form-control-user" placeholder="2019" required>
                                                 </div>
@@ -270,20 +274,12 @@
                                             <th>birthday</th>
                                             <th>Course</th>
                                             <th>Year Admitted</th>
+                                            <th>Year level</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
-                                        <% for(var i=0; i < student.length; i++) { %>
-                                            <tr>
-                                            <td><%= student[i].full_name %></td>
-                                            <td><%= student[i].birthday %></td>
-                                            <td><%= student[i].course %></td>
-                                            <td><%= student[i].y_admitted %></td>
-                                            <td><%= student[i].status %></td>
-                                            </tr>
-                                       <% } %>
+            
                                     </tbody>
                                 </table>
                             </div>

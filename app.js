@@ -188,15 +188,15 @@ app.get('/students', (req, res)=>{
     });
 });
 app.post('/students/add-new',(req, res)=>{
-    var {last_name, first_name, middle, month, day, year, course, y_level, y_admitted, status} = req.body;
-    var full_name = first_name + "" + middle + "" + last_name;
+    var {last_name, first_name, middle, month, day, year, course, y_admitted, status} = req.body;
+    var full_name = first_name + " " + middle + "  " + last_name;
+    var birthday = month + "" + day + "" + year;
 
     const sql = `INSERT INTO tbl_sti_students set ?`;
     let new_student={
         full_name: full_name,
         birthday: birthday,
         course: course,
-        y_level: y_level,
         y_admitted: y_admitted,
         status: status
     }
@@ -204,4 +204,10 @@ app.post('/students/add-new',(req, res)=>{
         if(err) throw err;
         res.redirect("/students")
     });
+});
+
+
+// acocunts of user get request
+app.get('/accounts', (req, res)=>{
+    res.render("accounts");
 });
