@@ -82,8 +82,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/students">Students</a>
-                        <a class="collapse-item" href="#">Audit-log</a>
-                        <a class="collapse-item" href="#">Accounts</a>
+                        <a class="collapse-item" href="/audit-log">Audit-log</a>
+                        <a class="collapse-item" href="/accounts">Accounts</a>
                     </div>
                 </div>
             </li>
@@ -186,7 +186,7 @@
                         <div class="card-header py-1">
 
                             <!---modal button-->
-                            <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddStudentModal">Add Students</button>
+                            <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddStudentModal">Add Account</button>
                             <!----------------->
                             <!---modal form-->
                             <form action="/students/add-new" method="post" onsubmit="confirm('Add new student?')">
@@ -270,16 +270,27 @@
                                 <table class="table" id="dataTable" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>School ID</th>
+                                            <th>Grad year</th>
                                             <th>Full Name</th>
-                                            <th>birthday</th>
-                                            <th>Course</th>
-                                            <th>Year Admitted</th>
-                                            <th>Year level</th>
-                                            <th>Status</th>
+                                            <th>Email</th>
+                                            <th>Birthday</th>
+                                            <th>Password</th>
+                                            <th>Campus</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-            
+                                    <% for(var i=0; i < accounts.length; i++) { %>
+                                        <tr>
+                                            <td><%= accounts[i].school_id %></td>
+                                            <td><%= accounts[i].grad_year %></td>
+                                            <td><%= accounts[i].full_name %></td>
+                                            <td><%= accounts[i].email %></td>
+                                            <td><%= accounts[i].birthday %></td>
+                                            <td><%= accounts[i].p_word %></td>
+                                            <td><%= accounts[i].campus %></td>
+                                        </tr>
+                                   <% } %>
                                     </tbody>
                                 </table>
                             </div>

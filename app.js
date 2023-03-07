@@ -205,9 +205,28 @@ app.post('/students/add-new',(req, res)=>{
         res.redirect("/students")
     });
 });
-
+// session log get request
+app.get('/audit-log',(req, res)=>{
+    res.render("session");
+});
 
 // acocunts of user get request
 app.get('/accounts', (req, res)=>{
-    res.render("accounts");
+    pool.query("SELECT * FROM tbl_sti_register",(err, accounts)=>{
+        if(err) throw err;
+        res.render("accounts",{
+            accounts,
+        });
+    });
+});
+
+
+// check pending documents
+app.get('/pending', (req, res)=>{
+    pool.query("SELECT * FROM tbl_sti_documents",(err, pending)=>{
+        if(err) throw err;
+        res.render("pending",{
+            pending,
+        });
+    });
 });
