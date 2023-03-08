@@ -191,7 +191,7 @@ app.get('/students', (req, res)=>{
 app.post('/students/add-new',(req, res)=>{
     var {last_name, first_name, middle, month, day, year, course, y_admitted, status} = req.body;
     var full_name = first_name + " " + middle + "  " + last_name;
-    var birthday = month + "/" + day + "/" + year;
+    var birthday = month + "" + day + "" + year;
 
     const sql = `INSERT INTO tbl_sti_students set ?`;
     let new_student={
@@ -240,4 +240,10 @@ app.get('/completed',(req, res)=>{
             complete,
         });
     });
+});
+
+
+// log out 
+app.get('/log-out', (req, res)=>{
+    res.render("login");
 });
