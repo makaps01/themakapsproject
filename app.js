@@ -88,8 +88,14 @@ app.post('/login', (req, res)=>{
                     regform: result
                 });
             }else{
-                console.log("wrong password")
-                res.redirect("/login");
+                if(req.session.role=="admin"){
+                    console.log("Welcome Admin!")
+                res.redirect("/dashboard");
+                }else{
+                    console.log("Wrong Password")
+                    res.render("/login");
+
+                }
             }
         }
     });
