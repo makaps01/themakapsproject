@@ -63,8 +63,10 @@
                                                 <tbody>
                                                     <% for (var i=0; i < docs.length; i++) { %>
                                                         <tr>
+                                                            <% if(docs.length== docs[i].school_id) { %> 
                                                             <td><%= docs[i].doc_type %></td>
                                                             <td><%= docs[i].status %></td>
+                                                       <% } %>
                                                         </tr>
                                                         <% } %>
                                                 </tbody>

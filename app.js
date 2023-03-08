@@ -110,7 +110,8 @@ app.get('/fill-up', (req, res)=>{
 
 // post request for new documents
 app.post('/fill-up', (req, res)=>{
-var {doc_type, school_id, grad_year, full_name, email, date} = req.body;
+var {doc_type, school_id, grad_year, full_name, email} = req.body;
+var date= new Date();
 var status= 'pending';
 const sql = `INSERT INTO tbl_sti_documents set ?`;
 
@@ -190,7 +191,7 @@ app.get('/students', (req, res)=>{
 app.post('/students/add-new',(req, res)=>{
     var {last_name, first_name, middle, month, day, year, course, y_admitted, status} = req.body;
     var full_name = first_name + " " + middle + "  " + last_name;
-    var birthday = month + "" + day + "" + year;
+    var birthday = month + "/" + day + "/" + year;
 
     const sql = `INSERT INTO tbl_sti_students set ?`;
     let new_student={
