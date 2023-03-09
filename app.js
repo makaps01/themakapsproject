@@ -253,3 +253,17 @@ app.get('/completed',(req, res)=>{
 app.get('/log-out', (req, res)=>{
     res.render("login");
 });
+
+// update request of patient
+app.get('/pending/update', (req, res)=>{
+    console.log("GET pending docs, pid: " + req.query.pid)
+    var full_name = req.query.pid;
+    pool.query("SELECT * FROM tbl_sti_documents WHERE full_name=?", [full_name], (err, pendingDocs)=>{
+    if(err) throw err;
+    res.render('update-modal',{
+            pendingDocs
+        });
+    });
+});
+
+

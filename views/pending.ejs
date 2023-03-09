@@ -233,8 +233,8 @@
                                                 <div class="col-md-4">
                                                     <label for="status">Status</label>
                                                     <select name="status" class="form-control form-control-user">
-                                                        <option>Graduated</option>
-                                                        <option>Discontinued</option>
+                                                        <option style="color: green;">Graduated</option>
+                                                        <option style="color: orangered">Discontinued</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -263,24 +263,29 @@
                                             <th>Email</th>
                                             <th>Date</th>
                                             <th>Status</th>
-                                            <th>action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <% for(var i=0; i < pending.length; i++) { %>
                                             <tr>
-                                            <% if(pending[i].status=="pending"){ %>
-                                                <td><%= pending[i].doc_type %></td>
+                                                <td>
+                        
+                                                        <button onclick="document_info('<%= pending[i].doc_type %>')" class="btn btn-secondary"><%= pending[i].doc_type %></button>
+                            
+                                                    <script>
+                                                        function document_info(doc_type){
+                                                            window.location.href = " <% process.env.DOMAIN %>/pending/update?pid="+ doc_type;
+                                                        }
+                                                    </script>
+                                                </td>
                                                 <td><%= pending[i].full_name %></td>
                                                 <td><%= pending[i].email %></td>
                                                 <td><%= pending[i].date %></td>
+                                                <% if(pending[i].status=="pending"){ %>
                                                 <td style="color: orangered;"><%= pending[i].status %></td>
-                                                <td>
-                                                    <a href="/pending/data_edit/<%=pending.doc_type %>" class="btn btn-primary">edit</a>
-                                                    
-                                                    <button type="button" class="btn btn-danger">delete</button>
-                                                </td>
-                                           <% } %>
+                                           <% } else { %>
+                                                <td style="color: green"><%= pending[i].status %></td>
+                                            <% } %>
                                             </tr>
                                        <% } %>
                                     </tbody>
