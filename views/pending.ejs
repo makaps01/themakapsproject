@@ -252,7 +252,9 @@
                         
                         <!---Data table example-->
                         <div class="card-body">
+                            <h5>Total Pending: <span id="total-pending"></span></h5>
                             <div class="table-responsive table-wrapper-scroll-y">
+                                
                                 <table class="table" id="dataTable" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -274,7 +276,8 @@
                                                 <td><%= pending[i].date %></td>
                                                 <td style="color: orangered;"><%= pending[i].status %></td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary">edit</button>
+                                                    <a href="/pending/data_edit/<%=pending.doc_type %>" class="btn btn-primary">edit</a>
+                                                    
                                                     <button type="button" class="btn btn-danger">delete</button>
                                                 </td>
                                            <% } %>
@@ -346,6 +349,23 @@
    <!-- Page level plugins -->
    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
    <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        const table = document.getElementById('dataTable');
+        const rows = table.getElementsByTagName('tr');
+
+        let totalPending = 0 ;
+
+        for(let i = 1; i < rows.length; i++) {
+            const Status = rows[i].getElementsByTagName('td')[1].innerHTML;
+            if(Status == 'pending') {
+                totalPending++;
+            }
+        }
+
+        document.getElementById('total-pending').innerHTML = totalPending;
+
+    </script>
 </body>
 
 </html>
