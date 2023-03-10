@@ -40,18 +40,18 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Enter Information</h1>
                                     </div>
-                                    <form action="/pending/update-pending" method="GET" onsubmit="confirm('Update existing files?')">
+                                    <form action="/pending/update" autocomplete="off" name='form' method="POST" accept-charset='UTF-8' onsubmit="return confirm('Do you really want to submit form?');">
                                     <div class="form-group">
                                         <div class="col-sm-6 mb-3 mb-sm-0">
                                             <label for="doc type">Document Type</label>
-                                            <input type="text" name="doc_type" class="form-control form-control-user">
+                                            <input type="text" name="doc_type" class="form-control form-control-user" value="<%= pendingDocs[0].doc_type %>" readonly>
                                         </div>
                                     </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="form-group" class="form-block">Full Name</label>
-                                                <input type="number" maxlength="10" name="school_id" class="form-control form-control-user" id="exampleSchoolid"
-                                                >
+                                                <input type="number" maxlength="10" name="full_name" class="form-control form-control-user" id="exampleSchoolid"
+                                                value="<%= pendingDocs[0].full_name %>">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -64,7 +64,7 @@
                                         <div class="form-group">
                                             <label for="form-group" class="form-block">Email</label>
                                             <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
-                                            >
+                                            value="<%= pendingDocs[0].email %>">
                                         </div>
                                             <hr>
                                             <hr>

@@ -273,16 +273,19 @@ app.get('/log-out', (req, res)=>{
     res.render("login");
 });
 
-// update request of patient
-app.get('/pending/update-pending',(req, res)=>{
-    console.log("update pending document, pid: "+ req.query.pid)
-    var name = req.query.pid;
-    pool.query("SELECT * FROM tbl_sti_documents WHERE full_name=?", [name],(err, pendingDocs)=>{
-        if(err) throw err;
-        res.render('update-modal',{
-            pendingDocs
-        })
-    });
+
+//GET REQUEST FOR UPDATE PAGE
+app.get('/pending/update-pending:f_name',(req, res)=>{
+   full_name = req.params.full_name;
+   
+   pool.query("SELECT * FROM tbl_sti_documents WHERE full_name=?",[full_name],(err, pendingDocs)=>{
+    if(err) throw err;
+
+    res.render("update-modal",{
+        pendingDocs
+    })
+   });
 });
+
 
 
