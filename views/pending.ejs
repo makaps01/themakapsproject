@@ -189,19 +189,13 @@
                                             <th>Email</th>
                                             <th>Date</th>
                                             <th>Status</th>
+                                            <th>Update</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <% for(var i=0; i < pending.length; i++) { %>
                                             <tr>
-                                                <td>
-                                                        <button onclick="document_info('<%= pending[i].doc_type %>')" class="btn btn-outline-info"><%= pending[i].doc_type %></button>                           
-                                                    <script>
-                                                        function document_info(doc_type){
-                                                            window.location.href = " <% process.env.DOMAIN %>/pending/update?pid="+ doc_type;
-                                                        }
-                                                    </script>
-                                                </td>
+                                                <td><%= pending[i].doc_type %></td>
                                                 <td><%= pending[i].full_name %></td>
                                                 <td><%= pending[i].email %></td>
                                                 <td><%= pending[i].date %></td>
@@ -210,6 +204,17 @@
                                            <% } else { %>
                                                 <td style="color: green"><%= pending[i].status %></td>
                                             <% } %>
+                                                <td>
+                                                    <a>
+                                                        <button onclick="update_docs('<%=pending[i].full_name %>')" class="btn btn-outline-primary">Update</button>
+                                                    </a>
+                                                
+                                                    <script>
+                                                        function  update_docs(full_name){
+                                                            window.location.href = " <% process.env.DOMAIN %>/pending/update-pending?pid="+ full_name ;
+                                                        }
+                                                    </script>
+                                                </td>
                                             </tr>
                                        <% } %>
                                     </tbody>
