@@ -195,9 +195,8 @@ app.get('/students', (req, res)=>{
     });
 });
 app.post('/students/add-new',(req, res)=>{
-    var {last_name, first_name, middle, month, day, year, course, y_admitted, status} = req.body;
+    var {last_name, first_name, middle, birthday, course, y_admitted, status} = req.body;
     var full_name = first_name + " " + middle + "  " + last_name;
-    var birthday = month + "" + day + "" + year;
 
     const sql = `INSERT INTO tbl_sti_students set ?`;
     let new_student={
@@ -227,6 +226,26 @@ app.get('/accounts', (req, res)=>{
     });
 });
 
+// add new account in database
+app.post('/accounts/add-account',(req,res)=>{
+    var{m_number, grad_year, full_name, email, birthday, p_word, campus} = req.body;
+    var role= 'student';
+    const sql = `INSERT INTO tbl_sti_register set ?`;
+    let new_account ={
+        m_number: m_number,
+        grad_year: grad_year,
+        full_name: full_name,
+        email: email,
+        birthday: birthday,
+        p_word: p_word,
+        campus: campus,
+        role: role
+    }
+    pool.query(sql, new_accounts,(err, result)=>{
+        if(err) throw err;
+        res.redirect("/accounts")
+    });
+});
 
 // check pending documents
 app.get('/pending', (req, res)=>{
