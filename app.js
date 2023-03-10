@@ -158,14 +158,14 @@ app.get('/register', (req, res)=> {
 });
 // POST REQUEST FOR REGISTRATION
 app.post('/register', (req, res)=>{
-    var {school_id, grad_year, full_name, email, birthday, p_word, campus} = req.body;
+    var {m_number, grad_year, full_name, email, birthday, p_word, campus} = req.body;
     var role = 'student';
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
         if(err) throw err;
             if(result.length == 0) {
                 const sql = `INSERT INTO tbl_sti_register set ?`;
                 let sti_register ={
-                    school_id: school_id,
+                    m_number: m_number,
                     grad_year: grad_year,
                     full_name: full_name,
                     email: email,
