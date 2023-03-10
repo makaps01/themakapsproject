@@ -189,14 +189,14 @@
                                                 <Span aria-hidden="true">&times;</Span>
                                             </button>
                                         </div>
-                                        <div class="modal-body" id="payment">
+                                        <div class="modal-body" id="account">
                                             <!---content of modal here-->
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                                     <input type="number" name="m_number" maxlength="11" class="form-control form-control-user"
                                                     id="exampleInputSchoolid" placeholder="Enter Mobile Number">
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-6 mb-sm-0">
                                                     <input type="number" name="grad_year" maxlength="4" class="form-control form-control-user" id="exampleYearGrad"
                                                         placeholder="Year Graduated..." required>
                                                 </div>
@@ -209,7 +209,7 @@
                                             <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
                                                 placeholder="Enter Email Address..." required>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group mb-sm-0">
                                     
                                             <label for="form-group" class="form-block">Birthday</label>
                                             <input type="date" name="birthday" class="form-control form-control-user" id="exampleInputEmail"
@@ -222,7 +222,7 @@
                                             <input type="password" name="p_word" class="form-control form-control-user"
                                                 id="exampleInputPassword" placeholder="Password" required>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-6 mb-sm-0">
                                             <label for="formControlSelectCampus">Select Campus</label>
                                                 <select name="campus" class="form-control" required>
                                                     <option>STI College Cauayan</option>
@@ -338,6 +338,14 @@
    <!-- Page level plugins -->
    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
    <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>
+   <script>
+    document.querySelectorAll('input[type="number"]').forEach(input=>{
+        input.oninput = () =>{
+            if(input.value.length> input.maxLength) input.value = input.value.slice(0, input.maxLength);
+        };
+    });
+</script>
+
 </body>
 
 </html>

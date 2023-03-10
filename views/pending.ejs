@@ -174,88 +174,14 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-1">
-
-                            <!--modal button
-                            <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddStudentModal">Add Students</button>-->
-                         
-                            <!--modal form-->
-                            <form action="/students/add-new" method="post" onsubmit="confirm('Add new student?')">
-                            <div class="modal fade" id="AddStudentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="title">Add new Student</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="close">
-                                                <Span aria-hidden="true">&times;</Span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body" id="payment">
-                                            <!---content of modal here-->
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <label for="last-name" class="mb-sm-0">Last name</label>
-                                                    <input type="text" name="last_name" class="form-control form-control-user" placeholder="Dela Cruz" required>
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <label for="last-name" class="mb-sm-0">First name</label>
-                                                    <input type="text" name="first_name" class="form-control form-control-user" placeholder="Juan" required>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label for="last-name" class="mb-sm-0">Middle initial</label>
-                                                    <input type="text" name="middle" class="form-control form-control-user" placeholder="D" required>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <label for="birthday" class="mb-sm-0">Birthday</label>
-                                                    <input type="number" name="month" class="form-control form-control-user" placeholder="MM" required>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label for="" class="mb-sm-0"></label>
-                                                    <input type="number" name="day" class="form-control form-control-user" placeholder="DD" required>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label for="" class="mb-sm-0"></label>
-                                                    <input type="number" name="year" class="form-control form-control-user" placeholder="YYYY" required>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label for="course" class="mb-sm-0">Course</label>
-                                                    <input type="text" name="course" class="form-control form-control-user" placeholder="BSIS" required>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="y-admitted">Year admitted</label>
-                                                    <input type="number" name="y_admitted" class="form-control form-control-user" placeholder="2019" required>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="status">Status</label>
-                                                    <select name="status" class="form-control form-control-user">
-                                                        <option style="color: green;">Graduated</option>
-                                                        <option style="color: orangered">Discontinued</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save</button>
-                                          </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                           
                             <!------------>
                         </div>
-                        
                         <!---Data table example-->
                         <div class="card-body">
-                            <h5>Total Pending: <span id="total-pending"></span></h5>
                             <div class="table-responsive table-wrapper-scroll-y">
-                                
                                 <table class="table" id="dataTable" cellspacing="0">
+                                    <h5> <strong>Total Pending:</strong>  <span id="total-pending"></span></h5>
                                     <thead>
                                         <tr>
                                             <th>Document type</th>
@@ -269,9 +195,7 @@
                                         <% for(var i=0; i < pending.length; i++) { %>
                                             <tr>
                                                 <td>
-                        
-                                                        <button onclick="document_info('<%= pending[i].doc_type %>')" class="btn btn-secondary"><%= pending[i].doc_type %></button>
-                            
+                                                        <button onclick="document_info('<%= pending[i].doc_type %>')" class="btn btn-outline-info"><%= pending[i].doc_type %></button>                           
                                                     <script>
                                                         function document_info(doc_type){
                                                             window.location.href = " <% process.env.DOMAIN %>/pending/update?pid="+ doc_type;
@@ -355,22 +279,25 @@
    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
    <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>
 
-    <script>
-        const table = document.getElementById('dataTable');
-        const rows = table.getElementsByTagName('tr');
+   <script>
+    // Get the table and the rows
+    const table = document.getElementById('dataTable');
+    const rows = table.getElementsByTagName('tr');
 
-        let totalPending = 0 ;
+    // Initialize the total variable
+    let totalPending = 0;
 
-        for(let i = 1; i < rows.length; i++) {
-            const Status = rows[i].getElementsByTagName('td')[1].innerHTML;
-            if(Status == 'pending') {
-                totalPending++;
-            }
+    // Loop through the rows and count the pending data
+    for (let i = 1; i < rows.length; i++) {
+        const status = rows[i].getElementsByTagName('td')[0].innerHTML;
+        if (status === 'pending') {
+            totalPending++;
         }
+    }
 
-        document.getElementById('total-pending').innerHTML = totalPending;
-
-    </script>
+    // Display the total pending data
+    document.getElementById('total-pending').innerHTML = totalPending;
+</script>
 </body>
 
 </html>
