@@ -118,6 +118,9 @@ app.get('/fill-up', (req, res)=>{
 app.post('/fill-up', (req, res)=>{
 var {doc_type, m_number, grad_year, full_name, email} = req.body;
 var date= new Date();
+var timestamp = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var event = "Requested new document: "+doc_type+" : "+full_name+" student";
+var role = req.session.role;
 var status= 'pending';
 const sql = `INSERT INTO tbl_sti_documents set ?`;
 
@@ -130,26 +133,26 @@ let document={
     date: date,
     status: status
 }
-pool.query(sql, document,(err, result)=>{
+pool.query(sql, document,(err, result_1)=>{
     if(err) throw err;
-    console.log(result)
-    res.render("view", {
-        docs: result
+    pool.query(`INSERT INTO tbl_sti_auditlog (date, timestamp, event, full_name, role) VALUES(?,?,?,?,?);`,[date, timestamp, event, full_name, role],(err, result_2)=>{
+        if(err) throw err;
+        console.log(result)
+        res.render("view", {
+            docs: result_1
+ });     
     });
-});
+    });
 });
 // get request to view documents
 app.get('/view-documents', (req, res)=>{
-    res.render("view");
-});
-app.post('/select-document', (req, result)=>{
-    pool.query("SELECT * FROM tbl_sti_documents WHERE full_name=?",[full_name],(req, result)=>{
-        if(err) throw err;
-        console.log(result)
-        res.render("view",{
-            docs: result
-        });
+    pool.query("SELECT * FROM tbl_sti_documents;",(req, docs)=>{
+       if(err) throw err;
+       res.render("view",{
+        docs
+       });
     });
+   
 });
 
 // register-user page
@@ -159,7 +162,7 @@ app.get('/register', (req, res)=> {
 
 // POST REQUEST FOR REGISTRATION
 app.post('/register', (req, res)=>{
-    var {m_number, grad_year, full_name, email, birthday, p_word, campus} = req.body;
+    var {m_number, y_admitted, full_name, email, birthday, p_word, campus} = req.body;
     var role = 'student';
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
         if(err) throw err;
@@ -167,7 +170,7 @@ app.post('/register', (req, res)=>{
                 const sql = `INSERT INTO tbl_sti_register set ?`;
                 let sti_register ={
                     m_number: m_number,
-                    grad_year: grad_year,
+                    y_admitted: y_admitted,
                     full_name: full_name,
                     email: email,
                     birthday: birthday,
@@ -229,12 +232,12 @@ app.get('/accounts', (req, res)=>{
 
 // add new account in database
 app.post('/accounts/add-account',(req,res)=>{
-    var{m_number, grad_year, full_name, email, birthday, p_word, campus} = req.body;
+    var{m_number, y_admitted, full_name, email, birthday, p_word, campus} = req.body;
     var role= 'student';
     const sql = `INSERT INTO tbl_sti_register set ?`;
     let new_account ={
         m_number: m_number,
-        grad_year: grad_year,
+        y_admitted: y_admitted,
         full_name: full_name,
         email: email,
         birthday: birthday,
