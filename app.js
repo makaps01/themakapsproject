@@ -63,7 +63,7 @@ app.get('/login', (req, res)=>{
 });
 // POST REQUEST FOR LOGIN
 app.post('/login', (req, res)=>{   
-    var {school_id, email, p_word} = req.body;
+    var {email, p_word} = req.body;
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [email], (err, result)=>{
         if(err) throw err;
         console.log(result)
@@ -73,7 +73,7 @@ app.post('/login', (req, res)=>{
         }else{
             if(p_word==result[0].p_word){
                 req.session.user_isLoggedIn = true;
-                req.session.school_id = result[0].school_id;
+                req.session.m_number = result[0].m_number;
                 req.session.email = result[0].email;
                 req.session.role = result[0].role;
                 req.session.campus = result[0].campus;
@@ -116,14 +116,14 @@ app.get('/fill-up', (req, res)=>{
 
 // post request for new documents
 app.post('/fill-up', (req, res)=>{
-var {doc_type, school_id, grad_year, full_name, email} = req.body;
+var {doc_type, m_number, grad_year, full_name, email} = req.body;
 var date= new Date();
 var status= 'pending';
 const sql = `INSERT INTO tbl_sti_documents set ?`;
 
 let document={
     doc_type: doc_type,
-    school_id: school_id,
+    m_number: m_number,
     grad_year: grad_year,
     full_name: full_name,
     email: email,
@@ -143,7 +143,7 @@ app.get('/view-documents', (req, res)=>{
     res.render("view");
 });
 app.post('/select-document', (req, result)=>{
-    pool.query("SELECT * FROM tbl_sti_documents WHERE school_id=?",[school_id],(req, result)=>{
+    pool.query("SELECT * FROM tbl_sti_documents WHERE full_name=?",[full_name],(req, result)=>{
         if(err) throw err;
         console.log(result)
         res.render("view",{
@@ -156,6 +156,7 @@ app.post('/select-document', (req, result)=>{
 app.get('/register', (req, res)=> {
     res.render("register");
 });
+
 // POST REQUEST FOR REGISTRATION
 app.post('/register', (req, res)=>{
     var {m_number, grad_year, full_name, email, birthday, p_word, campus} = req.body;
