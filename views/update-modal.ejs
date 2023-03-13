@@ -42,11 +42,11 @@
                                     </div>
                                     <form action="/pending/update" autocomplete="off" name='form' method="POST" accept-charset='UTF-8' onsubmit="return confirm('Do you really want to submit form?');">
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
-                                            <label for="trans">Transaction Number</label>
+                                        <div class="col-sm-4">
+                                            <label for="trans">Transaction #</label>
                                             <input type="number" name="transaction_no" class="form-control form-control-user" value="<%= transaction_id %>" readonly>
                                         </div>
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <div class="col-sm-8 mb-3 mb-sm-0">
                                             <label for="doc type">Document Type</label>
                                             <input type="text" name="doc_type" class="form-control form-control-user" value="<%= update[0].doc_type %>" readonly>
                                         </div>        
@@ -54,26 +54,26 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="form-group" class="form-block">Full Name</label>
-                                                <input type="number" maxlength="10" name="full_name" class="form-control form-control-user" id="exampleSchoolid"
-                                                value="<%= update[0].full_name %>">
+                                                <input type="text" maxlength="10" name="full_name" class="form-control form-control-user" id="exampleSchoolid"
+                                                value="<%= update[0].full_name %>" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="form-group" class="from-block">Status</label>
-                                                <select name="status" id="status">
-                                                    <option value="">pending</option>
-                                                    <option value="">released</option>
+                                                <select name="status" id="status" class="form-control form-control-user">
+                                                    <option style="color: orangered;">pending</option>
+                                                    <option style="color: green;">completed</option>
                                                 </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="form-group" class="form-block">Email</label>
                                             <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
-                                            value="<%= update[0].email %>">
+                                            value="<%= update[0].email %>" readonly >
                                         </div>
                                             <hr>
                                             <hr>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">Update Document</button>
-                                        <button type="button" class="btn btn-light btn-user btn-block"><a href="/login">Logout</a></button>
+                                        <button type="button" class="btn btn-light btn-user btn-block"><a href="/pending">Exit</a></button>
                                         <hr>
                                         <hr>
                                     </form>

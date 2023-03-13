@@ -275,7 +275,7 @@ app.get('/log-out', (req, res)=>{
 });
 
 
-
+// re-route to specific id of document
 app.get('/pending/edit/:transaction_id', (req, res)=>{
     transaction_id = req.params.transaction_id;
 
@@ -288,4 +288,13 @@ app.get('/pending/edit/:transaction_id', (req, res)=>{
     });
 });
 
+
+// post request to update documents
+app.post('/pending/update', (req, res)=>{
+    var {status} = req.body;
+    pool.query(`UPDATE tbl_sti_documents SET status=?;`,[status],(err, result)=>{
+    if(err) throw err;
+    res.redirect("/pending")
+    });
+});
 

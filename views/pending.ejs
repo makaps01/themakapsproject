@@ -195,7 +195,8 @@
                                     <tbody>
                                         <% for(var i=0; i < pending.length; i++) { %>
                                             <tr> 
-                                                <td style="font-size: medium; color: blue;">
+                                                <% if(pending[i].status=="pending"){ %>
+                                                <td>
                                                     <a href="#" onclick="edit_docs('<%= pending[i].transaction_no %>')">
                                                         <%= pending[i].transaction_no %>
                                                     </a>
@@ -210,10 +211,16 @@
                                                 <td><%= pending[i].full_name %></td>
                                                 <td><%= pending[i].email %></td>
                                                 <td><%= pending[i].date %></td>
-                                                <% if(pending[i].status=="pending"){ %>
+        
                                                 <td style="color: orangered;"><%= pending[i].status %></td>
-                                           <% }  %>
-                                                                     
+                                           <% } else { %>
+                                                <td>not available</td>
+                                                <td>not available</td>
+                                                <td>not available</td>
+                                                <td>not available</td>
+                                                <td>not available</td>
+                                                <td>not available</td>
+                                           <% } %>               
                                             </tr>
                                        <% } %>
                                     </tbody>
