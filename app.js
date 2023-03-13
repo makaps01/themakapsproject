@@ -117,10 +117,6 @@ app.get('/fill-up', (req, res)=>{
 // post request for new documents
 app.post('/fill-up', (req, res)=>{
 var {doc_type, m_number, grad_year, full_name, email} = req.body;
-var date= new Date();
-var timestamp = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-var event = "Requested new document: "+doc_type+" : "+full_name+" student";
-var role = req.session.role;
 var status= 'pending';
 const sql = `INSERT INTO tbl_sti_documents set ?`;
 
@@ -133,17 +129,14 @@ let document={
     date: date,
     status: status
 }
-pool.query(sql, document,(err, result_1)=>{
+pool.query(sql, document,(err, result)=>{
     if(err) throw err;
-    pool.query(`INSERT INTO tbl_sti_auditlog (date, timestamp, event, full_name, role) VALUES(?,?,?,?,?);`,[date, timestamp, event, full_name, role],(err, result_2)=>{
-        if(err) throw err;
-        console.log(result)
         res.render("view", {
-            docs: result_1
+            docs: result
  });     
     });
     });
-});
+
 // get request to view documents
 app.get('/view-documents', (req, res)=>{
     pool.query("SELECT * FROM tbl_sti_documents;",(req, docs)=>{
