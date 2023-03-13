@@ -275,18 +275,17 @@ app.get('/log-out', (req, res)=>{
 });
 
 
-//GET REQUEST FOR UPDATE PAGE
-app.get('/pending/update-pending:f_name',(req, res)=>{
-   full_name = req.params.full_name;
-   
-   pool.query("SELECT * FROM tbl_sti_documents WHERE full_name=?",[full_name],(err, pendingDocs)=>{
+
+app.get('/pending/edit/:transaction_id', (req, res)=>{
+    transaction_id = req.params.transaction_id;
+
+    pool.query("SELECT * FROM tbl_sti_documents where transaction_no=?",[transaction_id],(err, update)=>{
     if(err) throw err;
-
+    console.log(update)
     res.render("update-modal",{
-        pendingDocs
-    })
-   });
+        update
+    }); 
+    });
 });
-
 
 

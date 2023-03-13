@@ -195,14 +195,14 @@
                                     <tbody>
                                         <% for(var i=0; i < pending.length; i++) { %>
                                             <tr>
-                                                <td>
-                                                    <a onclick="edit_docs('<%= pending[i].transaction_no %>')">
+                                                <td style="font-size: medium; color: blue;">
+                                                    <a href="" onclick="edit_docs('<%= pending[i].transaction_no %>')">
                                                         <%= pending[i].transaction_no %>
                                                     </a>
 
                                                     <script>
                                                         function edit_docs(transaction_id) {
-                                                            window.location.href = " <% process.env.DOMAIN %>/pending/edit" + transaction_id;
+                                                            window.location.href = " <% process.env.DOMAIN %>/pending/edit/" + transaction_id;
                                                         }
                                                     </script>
                                                 </td>
