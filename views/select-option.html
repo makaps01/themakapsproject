@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Select Option Example</title>
+	<script type="text/javascript">
+		function addOption() {
+			var selectBox = document.getElementById("selectBox");
+			var newOption = document.createElement("option");
+			newOption.text = document.getElementById("newOption").value;
+			selectBox.add(newOption);
+			document.getElementById("newOption").value = "";
+		}
+	</script>
+</head>
+<body>
+	<label for="selectBox">Select an option:</label>
+	<select id="selectBox">
+		<option value="option1">Option 1</option>
+		<option value="option2">Option 2</option>
+		<option value="option3">Option 3</option>
+	</select>
+	<br><br>
+	<label for="newOption">Enter a new option:</label>
+	<input type="text" id="newOption">
+	<button onclick="addOption()">Add Option</button>
+</body>
+</html>

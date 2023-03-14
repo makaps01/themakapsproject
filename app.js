@@ -145,7 +145,6 @@ app.get('/view-documents', (req, res)=>{
         docs
        });
     });
-   
 });
 
 // register-user page
@@ -203,7 +202,7 @@ app.post('/students/add-new',(req, res)=>{
         y_admitted: y_admitted,
         status: status
     }
-    pool.query(sql, new_student,(err, student)=>{
+    pool.query(sql, new_student,(err, result)=>{
         if(err) throw err;
         res.redirect("/students")
     });
