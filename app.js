@@ -69,7 +69,7 @@ app.post('/login', (req, res)=>{
         console.log(result)
         if(result.length==0){
             console.log("user doesn't exist...")
-            res.redirect("/login");
+            res.redirect("/login")
         }else{
             if(p_word==result[0].p_word){
                 req.session.user_isLoggedIn = true;
@@ -131,6 +131,7 @@ let document={
 }
 pool.query(sql, document,(err, result)=>{
     if(err) throw err;
+    console.log(result)
         res.render("view", {
             docs: result
  });     
@@ -141,6 +142,7 @@ pool.query(sql, document,(err, result)=>{
 app.get('/view-documents', (req, res)=>{
     pool.query("SELECT * FROM tbl_sti_documents;",(req, docs)=>{
        if(err) throw err;
+       console.log(docs)
        res.render("view",{
         docs
        });
@@ -172,6 +174,7 @@ app.post('/register', (req, res)=>{
                 }
                 pool.query(sql, sti_register,(err, result)=>{
                     if(err) throw err;
+                    console.log(result)
                     res.redirect("/login")
                 });
             }else{
