@@ -173,15 +173,15 @@
                 <div class="container-fluid">
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-1">
-                           
+                        <div class="card-header py-3">
+                           <h3 class="m-0 font-weight-bold text-primary">Pending Documents</h3>
                             <!------------>
                         </div>
                         <!---Data table example-->
                         <div class="card-body">
                             <div class="table-responsive table-wrapper-scroll-y">
                                 <table class="table" id="dataTable" cellspacing="0">
-                                    <h5> <strong>Total Pending:</strong>  <span id="total-pending"></span></h5>
+                                    
                                     <thead>
                                         <tr>
                                             <th>Transaction ID</th>
@@ -290,25 +290,22 @@
    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
    <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>
 
-   <script>
-    // Get the table and the rows
-    const table = document.getElementById('dataTable');
-    const rows = table.getElementsByTagName('tr');
 
-    // Initialize the total variable
-    let totalPending = 0;
+    <script>
+        const table = document.getElementById('dataTable');
 
-    // Loop through the rows and count the pending data
-    for (let i = 1; i < rows.length; i++) {
-        const status = rows[i].getElementsByTagName('td')[0].innerHTML;
-        if (status === 'pending') {
-            totalPending++;
-        }
-    }
+        let previousRowCount = table.rows.length - 1;
 
-    // Display the total pending data
-    document.getElementById('total-pending').innerHTML = totalPending;
-</script>
+        setInterval(()=>{
+            const currentRowCount = table.rows.length - 1;
+
+            if(currentRowCount > previousRowCount){
+                const numNewRows = currentRowCount - previousRowCount;
+                alert(`Ther are ${numNewRows} pending documents!`);
+                previousRowCount = currentRowCount;
+            }
+        },60000);
+    </script>
 </body>
 
 </html>
