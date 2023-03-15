@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaderboard</title>
+	<script type="text/javascript">
+		var scores = [60, 80, 100, 75, 90]; // sample scores
+		var names = ["John", "Alice", "Bob", "Kate", "Tom"]; // sample names
+		var totalScore = 0; // total score initialized to zero
+
+		function displayLeaderboard() {
+			var leaderboard = document.getElementById("leaderboard");
+
+			// clear any existing rows in the leaderboard
+			while (leaderboard.hasChildNodes()) {
+				leaderboard.removeChild(leaderboard.lastChild);
+			}
+
+			// add a row for each score and name in the arrays
+			for (var i = 0; i < scores.length; i++) {
+				var row = document.createElement("tr");
+
+				var rank = document.createElement("td");
+				rank.innerHTML = i + 1;
+				row.appendChild(rank);
+
+				var name = document.createElement("td");
+				name.innerHTML = names[i];
+				row.appendChild(name);
+
+				var score = document.createElement("td");
+				score.innerHTML = scores[i];
+				row.appendChild(score);
+
+				var addButton = document.createElement("button");
+				addButton.innerHTML = "Add";
+				addButton.setAttribute("data-score-index", i); // set data attribute to index of score in array
+				addButton.onclick = addScore; // assign click handler
+
+				var addScoreCell = document.createElement("td");
+				addScoreCell.appendChild(addButton);
+				row.appendChild(addScoreCell);
+
+				leaderboard.appendChild(row);
+			}
+		}
+
+		function addScore() {
+			var scoreIndex = this.getAttribute("data-score-index");
+			var score = scores[scoreIndex];
+
+			totalScore += score; // add score to total score
+			alert("Score added: " + score + "\nTotal score: " + totalScore);
+
+			document.getElementById("total-score").innerHTML = totalScore; // update total score on page
+		}
+	</script>
+</head>
+<body>
+	<h1>Leaderboard</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Rank</th>
+				<th>Name</th>
+				<th>Score</th>
+				<th>Add Score</th>
+			</tr>
+		</thead>
+		<tbody id="leaderboard">
+			<!-- leaderboard rows will be added dynamically here -->
+		</tbody>
+	</table>
+
+	<br>
+
+	<button onclick="displayLeaderboard()">Display Leaderboard</button>
+
+	<p>Total score: <span id="total-score"></span></p>
+
+	<script type="text/javascript">
+		document.getElementById("total-score").innerHTML = totalScore;
+	</script>
+</body>
+</html>
