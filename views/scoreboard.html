@@ -7,7 +7,6 @@
     <title>Scoreboard</title>
     <style>
         body{
-            margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: Arial, Helvetica, sans-serif;
@@ -21,6 +20,31 @@
             padding: 10px;
             text-align: center;
         }
+        th{
+            background-color: #4caf50;
+        }
+        tr:nth-child(even){
+            background-color: #f2f2f2;
+        }
+        #buttons{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }       
+        button:hover{
+            background-color: #3e8e41;
+        }  
     </style>
 </head>
 <body>
@@ -38,6 +62,110 @@
                 <th>Score</th>
             </tr>
         </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
     </table>
+<script>
+    //create an array of teams with their ranking and scores
+    let teams =[
+        {name: "Team A", rank:1, score:0},
+        {name: "Team B", rank:2, score:0},
+        {name: "Team C", rank:3, score:0},
+        {name: "Team D", rank:4, score:0},
+        {name: "Team E", rank:5, score:0}
+    ];
+    //get a reference to the HTML elements where the scores will be displayed
+
+    let scoresTable = document.getElementById("scores-table");
+    let scoreCells = scoresTable.getElementsByTagName("td");
+
+    // loop through the score cells and set their text content to the initial scores and ranks
+
+    for(let i = 0; i < scoreCells.length; i += 3){
+    scoreCells[i].textContent = teams[i/3].name;
+    scoreCells[i + 1].textContent = teams[i/3].rank;
+    scoreCells[i + 2].textContent = teams[i/3].score;
+    }
+
+    // get a reference to the HTML elements for the buttons
+
+    let button1 = document.getElementById("button1");
+    let button2 = document.getElementById("button2");
+    let button3 = document.getElementById("button3");
+
+    // add event listenr
+    button1.addEventListener("click",
+    function(){
+        updateScores(3);
+    });
+    button2.addEventListener("click",
+    function(){
+        updateScores(2);
+    });
+    button3.addEventListener("click",
+    function(){
+        updateScores(1);
+    });
+    // define a function to update the scores and ranks for all teams
+
+    function updateScores(points){
+        //loop through the teams array and add the given number of points to each team's score
+
+        for(let i = 0; i < teams.length; i++){
+            teams[i].score += points;
+        }
+        // sort the teams array by score , in descending order
+        teams.sort(function(a,b){
+            return b.score - a.score;
+        });
+
+        // loop through the sorted teams array and update the rank for each team
+        for( let i = 0; i < teams.length; i++){
+            teams[i].rank = i + 1;
+        }
+        // update the rank cell for the current team
+        scoreCells[i * 3 + 1].textContent = teams[i].rank;
+        for(let i = 0; i < teams.length; i++){
+            scoreCells[i * 3 + 2].textContent = teams[i].score;
+        }
+    }
+    setInterval(function(){
+        // sort the teams array by score, in descending order
+        teams.sort(function(a,b){
+            return b.score - a.score;
+        });
+        // loop throgh the sorted teams array and update the rank for each team
+        for(let i = 0; i < teams.length; i++){
+            teams[i].rank = i + 1;
+            //update the rank cell for the current team
+            scoreCells[i * 3 + 1].textContent = teams[i].rank;
+        }
+    },10000);
+</script>
 </body>
 </html>
