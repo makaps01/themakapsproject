@@ -10,18 +10,17 @@ function user_isLoggedIn() {
     };
 }
 
-
-function role_client() {
+//verifies if current user is admin
+function user_isAdmin() {
     return function(req, res, next) {
-        if(req.session.role == "admin"){
-            res.redirect("/dashboard")
-        }else if (req.session.role == "student"){
-           res.redirect("/fill-up")
+        if(req.session.role == 'student'){
+           next();
+        }else{
+           res.redirect("/dashboard")
         }
     }
 }
 
 module.exports = {
-    user_isLoggedIn,
-    role_client
+    user_isAdmin,
 };

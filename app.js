@@ -13,7 +13,8 @@ const { rmSync, stat } = require('fs');
 const MySQLStore = require('express-mysql-session')(session);
 const {
     user_isLoggedIn,
-    role_client
+    role_client,
+    user_isAdmin
 } = require("./js/middleware");
 
 dotenv.config({path:"config.env"})
@@ -63,6 +64,7 @@ app.get('/login', (req, res)=>{
 });
 // POST REQUEST FOR LOGIN
 app.post('/login', (req, res)=>{   
+    const userRole = req.session.role;
     var {email, p_word} = req.body;
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [email], (err, result)=>{
         if(err) throw err;
@@ -79,7 +81,6 @@ app.post('/login', (req, res)=>{
                 req.session.campus = result[0].campus;
                 req.session.birthday = result[0].birthday;
                 console.log("LOGIN SET TO: "+ req.session.user_isLoggedIn)
-                console.log("USER :"+ req.session.full_name)
                 console.log("EMAIL: "+ req.session.email)
                 console.log("BIRTHDAY: "+ req.session.birthday)
                 console.log("ROLE: "+ req.session.role)
@@ -88,17 +89,15 @@ app.post('/login', (req, res)=>{
                     regform: result
                 });
             }else{
-                if(req.session.role=="admin"){
-                    console.log("Welcome Admin!")
-                res.redirect("/dashboard");
-                }else{
-                    console.log("Wrong Password")
-                    res.render("/login");
-
-                }
+                console.log("Wrong Password")
+                    res.render("/login");                                
             }
         }
     });
+});
+
+app.get('/dashboard', user_isAdmin,(req, res)=>{
+    res.send('Welcome, STI admin!');
 });
 // forgot password page
 app.get('/forgot-password', (req, res)=>{
