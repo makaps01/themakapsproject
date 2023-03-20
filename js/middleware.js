@@ -13,14 +13,28 @@ function user_isLoggedIn() {
 //verifies if current user is admin
 function user_isAdmin() {
     return function(req, res, next) {
-        if(req.session.role == 'student'){
+        if(req.session.role == 'admin'){
            next();
         }else{
-           res.redirect("/dashboard")
+            res.setHeader('Content-type','text/html')
+            res.send("Unauthorize Access...<a href='/fill-up'>Go back</a>");
+        }
+    }
+}
+
+function role_client() {
+    return function(req, res, next) {
+        if(req.session.role == "admin"){
+            res.redirect("/dashboard")
+        }
+        else
+        {
+           next();
         }
     }
 }
 
 module.exports = {
     user_isAdmin,
+    role_client
 };

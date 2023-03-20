@@ -40,7 +40,7 @@ var pool = mysql2.createPool({
     timezone: "+00:00",
 });
 
-// save session log 
+// save session log
 
 var sessionOptions ={
     host: process.env.mysql_host,
@@ -58,12 +58,12 @@ app.use(session({
     saveUninitialized: false
 }));
 /////////////////////////////////////////////////////////////////ROUTES///////////////////////////////////////////////
-// login page 
+// login page
 app.get('/login', (req, res)=>{
     res.render("login");
 });
 // POST REQUEST FOR LOGIN
-app.post('/login', (req, res)=>{   
+app.post('/login', (req, res)=>{
     const userRole = req.session.role;
     var {email, p_word} = req.body;
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [email], (err, result)=>{
@@ -85,32 +85,33 @@ app.post('/login', (req, res)=>{
                 console.log("BIRTHDAY: "+ req.session.birthday)
                 console.log("ROLE: "+ req.session.role)
                 console.log("Mission failed successfully!")
-                res.render("fill-up", {
-                    regform: result
-                });
+                res.redirect("/fill-up")
             }else{
                 console.log("Wrong Password")
-                    res.render("/login");                                
+                res.redirect("/login");
             }
         }
     });
 });
 
-app.get('/dashboard', user_isAdmin,(req, res)=>{
-    res.send('Welcome, STI admin!');
-});
 // forgot password page
 app.get('/forgot-password', (req, res)=>{
     res.render("forgot-password");
 });
 ///////////////////admin dashboard // //////////////////////////
-app.get('/dashboard', (req, res)=>{
+app.get('/dashboard',user_isAdmin(), (req, res)=>{
     res.render("index");
 });
 ////////////////////////// CLIENT DASHBOARD //////////////////////
 // get request for fill up
-app.get('/fill-up', (req, res)=>{
-    res.render("fill-up");
+app.get('/fill-up',role_client(), (req, res)=>{
+    pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [req.session.email], (err, result)=>{
+        if (err) throw err;
+        res.render("fill-up",{
+            regform : result
+        });
+    });
+
 });
 
 // post request for new documents
@@ -133,7 +134,7 @@ pool.query(sql, document,(err, result)=>{
     console.log(result)
         res.render("view", {
             docs: result
- });     
+ });
     });
     });
 
@@ -179,7 +180,7 @@ app.post('/register', (req, res)=>{
             }else{
                 console.log("user already exist")
                 res.redirect("/register")
-            } 
+            }
     });
 });
 
@@ -266,9 +267,10 @@ app.get('/completed',(req, res)=>{
 });
 
 
-// log out 
+// log out
 app.get('/log-out', (req, res)=>{
-    res.render("login");
+    req.session.destroy();
+    res.redirect("login");
 });
 
 
@@ -281,7 +283,7 @@ app.get('/pending/edit/:transaction_id', (req, res)=>{
     console.log(update)
     res.render("update-modal",{
         update
-    }); 
+    });
     });
 });
 
