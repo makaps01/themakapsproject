@@ -116,27 +116,27 @@ app.get('/fill-up',role_client(), (req, res)=>{
 
 // post request for new documents
 app.post('/fill-up', (req, res)=>{
-var {doc_type, m_number, grad_year, full_name, email} = req.body;
-var status= 'pending';
-const sql = `INSERT INTO tbl_sti_documents set ?`;
+    var {doc_type, m_number, grad_year, full_name, email} = req.body;
+    var status= 'pending';
+    const sql = `INSERT INTO tbl_sti_documents set ?`;
 
-let document={
-    doc_type: doc_type,
-    m_number: m_number,
-    grad_year: grad_year,
-    full_name: full_name,
-    email: email,
-    date: date,
-    status: status
-}
-pool.query(sql, document,(err, result)=>{
-    if(err) throw err;
-    console.log(result)
-        res.render("view", {
-            docs: result
- });
+    let document={
+        doc_type: doc_type,
+        m_number: m_number,
+        grad_year: grad_year,
+        full_name: full_name,
+        email: email,
+        date: date,
+        status: status
+    }
+    pool.query(sql, document,(err, result)=>{
+        if(err) throw err;
+        console.log(result)
+            res.render("view", {
+                docs: result
+            });
     });
-    });
+});
 
 // get request to view documents
 app.get('/view-documents', (req, res)=>{
