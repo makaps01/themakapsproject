@@ -140,7 +140,7 @@ app.post('/fill-up', (req, res)=>{
 
 // get request to view documents
 app.get('/view-documents', (req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_documents;",(req, docs)=>{
+    pool.query("SELECT * FROM tbl_sti_documents WHERE full_name=?",[full_name],(req, docs)=>{
        if(err) throw err;
        console.log(docs)
        res.render("view",{
