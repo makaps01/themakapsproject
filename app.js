@@ -100,7 +100,12 @@ app.get('/forgot-password', (req, res)=>{
 });
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard',user_isAdmin(), (req, res)=>{
-    res.render("index");
+    pool.query("SELECT * FROM tbl_sti_register",(err, access)=>{
+      if(err) throw err;
+      res.render("index",{
+       access 
+      });  
+    });  
 });
 ////////////////////////// CLIENT DASHBOARD //////////////////////
 // get request for fill up
@@ -116,14 +121,15 @@ app.get('/fill-up',role_client(), (req, res)=>{
 
 // post request for new documents
 app.post('/fill-up', (req, res)=>{
-    var {doc_type, m_number, grad_year, full_name, email} = req.body;
+    var {doc_type, m_number, y_admitted, full_name, email} = req.body;
+    var date = new Date();
     var status= 'pending';
     const sql = `INSERT INTO tbl_sti_documents set ?`;
 
     let document={
         doc_type: doc_type,
         m_number: m_number,
-        grad_year: grad_year,
+        y_admitted: y_admitted,
         full_name: full_name,
         email: email,
         date: date,
