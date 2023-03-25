@@ -231,7 +231,8 @@ app.get('/accounts', (req, res)=>{
     });
 });
 
-// add new account in database
+// add new account in database - 
+// logIN ACCOUNT TO BE SPECIFIC
 app.post('/accounts/add-account',(req,res)=>{
     var{m_number, y_admitted, full_name, email, birthday, p_word, campus} = req.body;
     var role= 'student';
@@ -252,6 +253,8 @@ app.post('/accounts/add-account',(req,res)=>{
     });
 });
 
+
+// these are the routes to check pending documents/ completed documents
 // check pending documents
 app.get('/pending', (req, res)=>{
     pool.query("SELECT * FROM tbl_sti_documents",(err, pending)=>{
@@ -273,17 +276,15 @@ app.get('/completed',(req, res)=>{
 });
 
 
-// log out
-app.get('/log-out', (req, res)=>{
-    req.session.destroy();
-    res.redirect("login");
-});
+
+// This Part shows the process
+// on how to re route the a certain document
+// to update its current status
 
 
 // re-route to specific id of document
 app.get('/pending/edit/:transaction_id', (req, res)=>{
     transaction_id = req.params.transaction_id;
-
     pool.query("SELECT * FROM tbl_sti_documents where transaction_no=?",[transaction_id],(err, update)=>{
     if(err) throw err;
     console.log(update)
@@ -292,8 +293,6 @@ app.get('/pending/edit/:transaction_id', (req, res)=>{
     });
     });
 });
-
-
 // post request to update documents
 app.post('/pending/update', (req, res)=>{
     var {status} = req.body;
@@ -303,3 +302,11 @@ app.post('/pending/update', (req, res)=>{
     });
 });
 
+
+
+// LOG OUT MODAL
+// log out
+app.get('/log-out', (req, res)=>{
+    req.session.destroy();
+    res.redirect("login");
+});
