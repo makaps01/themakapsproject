@@ -118,7 +118,6 @@ app.get('/fill-up',role_client(), (req, res)=>{
     });
 
 });
-
 // post request for new documents
 app.post('/fill-up', (req, res)=>{
     var {doc_type, m_number, y_admitted, full_name, email} = req.body;
