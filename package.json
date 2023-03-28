@@ -5,7 +5,10 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "fstart": "forever start -w app.js",
+    "fstop": "forever stop app.js",
+    "flist": "forever list"
   },
   "repository": {
     "type": "git",
@@ -26,6 +29,8 @@
     "express-middleware": "^1.1.0",
     "express-mysql-session": "^2.1.8",
     "express-session": "^1.17.3",
+    "forever": "^4.0.3",
+    "forever-monitor": "^3.0.3",
     "fs": "^0.0.1-security",
     "init": "^0.1.2",
     "joi": "^17.9.1",

@@ -277,7 +277,6 @@ app.post('/accounts/add-account',(req,res)=>{
     });
 });
 
-
 // these are the routes to check pending documents/ completed documents
 // check pending documents
 app.get('/pending', (req, res)=>{
