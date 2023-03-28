@@ -11,6 +11,8 @@ const session = require('express-session');
 const res = require('express/lib/response');
 const { rmSync, stat } = require('fs');
 const MySQLStore = require('express-mysql-session')(session);
+const jwt = require('jsonwebtoken');
+
 const {
     user_isLoggedIn,
     role_client,
@@ -29,6 +31,8 @@ app.use(express.static(__dirname + "/public"));
 PORT = 4000;
 app.listen(PORT);
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 app.use(bodyParser.json());
 var pool = mysql2.createPool({
     host: process.env.mysql_host,
@@ -97,6 +101,27 @@ app.post('/login', (req, res)=>{
 // forgot password page
 app.get('/forgot-password', (req, res)=>{
     res.render("forgot-password");
+});
+ 
+
+app.post('/forgot-password', (req, res)=>{
+   const {email} = req.body;
+   // find user in the database
+   pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [email],(err, result)=>{
+    if(err) throw err;
+    console.log(result)
+    if(result.length==0){
+        console.log("user doesn't exist...")
+        return;
+    }else{
+        const secret = JWT_SECRET + result.password
+        const payload = {
+            email: email,
+            
+        }
+    }
+   });
+   
 });
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard',user_isAdmin(), (req, res)=>{
