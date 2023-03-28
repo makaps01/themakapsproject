@@ -31,7 +31,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion border-right-primary border-bottom-primary" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
@@ -67,8 +67,8 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/pending">Pending</a>
-                        <a class="collapse-item" href="/completed">Completed</a>
+                        <a class="collapse-item" href="/pending" style="color: orangered;">Pending</a>
+                        <a class="collapse-item" href="/completed" style="color: green;">Completed</a>
                     </div>
                 </div>
             </li>
@@ -173,12 +173,12 @@
                 <div class="container-fluid">
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
+                        <div class="card-header py-3 border-left-primary">
                            <h3 class="m-0 font-weight-bold text-primary">Pending Documents</h3>
                             <!------------>
                         </div>
                         <!---Data table example-->
-                        <div class="card-body">
+                        <div class="card-body border-bottom-primary border-left-primary">
                             <div class="table-responsive table-wrapper-scroll-y">
                                 <table class="table" id="dataTable" cellspacing="0">
                                     
