@@ -12,6 +12,7 @@ const res = require('express/lib/response');
 const { rmSync, stat } = require('fs');
 const MySQLStore = require('express-mysql-session')(session);
 const jwt = require('jsonwebtoken');
+const bcrypt = require("bcrypt");
 
 const {
     user_isLoggedIn,
