@@ -103,7 +103,6 @@ app.get('/forgot-password', (req, res)=>{
     res.render("forgot-password");
 });
  
-
 app.post('/forgot-password', (req, res)=>{
    const {email} = req.body;
    // find user in the database
@@ -117,11 +116,9 @@ app.post('/forgot-password', (req, res)=>{
         const secret = JWT_SECRET + result.password
         const payload = {
             email: email,
-            
         }
     }
    });
-   
 });
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard',user_isAdmin(), (req, res)=>{
@@ -141,7 +138,6 @@ app.get('/fill-up',role_client(), (req, res)=>{
             regform : result
         });
     });
-
 });
 // post request for new documents
 app.post('/fill-up', (req, res)=>{
@@ -324,8 +320,6 @@ app.post('/pending/update', (req, res)=>{
     res.redirect("/pending")
     });
 });
-
-
 
 // LOG OUT MODAL
 // log out
