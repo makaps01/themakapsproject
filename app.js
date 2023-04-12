@@ -89,7 +89,7 @@ app.post('/login', (req, res)=>{
                 console.log("EMAIL: "+ req.session.email)
                 console.log("BIRTHDAY: "+ req.session.birthday)
                 console.log("ROLE: "+ req.session.role)
-                console.log("Mission failed successfully!")
+                console.log("Login successfully!")
                 res.redirect("/fill-up")
             }else{
                 console.log("Wrong Password")
@@ -238,7 +238,7 @@ app.post('/students/add-new',(req, res)=>{
     });
 });
 // session log get request
-app.get('/audit-log',(req, res)=>{
+app.get('/session-log',(req, res)=>{
     res.render("session");
 });
 
