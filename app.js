@@ -239,7 +239,12 @@ app.post('/students/add-new',(req, res)=>{
 });
 // session log get request
 app.get('/session-log',(req, res)=>{
-    res.render("session");
+    pool.query("SELECT * FROM tbl_applicants",(err, logs)=>{
+        if(err) throw err;
+        res.render("session", {
+            logs,
+        });
+    });
 });
 
 // acocunts of user get request
