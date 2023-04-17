@@ -334,9 +334,10 @@ app.get('/log-out', (req, res)=>{
 // post request to add new transaction for walk-in applicants
 app.post('/session/add-transaction', (req, res)=>{
    var date= new Date();
-   var{full_name, doc_request, school_year, course, p_number, remarks}= req.body;
+   var{serial_no, full_name, doc_request, school_year, course, p_number, remarks}= req.body;
     const sql = `INSERT INTO tbl_applicants set ?`;
     let new_transaction = {
+        serial_no: serial_no,
         full_name: full_name,
         doc_request: doc_request,
         date: date,
