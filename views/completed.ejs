@@ -48,7 +48,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Pending Document</span></a>
+                    <span>Completed</span></a>
             </li>
 
             <!-- Divider -->
@@ -174,7 +174,14 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h3 class="m-0 font-weight-bold text-primary">Completed Documents</h3>                    
+                            <h3 class="m-0 font-weight-bold text-primary">Completed Documents</h3>
+                            <h6 class="m-0 font-weight-bold">
+                                <span> Total Documents:
+                                <span id="count">
+
+                                </span>
+                            </span>
+                        </h6>                    
                         </div>
                         <!---Data table example-->
                         <div class="card-body">
@@ -276,6 +283,20 @@
    <!-- Page level plugins -->
    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
    <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript">
+    const table = document.getElementById("dataTable");
+    const countSpan = document.getElementById("count");
+
+    function updateRowCount() {
+        const rowCount = table.rows.length - 1;
+        countSpan.textContent = rowCount;
+    }
+
+    updateRowCount();
+
+    setInterval(updateRowCount, 20000);
+</script>
+
 </body>
 
 </html>
