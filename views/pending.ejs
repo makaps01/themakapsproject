@@ -175,6 +175,13 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 border-left-primary">
                            <h3 class="m-0 font-weight-bold text-primary">Pending Documents</h3>
+                           <h6 class="m-0 font-weight-bold">
+                            <span> Total Documents:
+                            <span id="count">
+
+                            </span>
+                        </span>
+                    </h6>  
                             <!------------>
                         </div>
                         <!---Data table example-->
@@ -291,20 +298,18 @@
    <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>
 
 
-    <script>
-        const table = document.getElementById('dataTable');
+    <script type="text/javascript">
+       const table = document.getElementById("dataTable");
+       const countSpan = document.getElementById("count");
 
-        let previousRowCount = table.rows.length - 1;
+       function updateRowCount() {
+        const rowCount = table.rows.length - 1;
+        countSpan.textContent = rowCount;
+        
+       }
+       updateRowCount();
 
-        setInterval(()=>{
-            const currentRowCount = table.rows.length - 1;
-
-            if(currentRowCount > previousRowCount){
-                const numNewRows = currentRowCount - previousRowCount;
-                alert(`Ther are ${numNewRows} pending documents!`);
-                previousRowCount = currentRowCount;
-            }
-        },60000);
+       setInterval(updateRowCount, 20000);
     </script>
 </body>
 
