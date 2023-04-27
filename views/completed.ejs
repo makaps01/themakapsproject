@@ -196,20 +196,12 @@
                                             <th>Mobile Number</th>
                                             <th>Date</th>
                                             <th>Status</th>
+                                            <th>Remarks</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <% for(var i=0; i < complete.length; i++) { %>
                                             <tr>
-                                                <a href="#" onclick="edit_docs('<%= complete[i].transaction_no %>')">
-                                                    <%= complete[i].transaction_no %>
-                                                </a>
-
-                                                <script>
-                                                    function edit_docs(transaction_id){
-                                                        window.location.href = "<% process.env.DOMAIN %>/complete/edit" + transaction_id;
-                                                    }
-                                                </script>
                                                 <td><%= complete[i].transaction_no %></td>
                                                 <td><%= complete[i].doc_type %></td>
                                                 <td><% complete[i].serial_no %></td>
@@ -217,9 +209,10 @@
                                                 <td><%= complete[i].m_number %></td>
                                                 <td><%= complete[i].date %></td>
                                                 <td style="color: darkgreen;"><%= complete[i].status %></td>
+                                                <td><%= complete[i].remarks %></td>
                                             </tr>
                                        <% } %>
-                                    </tbody>
+                                    </tbody>    
                                 </table>
                             </div>
                         </div>

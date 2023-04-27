@@ -144,7 +144,7 @@ app.get('/fill-up',role_client(), (req, res)=>{
 app.post('/fill-up', (req, res)=>{
     var {doc_type, m_number, y_admitted, full_name, email} = req.body;
     var date = new Date();
-    var serial_no = 'null';
+    var serial_no = 'A#######';
     var remarks = 'create remarks';
     var status= 'pending';
     const sql = `INSERT INTO tbl_sti_documents set ?`;
@@ -326,9 +326,9 @@ app.get('/pending/edit/:transaction_id', (req, res)=>{
 app.post('/pending/update', (req, res)=>{
     var {serial_no, status, remarks} = req.body;
     pool.query(`UPDATE tbl_sti_documents SET serial_no=?, status=?, remarks=?;`,[serial_no, status, remarks],(err, result)=>{
-    if(err) throw err;
-    console.log(result)
-    res.redirect("/pending")
+        if(err) throw err;
+            console.log(result)
+                res.redirect("/pending")
     });
 });
 
@@ -360,3 +360,6 @@ app.post('/session/add-transaction', (req, res)=>{
         res.redirect("/session-log")
     });
 });
+
+// create new route for damage documents
+
