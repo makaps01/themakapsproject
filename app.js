@@ -324,9 +324,10 @@ app.get('/pending/edit/:transaction_id', (req, res)=>{
 });
 // post request to update documents
 app.post('/pending/update', (req, res)=>{
-    var {status} = req.body;
-    pool.query(`UPDATE tbl_sti_documents SET status=?;`,[status],(err, result)=>{
+    var {serial_no, status, remarks} = req.body;
+    pool.query(`UPDATE tbl_sti_documents SET serial_no=?, status=?, remarks=?;`,[serial_no, status, remarks],(err, result)=>{
     if(err) throw err;
+    console.log(result)
     res.redirect("/pending")
     });
 });
