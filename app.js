@@ -339,8 +339,6 @@ app.get('/log-out', (req, res)=>{
     res.redirect("login");
 });
 
-
-
 // post request to add new transaction for walk-in applicants
 app.post('/session/add-transaction', (req, res)=>{
    var date= new Date();
