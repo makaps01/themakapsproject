@@ -200,21 +200,12 @@
                                     <tbody>
                                         <% for(var i=0; i < complete.length; i++) { %>
                                             <tr>
-                                            <% if(complete[i].status=="completed"){ %>
                                                 <td><%= complete[i].transaction_no %></td>
                                                 <td><%= complete[i].doc_type %></td>
                                                 <td><%= complete[i].full_name %></td>
                                                 <td><%= complete[i].m_number %></td>
                                                 <td><%= complete[i].date %></td>
                                                 <td style="color: darkgreen;"><%= complete[i].status %></td>
-                                           <% } else {%>
-                                            <td>not available</td>                                
-                                            <td>not available</td>
-                                            <td>not available</td>
-                                            <td>not available</td>
-                                            <td>not available</td>
-                                            <td>not available</td>
-                                           <% } %>
                                             </tr>
                                        <% } %>
                                     </tbody>

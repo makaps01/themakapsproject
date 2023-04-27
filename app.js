@@ -282,7 +282,7 @@ app.post('/accounts/add-account',(req,res)=>{
 // these are the routes to check pending documents/ completed documents
 // check pending documents
 app.get('/pending', (req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_documents",(err, pending)=>{
+    pool.query("SELECT * FROM tbl_sti_documents where status='pending'",(err, pending)=>{
         if(err) throw err;
         res.render("pending",{
             pending,
@@ -292,7 +292,7 @@ app.get('/pending', (req, res)=>{
 
 //check completed documents
 app.get('/completed',(req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_documents",(err, complete)=>{
+    pool.query("SELECT * FROM tbl_sti_documents where status='completed'",(err, complete)=>{
         if(err) throw err;
         res.render("completed",{
             complete,
