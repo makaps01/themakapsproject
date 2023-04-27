@@ -144,17 +144,21 @@ app.get('/fill-up',role_client(), (req, res)=>{
 app.post('/fill-up', (req, res)=>{
     var {doc_type, m_number, y_admitted, full_name, email} = req.body;
     var date = new Date();
+    var serial_no = 'null';
+    var remarks = 'create remarks';
     var status= 'pending';
     const sql = `INSERT INTO tbl_sti_documents set ?`;
 
     let document={
         doc_type: doc_type,
+        serial_no: serial_no,
         m_number: m_number,
         y_admitted: y_admitted,
         full_name: full_name,
         email: email,
         date: date,
-        status: status
+        status: status,
+        remarks: remarks
     }
     pool.query(sql, document,(err, result)=>{
         if(err) throw err;
@@ -282,7 +286,7 @@ app.post('/accounts/add-account',(req,res)=>{
 // these are the routes to check pending documents/ completed documents
 // check pending documents
 app.get('/pending', (req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_documents where status='pending'",(err, pending)=>{
+    pool.query("SELECT * FROM tbl_sti_documents WHERE status='pending'",(err, pending)=>{
         if(err) throw err;
         res.render("pending",{
             pending,
@@ -292,7 +296,7 @@ app.get('/pending', (req, res)=>{
 
 //check completed documents
 app.get('/completed',(req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_documents where status='completed'",(err, complete)=>{
+    pool.query("SELECT * FROM tbl_sti_documents WHERE status='completed'",(err, complete)=>{
         if(err) throw err;
         res.render("completed",{
             complete,

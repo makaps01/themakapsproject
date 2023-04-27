@@ -42,14 +42,21 @@
                                     </div>
                                     <form action="/pending/update" autocomplete="off" name='form' method="POST" accept-charset='UTF-8'>
                                     <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label for="trans">Transaction #</label>
+                                        <div class="col-sm-5">
+                                            <label for="trans">Trans. #</label>
                                             <input type="number" name="transaction_no" class="form-control form-control-user" value="<%= transaction_id %>" readonly>
                                         </div>
-                                        <div class="col-sm-8 mb-3 mb-sm-0">
+                                        <div class="col-sm-7 mb-3 mb-sm-0">
+                                            <label for="ser">Serial #</label>
+                                            <input type="text" name="serial_no" maxlength="8" class="form-control form-control-user" required>
+                                       </div>        
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
                                             <label for="doc type">Document Type</label>
                                             <input type="text" name="doc_type" class="form-control form-control-user" value="<%= update[0].doc_type %>" readonly>
-                                        </div>        
+                                        
+                                        </div>
                                     </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
@@ -60,15 +67,16 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="form-group" class="from-block">Status</label>
-                                                <select name="status" id="status" class="form-control form-control-user">
-                                                    <option style="color: orangered;">pending</option>
-                                                    <option style="color: green;">completed</option>
-                                                </select>
+                                                <input type="text" name="status" class="form-control form-control-user" value="completed" style="color: green;" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="form-group" class="form-block">Email</label>
                                             <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
                                             value="<%= update[0].email %>" readonly >
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="form-group">Remarks</label>
+                                            <input type="text" name="remarks" class="form-control form-control-user" required>
                                         </div>
                                             <hr>
                                             <hr>
@@ -99,11 +107,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-    <script>
-        const date = document.getElementById('today');
-        const e = document.write(newDate());
-
-    </script>
 </body>
 
 </html>
