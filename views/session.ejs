@@ -246,6 +246,7 @@
                                 <table class="table" id="dataTable" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>Transaction Number</th>
                                             <th>Serial Number</th>
                                             <th>Full Name</th>
                                             <th>Document Request</th>
@@ -259,6 +260,7 @@
                                     <tbody>
                                         <% for(var i=0; logs.length; i++) { %>
                                             <tr>
+                                            <td><%= logs[i].transaction_no %></td>
                                             <td><%= logs[i].serial_no %></td>
                                             <td><%= logs[i].full_name %></td>
                                             <td><%= logs[i].doc_request %></td>
