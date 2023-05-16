@@ -42,6 +42,34 @@
                                     </div>
                                     <form action="/fill-up" method="post">
                                         <div class="form-group">
+                                            <!--Button trigger modal to upload photo-->
+                                            <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#UploadImageFile">Upload Image</button>
+                                            <!--Modal form to upload mimage-->
+                                            <form role="form" action="/img-post" method="POST" enctype="multipart/form-data" accept-charset='UTF-8'>
+                                                <div class="modal fade" id="UploadImageFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Upload Image</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                                                    <Span aria-hidden="true">&times;</Span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body form-group">
+                                                                <div class="row">
+                                                                    <div class="col-lg-10">
+                                                                        <input type="file" id="customFile" name="image_req" accept="image/*" class="form-control form-control-user " required>
+                                                                    </div>
+                                                                    <input type="submit" onclick='return confirm("Confirm details are correct?")'>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                            </div>
+                                            </form>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="formControlSelectDocs">Select Document type</label>
                                             <select name="doc_type" class="form-control">
                                                 <option>Certificate of Grades</option>

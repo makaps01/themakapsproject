@@ -13,6 +13,8 @@ const { rmSync, stat } = require('fs');
 const MySQLStore = require('express-mysql-session')(session);
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt");
+const { v4: uuidv4 } = require("uuid");
+const fileUpload = require("express-fileupload");
 
 const {
     user_isLoggedIn,
@@ -33,6 +35,7 @@ PORT = 4000;
 app.listen(PORT);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json())
+app.use(fileUpload());
 app.use(express.urlencoded({extended: false}))
 app.use(bodyParser.json());
 var pool = mysql2.createPool({
