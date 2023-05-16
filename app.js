@@ -376,3 +376,26 @@ app.get('/completed/edit/:transaction_id', (req, res)=>{
         }
     });
 });
+
+// new post request for image insertion
+
+app.post('/img-post', (req, res)=>{
+    try{
+        var Img = req.files.image_req;
+        console.log("Image found!")
+    }
+    catch(err)
+    {
+        var Img = '';
+        console.log("No Image")
+    }
+
+    if(Img)
+    {
+        var image_name = uuidv4()+"_"+Img.name;
+        Img.mv("public/img/" + image_name, (err) =>
+        {
+          if (err) console.log(err);
+        }); 
+    }
+});
