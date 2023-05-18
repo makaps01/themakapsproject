@@ -31,7 +31,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(__dirname + "/public"));
 
 
-PORT = 4000;
+PORT = 3000;
 app.listen(PORT);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json())
@@ -148,7 +148,7 @@ app.post('/fill-up', (req, res)=>{
     var {doc_type, m_number, y_admitted, full_name, email} = req.body;
     var date = new Date();
     var serial_no = 'A#######';
-    var remarks = 'create remarks';
+    var remarks = 'No remarks';
     var status= 'pending';
     const sql = `INSERT INTO tbl_sti_documents set ?`;
 
@@ -245,11 +245,11 @@ app.post('/students/add-new',(req, res)=>{
     });
 });
 // session log get request
-app.get('/session-log',(req, res)=>{
-    pool.query("SELECT * FROM tbl_applicants",(err, logs)=>{
+app.get('/session-log', (req, res)=>{
+    pool.query("SELECT * FROM tbl_sti_documents WHERE status='pending'",(err, walkin)=>{
         if(err) throw err;
-        res.render("session", {
-            logs,
+        res.render("session",{
+            walkin,
         });
     });
 });
@@ -344,17 +344,21 @@ app.get('/log-out', (req, res)=>{
 
 // post request to add new transaction for walk-in applicants
 app.post('/session/add-transaction', (req, res)=>{
+   var{doc_type, m_number, y_admitted, full_name, email}= req.body;
    var date= new Date();
-   var{serial_no, full_name, doc_request, school_year, course, p_number, remarks}= req.body;
-    const sql = `INSERT INTO tbl_applicants set ?`;
+   var serial_no = 'A#######';
+    var remarks = 'No remarks';
+    var status= 'pending'; 
+   const sql = `INSERT INTO tbl_sti_documents set ?`;
     let new_transaction = {
+        doc_type: doc_type,
         serial_no: serial_no,
+        m_number: m_number,
+        y_admitted: y_admitted,
         full_name: full_name,
-        doc_request: doc_request,
+        email: email,
         date: date,
-        school_year: school_year,
-        course: course,
-        p_number: p_number,
+        status: status,
         remarks: remarks
     }
 
