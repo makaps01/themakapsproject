@@ -126,11 +126,19 @@ app.post('/forgot-password', (req, res)=>{
 });
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard',user_isAdmin(), (req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_register",(err, access)=>{
+    pool.query("SELECT * FROM tbl_sti_documents",(err, access)=>{
       if(err) throw err;
-      res.render("index",{
-       access 
-      });  
+        pool.query("SELECT * FROM tbl_sti_documents WHERE status='pending'",(err, pending)=>{
+            if(err) throw err;
+                pool.query("SELECT * FROM tbl_sti_documents WHERE status='completed'", (err, complete)=>{
+                    if(err) throw err;
+                    res.render("index", {
+                     access: access,
+                     pending: pending,
+                     complete: complete   
+                    })
+                });
+        });
     });  
 });
 ////////////////////////// CLIENT DASHBOARD //////////////////////
