@@ -12,7 +12,14 @@
     <title>STI Cauayan || Dashboard</title>
     <link rel="icon" type="image/xicon" href="https://cdn.discordapp.com/attachments/1036248048390651906/1082856634814046289/STI_Localized_Logo_Cauayan.png">
 
-
+    <style>
+        td{
+            color: black;
+        }
+        thead{
+            color: blue;
+        }
+    </style>
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -68,8 +75,8 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/pending">Pending</a>
-                        <a class="collapse-item" href="/completed">Released</a>
+                        <a class="collapse-item" href="/pending" style="color: darkorange;">Pending</a>
+                        <a class="collapse-item" href="/completed" style="color: green;">Completed</a>
                     </div>
                 </div>
             </li>
@@ -84,7 +91,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/students">Students</a>
-                        <a class="collapse-item" href="/audit-log">Req. History</a>
+                        <a class="collapse-item" href="/audit-log">Doc. Req. History</a>
                         <a class="collapse-item" href="/accounts">Accounts</a>
                     </div>
                 </div>
@@ -205,13 +212,11 @@
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <label for="form-control" class="form-block">Year admitted</label>
-                                                    <input type="number" name="y_admitted" class="form-control form-control-user" id="exampleYearGrad"
-                                                   required>
+                                                   <input type="number" maxlength="4" class="form-control form-control-user" name="y_admitted" required>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <label for="form-control" class="form-block">Mobile Number</label>
-                                                    <input type="number" name="m_number" class="form-control form-control-user" id="exampleMobileNumber"
-                                                     required>
+                                                    <input type="number" maxlength="11" name="m_number" class="form-control form-control-user" required>
                                                 </div>                                                                                                            
                                             </div>
                                             <div class="form-group">
@@ -241,7 +246,7 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table" id="dataTable" cellspacing="0">
-                                    <thead>
+                                    <thead style="color: blue;">
                                         <tr>
                                             <th>Transaction ID</th>
                                             <th>Document Type</th>
@@ -258,11 +263,12 @@
                                             <tr>
                                                 <td><%= walkin[i].transaction_no %></td>
                                                 <td><%= walkin[i].doc_type %></td>
-                                                <td><% walkin[i].serial_no %></td>
+                                                <td><%= walkin[i].serial_no %></td>
                                                 <td><%= walkin[i].full_name %></td>
                                                 <td><%= walkin[i].email %></td>
                                                 <td><%= walkin[i].date %></td>
                                                 <td style="color: orangered;"><%= walkin[i].status %></td>
+                                                <td><%= walkin[i].remarks %></td>
                                             </tr>
                                        <% } %>
                                     </tbody>
