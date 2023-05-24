@@ -76,7 +76,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/pending">Pending</a>
-                        <a class="collapse-item" href="/completed">Released</a>
+                        <a class="collapse-item" href="/completed" style="color:">Completed</a>
                     </div>
                 </div>
             </li>
@@ -180,7 +180,8 @@
                 <div class="container-fluid">
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-2">
+                        <div class="card-header py-2 border-left-primary">
+
                             <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddAccountModal">Add Account</button>
                             
                             <!---modal button-->
@@ -253,7 +254,7 @@
                         </div>
                         
                         <!---Data table example-->
-                        <div class="card-body">
+                        <div class="card-body border-left-primary border-bottom-primary">
                             <div class="table-responsive">
                                 <table class="table" id="dataTable" cellspacing="0">
                                     <thead>
@@ -263,7 +264,6 @@
                                             <th>Full Name</th>
                                             <th>Email</th>
                                             <th>Birthday</th>
-                                            <th>Password</th>
                                             <th>Campus</th>
                                         </tr>
                                     </thead>
@@ -271,11 +271,10 @@
                                     <% for(var i=0; i < accounts.length; i++) { %>
                                         <tr>
                                             <td><%= accounts[i].m_number %></td>
-                                            <td><%= accounts[i].grad_year %></td>
+                                            <td><%= accounts[i].y_admitted %></td>
                                             <td><%= accounts[i].full_name %></td>
                                             <td><%= accounts[i].email %></td>
                                             <td><%= accounts[i].birthday %></td>
-                                            <td><%= accounts[i].p_word %></td>
                                             <td><%= accounts[i].campus %></td>
                                         </tr>
                                    <% } %>
