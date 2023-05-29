@@ -189,7 +189,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Total Documents</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="total-docs"></span></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="total-docs"><%= total_doc %></span></div>
                                             
                                         </div>
                                         <div class="col-auto">
@@ -207,7 +207,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Completed Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span class="completed-docs"></span></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span class="completed-docs"><%= complete_count %></span></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -225,7 +225,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= pending_count %></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -245,7 +245,7 @@
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                         Total number of users</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">500</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%= ttl_users %></div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fa-sharp fa-solid fa-person fa-2x text-gray-300"></i>
@@ -256,67 +256,7 @@
                                 </div>
                     </div>
 
-                    <!-- Total documents Row -->
-
-                    <div class="row">
-                            <!---Data table for total documents example-->
-                            <div class="card-body border-left-primary border-bottom-primary">
-                                <div class="table-responsive">
-                                    <table class="table" id="totalDocuments" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>Transaction ID</th>
-                                                <th>Document Type</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <% for(var i=0; i < access.length; i++) { %>
-                                                <tr>
-                                                    <td><%= access[i].transaction_no %></td>
-                                                    <td><%= access[i].doc_type %></td>
-                                                    <td><%= access[i].status %></td>
-                                                </tr>
-                                           <% } %>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                    </div>
-
-                    <!-- Completed Row -->
-                    <div class="row">
-                        <div class="card-body border-left-primary border-bottom-primary">
-                            <div class="table-responsive">
-                                <table class="table" id="completedDocs" cellspacing="0">
-                                    <tr>
-                                 
-                                        <th>Document Type</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    <tbody>
-                                        <% for(var i=0; complete.length; i++) { %>
-                                            <tr>
-                                        
-                                                <td><%= complete[i].doc_type %></td>
-                                                <td><%= complete[i].status %></td>
-                                            </tr>
-                                       <% } %>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pending Row -->
-                    <div class="row">
-
-                    </div>
-
-                    <!-- Total Number of Users Row -->
-                    <div class="row">
-                        
-                    </div>
+     
                 </div>
                 <!-- /.container-fluid -->
 
@@ -380,41 +320,7 @@
     <!-- Page level custom scripts -->
     <script src="/js/demo/chart-area-demo.js"></script>
     <script src="/js/demo/chart-pie-demo.js"></script>
-
-<script type="text/javascript">
-    const table1 = document.getElementById("totalDocuments");
-    const fulldocs = document.getElementById("total-docs");
-
-    const table2 = document.getElementById("pendingDocs");
-    const pending = document.getElementById("pending-docs");
-
-    const table3 = document.getElementById("completedDocs");
-    const complete = document.getElementById("complete-docs");
-
-    const table4 = document.getElementById("totalUser");
-    const user = document.getElementById("user");
-
-    function updateRowCount() {
-        const rowCount1 = table1.rows.length - 1;
-        fulldocs.textContent = rowCount1;
-
-        const rowCount2 = table2.rows.length - 1;
-        pending.textContent = rowCount2;
-
-        const rowCount3 = table3.rows.length -1;
-        complete.textContent = rowCount3;
-
-        const rowCount4 = table4.rows.length -1;
-        user.textContent = rowCount4;
-        
-    }
-
-
-
-    updateRowCount();
-
-    setInterval(updateRowCount, 20000);
-</script>    
+  
 
 </body>
 
