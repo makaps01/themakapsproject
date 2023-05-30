@@ -126,6 +126,8 @@ app.post('/forgot-password', (req, res)=>{
 });
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard',user_isAdmin(), (req, res)=>{
+    pool.query("SELECT * FROM tbl_sti_register",(err, result)=>{
+    if(err) throw err;
     pool.query("SELECT * FROM tbl_sti_documents;SELECT COUNT(*) as v1 FROM tbl_sti_documents",(err, access)=>{
       if(err) throw err;
         pool.query(`SELECT * FROM tbl_sti_documents WHERE status="pending"; SELECT COUNT(*) as v2 FROM tbl_sti_documents WHERE status="pending"`,(err, pending)=>{
@@ -135,12 +137,15 @@ app.get('/dashboard',user_isAdmin(), (req, res)=>{
                 pool.query(`SELECT COUNT(*) as v4 FROM tbl_sti_register;`, (err, ttl_users)=>{
                     if(err) throw err;
                     res.render("index", {
+                        full_name: result[0],
                         access: access[0], total_doc: access[1][0].v1,
                         pending: pending[0], pending_count: pending[1][0].v2,
                         complete: complete[0], complete_count: complete[1][0].v3,
                         ttl_users : ttl_users[0].v4
                     });
+
                 })
+            })
             })
         })
     })  
