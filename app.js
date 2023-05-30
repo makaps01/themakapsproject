@@ -126,21 +126,25 @@ app.post('/forgot-password', (req, res)=>{
 });
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard',user_isAdmin(), (req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_documents",(err, access)=>{
+    pool.query("SELECT * FROM tbl_sti_documents;SELECT COUNT(*) as v1 FROM tbl_sti_documents",(err, access)=>{
       if(err) throw err;
-        pool.query("SELECT * FROM tbl_sti_documents WHERE status='pending'",(err, pending)=>{
+        pool.query(`SELECT * FROM tbl_sti_documents WHERE status="pending"; SELECT COUNT(*) as v2 FROM tbl_sti_documents WHERE status="pending"`,(err, pending)=>{
             if(err) throw err;
-                pool.query("SELECT * FROM tbl_sti_documents WHERE status='completed'", (err, complete)=>{
+            pool.query(`SELECT * FROM tbl_sti_documents WHERE status="completed"; SELECT COUNT(*) as v3 FROM tbl_sti_documents WHERE status="completed"`, (err, complete)=>{
+                if(err) throw err;
+                pool.query(`SELECT COUNT(*) as v4 FROM tbl_sti_register;`, (err, ttl_users)=>{
                     if(err) throw err;
                     res.render("index", {
-                     access: access,
-                     pending: pending,
-                     complete: complete   
-                    })
-                });
-        });
-    });  
-});
+                        access: access[0], total_doc: access[1][0].v1,
+                        pending: pending[0], pending_count: pending[1][0].v2,
+                        complete: complete[0], complete_count: complete[1][0].v3,
+                        ttl_users : ttl_users[0].v4
+                    });
+                })
+            })
+        })
+    })  
+})
 ////////////////////////// CLIENT DASHBOARD //////////////////////
 // get request for fill up
 app.get('/fill-up',role_client(), (req, res)=>{
