@@ -245,11 +245,11 @@ app.get('/students', (req, res)=>{
     });
 });
 app.post('/students/add-new',(req, res)=>{
-    var{name, course, form137, form138, birth_certificate, ojt_report, grading_sheet, school_year} = req.body;
-    const sql = `INSERT INTO tbl_sti_register set ?`;
+    var{f_name, course, form137, form138, birth_certificate, ojt_report, grading_sheet, school_year} = req.body;
+    const sql = `INSERT INTO sti_students set ?`;
     let new_student = {
    
-        name: name,
+        f_name: f_name,
         course: course,
         form137: form137,
         form138: form138,
@@ -260,6 +260,7 @@ app.post('/students/add-new',(req, res)=>{
     }
     pool.query(sql, new_student,(err, result)=>{
         if(err) throw err;
+        console.log(result)
         res.redirect('/students')
     });
 });
