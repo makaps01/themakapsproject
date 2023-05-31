@@ -24,6 +24,14 @@
     <!-- Custom styles for this template-->
     <link href="/css/main.min.css" rel="stylesheet">
 
+    <style>
+        th {
+            color: blue;
+        }
+        td {
+            color: black;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -191,45 +199,61 @@
                                         </div>
                                         <div class="modal-body" id="payment">
                                             <!---content of modal here-->
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <label for="last-name" class="mb-sm-0">Last name</label>
-                                                    <input type="text" name="last_name" class="form-control form-control-user" placeholder="Dela Cruz" required>
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <label for="last-name" class="mb-sm-0">First name</label>
-                                                    <input type="text" name="first_name" class="form-control form-control-user" placeholder="Juan" required>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label for="last-name" class="mb-sm-0">Middle initial</label>
-                                                    <input type="text" name="middle" class="form-control form-control-user" placeholder="D" required>
+                                            <div class="form-group">
+                                                <div class="col-md mb-sm-0">
+                                                    <label for="last-name" class="mb-sm-0">Full name</label>
+                                                    <input type="text" name="name" class="form-control form-control-user" placeholder="Dela Cruz" required>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div class="col-md-8">
-                                                    <label for="birthday" class="mb-sm-0">Birthday</label>
-                                                    <input type="date" name="birthday" class="form-control form-control-user" placeholder="MM" required>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="birthday" class="mb-sm-0">Course</label>
+                                                    <input type="text" name="course" class="form-control form-control-user" placeholder="Dela Cruz" required>
+                                                
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="birthday" class="mb-sm-0">Form 137</label>
+                                                   <select name="form137" class="form-control form-control-user">
+                                                        <option style="color: green;">Y</option>                                               
+                                                        <option style="color: red">N</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="birthday" class="mb-sm-0">Form 138</label>
+                                                    <select name="form138" class="form-control form-control-user">
+                                                        <option style="color: green;">Y</option>                                               
+                                                        <option style="color: red">N</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="birth_cert" class="mb-sm-0">Birth Certificate</label>
+                                                    <select name="birth_certificate" class="form-control form-control-user">
+                                                        <option style="color: green;">Y</option>                                               
+                                                        <option style="color: red">N</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="OJT" class="mb-sm-0">OJT Report</label>
+                                                    <select name="ojt_report" class="form-control form-control-user">
+                                                        <option style="color: green;">Y</option>                                               
+                                                        <option style="color: red">N</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="grade-sheet" class="mb-sm-0">Form 138</label>
+                                                    <select name="grading_sheet" class="form-control form-control-user">
+                                                        <option style="color: green;">Y</option>                                               
+                                                        <option style="color: red">N</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <hr>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label for="status" class="mb-sm-0">Course</label>
-                                                    <select name="course" class="form-control form-control-user">
-                                                        <option style="color: green;">Graduated</option>                                               
-                                                        <option style="color: red">Discontinued</option>
-                                                    </select></div>
-                                                <div class="col-md-4">
-                                                    <label for="y-admitted" class="mb-sm-0">Year admitted</label>
-                                                    <input type="number" name="y_admitted" maxlength="4" class="form-control form-control-user" placeholder="2019" required>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="status" class="mb-sm-0">Status</label>
-                                                    <select name="status" class="form-control form-control-user">
-                                                        <option style="color: green;">Graduated</option>                                               
-                                                        <option style="color: red">Discontinued</option>
-                                                    </select>
+                                            <div class="form-group">
+                                                <div class="col-md">
+                                                    <label for="y-admitted" class="mb-sm-0">School Year</label>
+                                                    <input type="text" name="school_year" class="form-control form-control-user" placeholder="2019" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -250,24 +274,32 @@
                                 <table class="table" id="dataTable" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            th
+                                            <th>U.I.D</th>
+                                            <th>Name</th>
+                                            <th>Course</th>
+                                            <th>Form 137</th>
+                                            <th>Form 138</th>
+                                            <th>Birth Certificate</th>
+                                            <th>OJT Report</th>
+                                            <th>Grading Sheet</th>
+                                            <th>School Year</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
-                                        <% for(var i=0; i < student.length; i++) { %>
+                                        <% for(var i=0; i < students.length; i++) {%>
                                             <tr>
-                                            <td><%= student[i].full_name %></td>
-                                            <td><%= student[i].birthday %></td>
-                                            <td><%= student[i].course %></td>
-                                            <td><%= student[i].y_admitted %></td>
-                                            <% if(student[i].status=="Discontinued") { %>
-                                                <td style="color: orangered;"><%= student[i].status %></td>
-                                           <% } else { %>
-                                            <td style="color: green;"><%= student[i].status %></td>
-                                           <% } %>
+                                                <td><%= students[i].UID %></td>
+                                                <td><%= students[i].name %></td>
+                                                <td><%= students[i].course %></td>
+                                                <td><%= students[i].form137 %></td>
+                                                <td><%= students[i].form138 %></td>
+                                                <td><%= students[i].birth_certificate %></td>
+                                                <td><%= students[i].ojt_report %></td>
+                                                <td><%= students[i].grading_sheet %></td>
+                                                <td><%= students[i].school_year %></td>
                                             </tr>
-                                       <% } %>
+                                    <% } %>
+                                      
                                     </tbody>
                                 </table>
                             </div>
@@ -335,15 +367,6 @@
    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
    <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>
 
-
-   <script>
-    document.querySelectorAll('input[type="number"]').forEach(input=>{
-        input.oninput = () =>{
-            if(input.value.length> input.maxLength) input.value = input.value.slice(0, input.maxLength);
-        };
-    });
-
-</script>
 </body>
 
 </html>

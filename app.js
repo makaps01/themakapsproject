@@ -237,28 +237,30 @@ app.post('/register', (req, res)=>{
 
 // student list - get and post request
 app.get('/students', (req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_students",(err, student)=>{
+    pool.query("SELECT * FROM sti_students",(err, students)=>{
         if(err) throw err;
         res.render("student-list",{
-            student,
+            students,
         });
     });
 });
 app.post('/students/add-new',(req, res)=>{
-    var {last_name, first_name, middle, birthday, course, y_admitted, status} = req.body;
-    var full_name = first_name + " " + middle + "  " + last_name;
-
-    const sql = `INSERT INTO tbl_sti_students set ?`;
-    let new_student={
-        full_name: full_name,
-        birthday: birthday,
+    var{name, course, form137, form138, birth_certificate, ojt_report, grading_sheet, school_year} = req.body;
+    const sql = `INSERT INTO tbl_sti_register set ?`;
+    let new_student = {
+   
+        name: name,
         course: course,
-        y_admitted: y_admitted,
-        status: status
+        form137: form137,
+        form138: form138,
+        birth_certificate: birth_certificate,
+        ojt_report: ojt_report,
+        grading_sheet: grading_sheet,
+        school_year: school_year
     }
     pool.query(sql, new_student,(err, result)=>{
         if(err) throw err;
-        res.redirect("/students")
+        res.redirect('/students')
     });
 });
 // session log get request
