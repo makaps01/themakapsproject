@@ -300,8 +300,9 @@ app.post('/accounts/add-account',(req,res)=>{
         campus: campus,
         role: role
     }
-    pool.query(sql, new_accounts,(err, result)=>{
+    pool.query(sql, new_account,(err, result)=>{
         if(err) throw err;
+        console.log(result)
         res.redirect("/accounts")
     });
 });
