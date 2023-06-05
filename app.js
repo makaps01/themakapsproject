@@ -110,7 +110,7 @@ app.get('/forgot-password', (req, res)=>{
 app.post('/forgot-password', (req, res)=>{
    const {email} = req.body;
    // find user in the database
-   pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [email],(err, result)=>{
+   pool.query("SELECT * FROM tbl_sti_register WHERE emai l=?", [email],(err, result)=>{
     if(err) throw err;
     console.log(result)
     if(result.length==0){
