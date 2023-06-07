@@ -77,31 +77,39 @@ app.post('/login', (req, res)=>{
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [email], (err, result)=>{
         if(err) throw err;
         console.log(result)
+
         if(result.length==0){
             console.log("user doesn't exist...")
+            alert("User not found..")
             res.redirect("/login")
         }else{
-            if(p_word==result[0].p_word){
-                req.session.user_isLoggedIn = true;
-                req.session.m_number = result[0].m_number;
-                req.session.email = result[0].email;
-                req.session.role = result[0].role;
-                req.session.campus = result[0].campus;
-                req.session.birthday = result[0].birthday;
-                console.log("LOGIN SET TO: "+ req.session.user_isLoggedIn)
-                console.log("EMAIL: "+ req.session.email)
-                console.log("BIRTHDAY: "+ req.session.birthday)
-                console.log("ROLE: "+ req.session.role)
-                console.log("Login successfully!")
-                res.redirect("/fill-up")
+            if(email==result[0].email){
+                console.log("User already exist...")
+                alert("User already exist...")
+                res.redirect("/login")
             }else{
-                console.log("Wrong Password")
-                res.redirect("/login");
+                if(p_word==result[0].p_word){
+                    req.session.user_isLoggedIn = true;
+                    req.session.m_number = result[0].m_number;
+                    req.session.email = result[0].email;
+                    req.session.role = result[0].role;
+                    req.session.campus = result[0].campus;
+                    req.session.birthday = result[0].birthday;
+                    console.log("LOGIN SET TO: "+ req.session.user_isLoggedIn)
+                    console.log("EMAIL: "+ req.session.email)
+                    console.log("BIRTHDAY: "+ req.session.birthday)
+                    console.log("ROLE: "+ req.session.role)
+                    console.log("Login successfully!")
+                    res.redirect("/fill-up") 
+                }else{
+                    console.log("Wrong Email or Password...")
+                    alert("Wrong email or Password")
+                    res.redirect("/login");
+                }
             }
         }
     });
-});
-
+});  
 // forgot password page
 app.get('/forgot-password', (req, res)=>{
     res.render("forgot-password");
@@ -110,7 +118,7 @@ app.get('/forgot-password', (req, res)=>{
 app.post('/forgot-password', (req, res)=>{
    const {email} = req.body;
    // find user in the database
-   pool.query("SELECT * FROM tbl_sti_register WHERE emai l=?", [email],(err, result)=>{
+   pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [email],(err, result)=>{
     if(err) throw err;
     console.log(result)
     if(result.length==0){
@@ -227,7 +235,8 @@ app.post('/register', (req, res)=>{
                     console.log(result)
                     res.redirect("/login")
                 });
-            }else{
+            }
+            else{
                 console.log("user already exist")
                 res.redirect("/register")
             }
