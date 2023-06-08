@@ -83,11 +83,6 @@ app.post('/login', (req, res)=>{
             alert("User not found..")
             res.redirect("/login")
         }else{
-            if(email==result[0].email){
-                console.log("User already exist...")
-                alert("User already exist...")
-                res.redirect("/login")
-            }else{
                 if(p_word==result[0].p_word){
                     req.session.user_isLoggedIn = true;
                     req.session.m_number = result[0].m_number;
@@ -107,7 +102,7 @@ app.post('/login', (req, res)=>{
                     res.redirect("/login");
                 }
             }
-        }
+        
     });
 });  
 // forgot password page
@@ -268,7 +263,6 @@ app.post('/students/add-new',(req, res)=>{
     }
     pool.query(sql, new_student,(err, result)=>{
         if(err) throw err;
-        console.log(result)
         res.redirect('/students')
     });
 });
