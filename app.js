@@ -80,7 +80,6 @@ app.post('/login', (req, res)=>{
 
         if(result.length==0){
             console.log("user doesn't exist...")
-            alert("User not found..")
             res.redirect("/login")
         }else{
                 if(p_word==result[0].p_word){
@@ -213,9 +212,16 @@ app.post('/register', (req, res)=>{
     var role = 'student';
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
         if(err) throw err;
-            if(result.length == 0) {
+
+        if(email==result[0].email){
+            console.log("Email already taken...")
+            res.redirect("/register")
+        }
+        
+        else{
+            if(result.length==0){
                 const sql = `INSERT INTO tbl_sti_register set ?`;
-                let sti_register ={
+                let sti_register = {
                     m_number: m_number,
                     y_admitted: y_admitted,
                     full_name: full_name,
@@ -231,13 +237,10 @@ app.post('/register', (req, res)=>{
                     res.redirect("/login")
                 });
             }
-            else{
-                console.log("user already exist")
-                res.redirect("/register")
-            }
+        }
     });
-});
 
+});
 // student list - get and post request
 app.get('/students', (req, res)=>{
     pool.query("SELECT * FROM sti_students",(err, students)=>{
@@ -249,21 +252,33 @@ app.get('/students', (req, res)=>{
 });
 app.post('/students/add-new',(req, res)=>{
     var{f_name, course, form137, form138, birth_certificate, ojt_report, grading_sheet, school_year} = req.body;
-    const sql = `INSERT INTO sti_students set ?`;
-    let new_student = {
-   
-        f_name: f_name,
-        course: course,
-        form137: form137,
-        form138: form138,
-        birth_certificate: birth_certificate,
-        ojt_report: ojt_report,
-        grading_sheet: grading_sheet,
-        school_year: school_year
-    }
-    pool.query(sql, new_student,(err, result)=>{
+    pool.query("SELECT * FROM sti_students WHERE f_name=?",[f_name],(err, result)=>{
         if(err) throw err;
-        res.redirect('/students')
+
+        if(f_name==result[0].f_name){
+            console.log("Student name already exists...")
+            res.redirect("/students")
+        }
+        else{
+            if(result.length== 0){
+                const sql = `INSERT INTO sti_students set ?`;
+
+                let new_student = {
+                    f_name: f_name,
+                    course: course,
+                    form137: form137,
+                    form138: form138,
+                    birth_certificate: birth_certificate,
+                    ojt_report: ojt_report,
+                    grading_sheet: grading_sheet,
+                    school_year: school_year
+                }
+                pool.query(sql, new_student,(err, result)=>{
+                    if(err) throw err;
+                    res.redirect('/students')
+                });
+            }
+        }
     });
 });
 // session log get request
