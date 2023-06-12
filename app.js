@@ -273,6 +273,7 @@ app.post('/students/add-new',(req, res)=>{
                     grading_sheet: grading_sheet,
                     school_year: school_year
                 }
+
                 pool.query(sql, new_student,(err, result)=>{
                     if(err) throw err;
                     res.redirect('/students')
@@ -345,13 +346,6 @@ app.get('/completed',(req, res)=>{
     });
 });
 
-
-
-// This Part shows the process
-// on how to re route the a certain document
-// to update its current status
-
-
 // re-route to specific id of document
 app.get('/pending/edit/:transaction_id', (req, res)=>{
     transaction_id = req.params.transaction_id;
@@ -402,6 +396,7 @@ app.post('/session/add-transaction', (req, res)=>{
 
     pool.query(sql, new_transaction,(err, result)=>{
         if(err) throw err;
+        console.log(result)
         res.redirect("/session-log")
     });
 });
@@ -410,34 +405,11 @@ app.post('/session/add-transaction', (req, res)=>{
 
 app.get('/completed/edit/:transaction_id', (req, res)=>{
     transaction_id = req.params.transaction_id;
-    pool.query("SELECT * FROM tbl_sti_documents WHERE transaction_no=?", [transaction_id],(err, result)=>{
+    pool.query("SELECT * FROM tbl_sti_documents WHERE transaction_no=?", [transaction_id],(err, validate)=>{
         if(err) throw err;
         console.log(validate)
         res.render("validate-docs"),{
-            result
+            validate
         }
     });
-});
-
-// new post request for image insertion
-
-app.post('/img-post', (req, res)=>{
-    try{
-        var Img = req.files.image_req;
-        console.log("Image found!")
-    }
-    catch(err)
-    {
-        var Img = '';
-        console.log("No Image")
-    }
-
-    if(Img)
-    {
-        var image_name = uuidv4()+"_"+Img.name;
-        Img.mv("public/img/" + image_name, (err) =>
-        {
-          if (err) console.log(err);
-        }); 
-    }
 });
