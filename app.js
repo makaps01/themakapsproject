@@ -97,7 +97,6 @@ app.post('/login', (req, res)=>{
                     res.redirect("/fill-up") 
                 }else{
                     console.log("Wrong Email or Password...")
-                    alert("Wrong email or Password")
                     res.redirect("/login");
                 }
             }
@@ -403,7 +402,7 @@ app.post('/session/add-transaction', (req, res)=>{
 
 // create new route for damage documents
 
-app.get('/completed/edit/:transaction_id', (req, res)=>{
+app.get('/completed/edit/:transactionID', (req, res)=>{
     transaction_id = req.params.transaction_id;
     pool.query("SELECT * FROM tbl_sti_documents WHERE transaction_no=?", [transaction_id],(err, validate)=>{
         if(err) throw err;
