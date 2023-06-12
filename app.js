@@ -30,7 +30,7 @@ app.set("views", path.join(__dirname, "views"));
 // STATIC FOLDER || LOADS ALL ASSETS FROM PUBLIC FOLDER
 app.use(express.static(__dirname + "/public"));
 
-
+// ACCESING PORT AND SQLPOOL
 PORT = 3000;
 app.listen(PORT);
 app.use(bodyParser.urlencoded({ extended: false }));
