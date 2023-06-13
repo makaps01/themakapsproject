@@ -306,22 +306,36 @@ app.get('/accounts', (req, res)=>{
 app.post('/accounts/add-account',(req,res)=>{
     var{m_number, y_admitted, full_name, email, birthday, p_word, campus} = req.body;
     var role= 'student';
-    const sql = `INSERT INTO tbl_sti_register set ?`;
-    let new_account ={
-        m_number: m_number,
-        y_admitted: y_admitted,
-        full_name: full_name,
-        email: email,
-        birthday: birthday,
-        p_word: p_word,
-        campus: campus,
-        role: role
-    }
-    pool.query(sql, new_account,(err, result)=>{
-        if(err) throw err;
-        console.log(result)
+    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
+    if(err) throw err;
+
+    if(email==result[0].email){
+        console.log("Account email already exists..")
         res.redirect("/accounts")
+    }else{
+        if(result.length==0){
+            const sql =  `INSERT INTO tbl_sti_register set ?`;
+
+            let new_account ={
+                m_number: m_number,
+                y_admitted: y_admitted,
+                full_name: full_name,
+                email: email,
+                birthday: birthday,
+                p_word: p_word,
+                campus: campus,
+                role: role
+            }
+            pool.query(sql, new_account,(err, result)=>{
+                if(err) throw err;
+                console.log(result)
+                res.redirect("/accounts")
+            });
+        }
+    }
     });
+
+
 });
 
 // these are the routes to check pending documents/ completed documents
