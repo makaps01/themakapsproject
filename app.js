@@ -403,7 +403,7 @@ app.post('/session/add-transaction', (req, res)=>{
 // create new route for damage documents
 
 app.get('/completed/edit/:transactionID', (req, res)=>{
-    transaction_id = req.params.transaction_id;
+    var transaction_id = req.params.transaction_id;
     pool.query("SELECT * FROM tbl_sti_documents WHERE transaction_no=?", [transaction_id],(err, validate)=>{
         if(err) throw err;
         console.log(validate)
