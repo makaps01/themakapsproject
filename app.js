@@ -413,3 +413,10 @@ app.post('/session/add-transaction', (req, res)=>{
         res.redirect("/session-log")
     });
 });
+
+
+// ROUTE FOR DAMAGED DOCUMENTS
+
+app.get('/damaged-docs',(req, res)=>{
+    res.render("damaged-docs");
+});
