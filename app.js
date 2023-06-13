@@ -347,8 +347,8 @@ app.get('/completed',(req, res)=>{
 
 // re-route to specific id of document
 app.get('/pending/edit/:transactionID', (req, res)=>{
-    transaction_id = req.params.transaction_id;
-    pool.query("SELECT * FROM tbl_sti_documents where transaction_no=?",[transaction_id],(err, data)=>{
+    transactionID = req.params.transactionID;
+    pool.query("SELECT * FROM tbl_sti_documents WHERE transaction_no=?",[transactionID],(err, data)=>{
     if(err) throw err;
     res.render("update-docs",{
          data

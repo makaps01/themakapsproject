@@ -1,4 +1,4 @@
-@@ -1,114 +0,0 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,12 +48,12 @@
                                         <div class="col-sm-5">
                                             <label for="trans">Trans. #</label>
                                             <input type="number" name="transaction_no" class="form-control form-control-user"
-                                             value="<%= transaction_id %>" readonly>
+                                             value="<%= transactionID %>" readonly>
                                         </div>
                                         <div class="col-sm-7 mb-3 mb-sm-0">
-                                            <label for="ser">Serial #</label>
+                                            <label for="ser">Serial Number</label>
                                             <input type="text" name="serial_no" maxlength="8" class="form-control form-control-user"
-                                             value="<%= data[0].serial_no %>" readonly>
+                                            value="<%= data[0].serial_no %>"  required>
                                        </div>        
                                     </div>
                                     <div class="form-group row">
@@ -74,7 +74,7 @@
                                         <div class="form-group">
                                             <label for="form-group" class="from-block">Status</label>
                                                 <input type="text" name="status" class="form-control form-control-user" value="completed" style="color: green;" 
-                                                value="<%= data[0].status %>" readonly>
+                                                 readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="form-group" class="form-block">Email</label>
@@ -84,7 +84,7 @@
                                         <div class="form-group">
                                             <label for="form-group">Remarks</label>
                                             <input type="text" name="remarks" class="form-control form-control-user"
-                                            value="<%= data[0].remarks %>" required>
+                                             required>
                                         </div>
                                             <hr>
                                             <hr>
