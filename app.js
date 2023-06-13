@@ -346,11 +346,10 @@ app.get('/completed',(req, res)=>{
 });
 
 // re-route to specific id of document
-app.get('/pending/edit/:transaction_id', (req, res)=>{
-    transaction_id = req.params.transaction_id;
+app.get('/pending/edit/:transactionID', (req, res)=>{
+    var transaction_id = req.params.transaction_id;
     pool.query("SELECT * FROM tbl_sti_documents where transaction_no=?",[transaction_id],(err, update)=>{
     if(err) throw err;
-    console.log(update)
     res.render("update-modal",{
         update
     });
@@ -397,18 +396,5 @@ app.post('/session/add-transaction', (req, res)=>{
         if(err) throw err;
         console.log(result)
         res.redirect("/session-log")
-    });
-});
-
-// create new route for damage documents
-
-app.get('/completed/edit/:transactionID', (req, res)=>{
-    var transaction_id = req.params.transaction_id;
-    pool.query("SELECT * FROM tbl_sti_documents WHERE transaction_no=?", [transaction_id],(err, validate)=>{
-        if(err) throw err;
-        console.log(validate)
-        res.render("validate-docs"),{
-            validate
-        }
     });
 });
