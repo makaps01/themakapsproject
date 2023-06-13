@@ -1,3 +1,4 @@
+@@ -1,114 +0,0 @@
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +11,9 @@
     <meta name="author" content="">
 
     <title>STI-Document Request || Get started!</title>
-    <link rel="icon" type="image/xicon" href="/image/sticauayan.png">
+    <link rel="icon" type="image/xicon" href="https://cdn.discordapp.com/attachments/1036248048390651906/1082856634814046289/STI_Localized_Logo_Cauayan.png">
+
+
      <!-- Custom fonts for this template-->
      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet" type="text/css">
      <link
@@ -38,26 +41,26 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Enter Information</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Update Document Information</h1>
                                     </div>
                                     <form action="/pending/update" autocomplete="off" name='form' method="POST" accept-charset='UTF-8'>
                                     <div class="form-group row">
                                         <div class="col-sm-5">
                                             <label for="trans">Trans. #</label>
                                             <input type="number" name="transaction_no" class="form-control form-control-user"
-                                             value="<%= transactionID %>" readonly>
+                                             value="<%= transaction_id %>" readonly>
                                         </div>
                                         <div class="col-sm-7 mb-3 mb-sm-0">
                                             <label for="ser">Serial #</label>
-                                            <input type="text" name="serial_no" maxlength="8" class="form-control form-control-user" 
-                                            value="<%= update[0].serial_no %>" required>
+                                            <input type="text" name="serial_no" maxlength="8" class="form-control form-control-user"
+                                             value="<%= data[0].serial_no %>" readonly>
                                        </div>        
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <label for="doc type">Document Type</label>
-                                            <input type="text" name="doc_type" class="form-control form-control-user"
-                                            value="<%= update[0].doc_type %>" readonly>
+                                            <label for="doc_type">Document Type</label>
+                                            <input type="text" name="doc_type" class="form-control form-control-user" 
+                                            value="<%= data[0].doc_type %>" readonly>
                                         
                                         </div>
                                     </div>
@@ -65,21 +68,23 @@
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <label for="form-group" class="form-block">Full Name</label>
                                                 <input type="text" maxlength="10" name="full_name" class="form-control form-control-user" id="exampleSchoolid"
-                                                 readonly>
+                                                value="<%= data[0].full_name %>" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="form-group" class="from-block">Status</label>
-                                                <input type="text" name="status" class="form-control form-control-user" value="completed" style="color: green;" readonly>
+                                                <input type="text" name="status" class="form-control form-control-user" value="completed" style="color: green;" 
+                                                value="<%= data[0].status %>" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="form-group" class="form-block">Email</label>
                                             <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
-                                             readonly >
+                                            value="<%= data[0].email %>" readonly >
                                         </div>
                                         <div class="form-group">
                                             <label for="form-group">Remarks</label>
-                                            <input type="text" name="remarks" class="form-control form-control-user" required>
+                                            <input type="text" name="remarks" class="form-control form-control-user"
+                                            value="<%= data[0].remarks %>" required>
                                         </div>
                                             <hr>
                                             <hr>
@@ -107,5 +112,4 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 </body>
-
 </html>

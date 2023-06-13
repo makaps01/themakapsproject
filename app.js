@@ -347,14 +347,15 @@ app.get('/completed',(req, res)=>{
 
 // re-route to specific id of document
 app.get('/pending/edit/:transactionID', (req, res)=>{
-    var transaction_id = req.params.transaction_id;
-    pool.query("SELECT * FROM tbl_sti_documents where transaction_no=?",[transaction_id],(err, update)=>{
+    transaction_id = req.params.transaction_id;
+    pool.query("SELECT * FROM tbl_sti_documents where transaction_no=?",[transaction_id],(err, data)=>{
     if(err) throw err;
-    res.render("update-modal",{
-        update
-    });
+    res.render("update-docs",{
+         data
+        });
     });
 });
+
 // post request to update documents
 app.post('/pending/update', (req, res)=>{
     var {serial_no, status, remarks} = req.body;
@@ -362,8 +363,8 @@ app.post('/pending/update', (req, res)=>{
         if(err) throw err;
             console.log(result)
                 res.redirect("/pending")
-    });
-});
+            });
+        });
 
 // LOG OUT MODAL
 // log out
