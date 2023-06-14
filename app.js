@@ -15,6 +15,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const fileUpload = require("express-fileupload");
+const nodemailer = require('nodemailer');
+
 
 const {
     user_isLoggedIn,
@@ -103,28 +105,62 @@ app.post('/login', (req, res)=>{
         
     });
 });  
+
+const JWT_SECRET = "secret...";
+const transporter = nodemailer.createTransport({
+    service: process.env.SYS_SERVICE,
+    auth: {
+        user: process.env.SYS_USER,
+        pass: process.env.SYS_PASSWORD,
+    },
+});
+ 
 // forgot password page
 app.get('/forgot-password', (req, res)=>{
     res.render("forgot-password");
 });
  
-app.post('/forgot-password', (req, res)=>{
-   const {email} = req.body;
-   // find user in the database
-   pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [email],(err, result)=>{
-    if(err) throw err;
-    console.log(result)
-    if(result.length==0){
-        console.log("user doesn't exist...")
-        return;
-    }else{
-        const secret = JWT_SECRET + result.password
-        const payload = {
-            email: email,
+app.post('/forgot-password', (req, res, next)=>{
+    const {email} = req.body;
+    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
+        if(err) throw err;
+
+        if(result.length == 0) {
+            console.log("user not registered...");
+            res.redirect("/forgot-password");
         }
-    }
-   });
+
+        else{
+            res.render("reset-confirmation");
+            userPassword = result[0].password;
+            const secret = JWT_SECRET + userPassword;
+            const payload = {
+                email: result[0].email,
+                userName: result[0].full_name,
+            };
+            const token = jwt.sign(payload, secret, {
+                expiresIn: "15m"// 15 minutes to be exact
+            });
+            const link = `${process.env.domain2}/reset-pasword/${result[0].full_name}/${token}`;
+            const options = {
+                from: process.env.SYS_EMAIL_FROM,
+                to: email,
+                subject: "Password recovery link",
+                text: "requested password link" + link,
+            };
+
+            transporter.sendMail(options,(err, info)=>{
+                if (err) {
+                    console.log(err);
+                    return;
+                }else{
+                    console.log("sent: " + info.response);
+                }
+            });
+        }
+    });
 });
+     
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard',user_isAdmin(), (req, res)=>{
     pool.query("SELECT * FROM tbl_sti_register;",(err, result)=>{
