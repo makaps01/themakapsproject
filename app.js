@@ -17,6 +17,19 @@ const { v4: uuidv4 } = require("uuid");
 const fileUpload = require("express-fileupload");
 const nodemailer = require('nodemailer');
 
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './img')
+    },
+    filename: (req, file, cb) => {
+        console.log(file)
+        cb(null, Date.now() + path.extname(file.originalname))
+    }
+});
+
+
+const upload = multer({storage: storage})
 
 const {
     user_isLoggedIn,
