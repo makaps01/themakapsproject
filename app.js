@@ -16,7 +16,20 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const fileUpload = require("express-fileupload");
 const nodemailer = require('nodemailer');
+const multer = require('multer');
 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './img')
+    },
+    filename: (req, file, cb) => {
+        console.log(file)
+        cb(null, Date.now() + path.extname(file.originalname))
+    }
+});
+
+
+const upload = multer({storage: storage})
 
 const {
     user_isLoggedIn,
@@ -197,7 +210,7 @@ app.get('/fill-up',role_client(), (req, res)=>{
     });
 });
 // post request for new documents
-app.post('/fill-up', (req, res)=>{
+app.post('/fill-up', upload.single('image'),(req, res)=>{
     var {doc_type, m_number, y_admitted, full_name, email} = req.body;
     var date = new Date();
     var serial_no = 'A#######';
@@ -248,7 +261,7 @@ app.post('/register', (req, res)=>{
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
         if(err) throw err;
 
-        if(email==result[0].email){
+        if(email==result[0]){
             console.log("Email already taken...")
             res.redirect("/register")
         }
@@ -454,5 +467,39 @@ app.post('/session/add-transaction', (req, res)=>{
 // ROUTE FOR DAMAGED DOCUMENTS
 
 app.get('/damaged-docs',(req, res)=>{
-    res.render("damaged-docs");
+    pool.query("SELECT * FROM tbl_sti_documents WHERE status='damaged'",(err, data)=>{
+        if(err) throw err;
+        res.render("damaged-docs",{
+            data
+        });
+    });
+  
 });
+
+app.post('/damaged-docs/add',(req, res)=>{
+    var { doc_type, serial_no, full_name, date, status, remarks} = req.body;
+    var m_number='N/A';
+    var y_admitted= 1111;
+    var email='email';
+    var image_id= 'no image';
+    const sql = `INSERT INTO tbl_sti_documents set ?`;
+
+    let fail = {
+        image_id: image_id,
+        serial_no: serial_no,
+        doc_type: doc_type,
+        m_number: m_number,
+        y_admitted: y_admitted,
+        full_name: full_name,
+        email: email,
+        date: date,
+        status: status,
+        remarks: remarks
+    }
+
+    pool.query(sql, fail, (err, result)=>{
+        if(err) throw err;
+        console.log(result)
+        res.redirect("/damaged-docs");
+    });
+})
