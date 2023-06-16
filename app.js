@@ -33,7 +33,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(__dirname + "/public"));
 
 // ACCESING PORT AND SQLPOOL
-PORT = 8000;
+PORT = 3000;
 app.listen(PORT);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json())
