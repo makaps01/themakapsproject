@@ -249,15 +249,19 @@ app.get('/fill-up',role_client(), (req, res)=>{
     });
 });
 // post request for new documents
-app.post('/fill-up', upload.single('image'),(req, res)=>{
-    var {doc_type, m_number, y_admitted, full_name, email} = req.body;
+app.post('/fill-up',(req, res)=>{
+    var { doc_type, m_number, y_admitted, full_name, email} = req.body;
     var date = new Date();
     var serial_no = 'A#######';
     var remarks = 'No remarks';
     var status= 'pending';
+    
+    try{
+    var doc = req.files.upfile;
+    filename = uuidv4()+"_"+doc.name;
     const sql = `INSERT INTO tbl_sti_documents set ?`;
-
     let document={
+        image_id: filename,
         doc_type: doc_type,
         serial_no: serial_no,
         m_number: m_number,
@@ -271,10 +275,17 @@ app.post('/fill-up', upload.single('image'),(req, res)=>{
     pool.query(sql, document,(err, result)=>{
         if(err) throw err;
         console.log(result)
+            destination = "public/img/";
+            doc.mv(destination + file_name, (err)=>{
+            if (err) console.log(err);
             res.render("view", {
                 docs: result
             });
+        });
     });
+    }catch(error){
+        var doc = "";
+    }
 });
 
 // get request to view documents

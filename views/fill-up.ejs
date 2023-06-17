@@ -43,9 +43,9 @@
                                     </div>
 
                                     <!-- Upload image -->
-                                    <form action="/fill-up" method="post">
+                                    <form action="/fill-up" method="post" enctype="multipart/form-data">
                                         <div class="form-group">
-                                            <input type="file" id="customFile" name="image" accept="image/*" class="form-control form-control-user " required>
+                                            <input type="file" id="customFile" name="upfile" accept="image/*" class="form-control form-control-user " required>
                                         </div>
                                         <div class="form-group">
                                             <label for="formControlSelectDocs">Select Document type</label>
