@@ -145,7 +145,7 @@ app.post('/forgot-password', (req, res, next)=>{
 
         else{
             res.render("reset-confirmation");
-            userPassword = result[0].password;
+            userPassword = result[0].p_word;
             const secret = JWT_SECRET + userPassword;
             const payload = {
                 email: result[0].email,
@@ -191,19 +191,20 @@ app.post("/reset-password/:userName/:token", (req, res)=>{
     var {new_pword, re_new_pword } = req.body;
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email], async (err, result)=>{
         if(err) throw err;
-
+        console.log(result)
         if(new_pword !== re_new_pword){
             req.flash("info", "password does not match");
             res.render("reset-password");
         }else{
             try {
-                var hashedPassword = await bcrypt.hash(new_pword, 10);
+                var salt = bcrypt.genSaltSync(10)
+                var hashedPassword = await bcrypt.hash(new_pword, salt);
                 let userPassword = hashedPassword;
                 
                 pool.query("UPDATE tbl_sti_register SET p_word=? WHERE email=?", [userPassword, email], (err, result)=>{
                     if(err) throw err;                    
-                    console.log("Password successfully reset...")
-                    res.redirect("/")
+                    console.log("Password successfully reset..."+ result)
+                    res.redirect("/login")
                 });
             }catch (e) {
                 console.log(e);
@@ -300,13 +301,14 @@ app.post('/register', async (req, res)=>{
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],async (err, result)=>{
         if(err) throw err;
         
-        if(email == result[0]){
+        if(result[0] == email ){
             req.flash("info", "Email already exist...");
             res.redirect("/register");
 
         }else{
             try {
-                var hashedPassword = await bcrypt.hash(p_word, 10);
+                var salt = bcrypt.genSaltSync(10)
+                var hashedPassword = await bcrypt.hash(p_word, salt);
                 let userPassword = hashedPassword;
                 const sql = `INSERT INTO tbl_sti_register set ?`;
 
@@ -316,14 +318,14 @@ app.post('/register', async (req, res)=>{
                     full_name: full_name,
                     email: email,
                     birthday: birthday,
-                    p_word: p_word,
+                    p_word: userPassword,
                     campus: campus,
                     role: role
                 }
                 pool.query(sql, register,(err, result)=>{
                     if(err) throw err;
                     console.log(result)
-                    res.redirect("/")
+                    res.redirect("/login")
 
                 });
 
