@@ -356,6 +356,8 @@ app.get('/students', (req, res)=>{
         });
     });
 });
+
+//// add neww student to database(from 2008-present)
 app.post('/students/add-new',(req, res)=>{
     var{f_name, course, form137, form138, birth_certificate, ojt_report, grading_sheet, school_year} = req.body;
     pool.query("SELECT * FROM sti_students WHERE f_name=?",[f_name],(err, result)=>{
@@ -407,7 +409,6 @@ app.get('/accounts', (req, res)=>{
         });
     });
 });
-
 // add new account in database - 
 // logIN ACCOUNT TO BE SPECIFIC
 app.post('/accounts/add-account',(req,res)=>{
