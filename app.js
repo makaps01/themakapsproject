@@ -173,7 +173,45 @@ app.post('/forgot-password', (req, res, next)=>{
         }
     });
 });
-     
+
+app.get("/reset-password/:userName/:token", (req, res, next)=>{
+    const {userName, token } = req.params;
+    const secret = JWT_SECRET + result[0].p_word;
+    try{
+        const payload = jwt.verify(token, secret);
+        res.render('reset-password', {email: email }); 
+    }catch(error) {
+        console.log(error.message);
+        res.send('session expired');
+    }
+});
+
+app.post("/reset-password/:userName/:token", (req, res)=>{
+    var { userName, token } = req.params;
+    var {new_pword, re_new_pword } = req.body;
+    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email], async (err, result)=>{
+        if(err) throw err;
+
+        if(new_pword !== re_new_pword){
+            req.flash("info", "password does not match");
+            res.render("reset-password");
+        }else{
+            try {
+                var hashedPassword = await bcrypt.hash(new_pword, 10);
+                let userPassword = hashedPassword;
+                
+                pool.query("UPDATE tbl_sti_register SET p_word=? WHERE email=?", [userPassword, email], (err, result)=>{
+                    if(err) throw err;                    
+                    console.log("Password successfully reset...")
+                    res.redirect("/")
+                });
+            }catch (e) {
+                console.log(e);
+                res.redirect("/forgot-password");
+            }
+        }
+    });
+});
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard',user_isAdmin(), (req, res)=>{
     pool.query("SELECT * FROM tbl_sti_register;",(err, result)=>{
@@ -255,21 +293,24 @@ app.get('/register', (req, res)=> {
 });
 
 // POST REQUEST FOR REGISTRATION
-app.post('/register', (req, res)=>{
+app.post('/register', async (req, res)=>{
     var {m_number, y_admitted, full_name, email, birthday, p_word, campus} = req.body;
     var role = 'student';
-    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
-        if(err) throw err;
 
-        if(email==result[0]){
-            console.log("Email already taken...")
-            res.redirect("/register")
-        }
+    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],async (err, result)=>{
+        if(err) throw err;
         
-        else{
-            if(result.length==0){
+        if(email == result[0]){
+            req.flash("info", "Email already exist...");
+            res.redirect("/register");
+
+        }else{
+            try {
+                var hashedPassword = await bcrypt.hash(p_word, 10);
+                let userPassword = hashedPassword;
                 const sql = `INSERT INTO tbl_sti_register set ?`;
-                let sti_register = {
+
+                let register ={
                     m_number: m_number,
                     y_admitted: y_admitted,
                     full_name: full_name,
@@ -279,15 +320,19 @@ app.post('/register', (req, res)=>{
                     campus: campus,
                     role: role
                 }
-                pool.query(sql, sti_register,(err, result)=>{
+                pool.query(sql, register,(err, result)=>{
                     if(err) throw err;
                     console.log(result)
-                    res.redirect("/login")
-                });
-            }
-        }
-    });
+                    res.redirect("/")
 
+                });
+
+            } catch (e){
+                console.log(e);
+                res.redirect("/register");
+            }
+        } 
+    });
 });
 // student list - get and post request
 app.get('/students', (req, res)=>{
@@ -364,7 +409,6 @@ app.post('/accounts/add-account',(req,res)=>{
     }else{
         if(result.length==0){
             const sql =  `INSERT INTO tbl_sti_register set ?`;
-
             let new_account ={
                 m_number: m_number,
                 y_admitted: y_admitted,
@@ -407,7 +451,7 @@ app.get('/completed',(req, res)=>{
         });
     });
 });
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 // re-route to specific id of document
 app.get('/pending/edit/:transactionID', (req, res)=>{
     transactionID = req.params.transactionID;
@@ -418,7 +462,6 @@ app.get('/pending/edit/:transactionID', (req, res)=>{
         });
     });
 });
-
 // post request to update documents
 app.post('/pending/update', (req, res)=>{
     var {serial_no, status, remarks} = req.body;
@@ -428,15 +471,19 @@ app.post('/pending/update', (req, res)=>{
                 res.redirect("/pending")
             });
         });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// LOG OUT MODAL
+
+////////////////////////////////////////////////// LOG OUT MODAL////////////////////////////////////////
 // log out
 app.get('/log-out', (req, res)=>{
     req.session.destroy();
     res.redirect("login");
 });
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// post request to add new transaction for walk-in applicants
+
+/////////////////////// post request to add new transaction for walk-in applicants ////////////////////////
 app.post('/session/add-transaction', (req, res)=>{
    var{doc_type, m_number, y_admitted, full_name, email}= req.body;
    var date= new Date();
@@ -464,8 +511,7 @@ app.post('/session/add-transaction', (req, res)=>{
 });
 
 
-// ROUTE FOR DAMAGED DOCUMENTS
-
+/////////////////////////////////////////////// ROUTE FOR DAMAGED DOCUMENTS ////////////////////////////////
 app.get('/damaged-docs',(req, res)=>{
     pool.query("SELECT * FROM tbl_sti_documents WHERE status='damaged'",(err, data)=>{
         if(err) throw err;
@@ -473,33 +519,4 @@ app.get('/damaged-docs',(req, res)=>{
             data
         });
     });
-  
 });
-
-app.post('/damaged-docs/add',(req, res)=>{
-    var { doc_type, serial_no, full_name, date, status, remarks} = req.body;
-    var m_number='N/A';
-    var y_admitted= 1111;
-    var email='email';
-    var image_id= 'no image';
-    const sql = `INSERT INTO tbl_sti_documents set ?`;
-
-    let fail = {
-        image_id: image_id,
-        serial_no: serial_no,
-        doc_type: doc_type,
-        m_number: m_number,
-        y_admitted: y_admitted,
-        full_name: full_name,
-        email: email,
-        date: date,
-        status: status,
-        remarks: remarks
-    }
-
-    pool.query(sql, fail, (err, result)=>{
-        if(err) throw err;
-        console.log(result)
-        res.redirect("/damaged-docs");
-    });
-})
