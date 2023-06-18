@@ -89,15 +89,15 @@ app.get('/login', (req, res)=>{
 app.post('/login', (req, res)=>{
     const userRole = req.session.role;
     var {email, p_word} = req.body;
-    pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [email], (err, result)=>{
+    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],async(err, result)=>{
         if(err) throw err;
-        console.log(result)
-
+        console.log(result) 
+        var isMatch = await bcrypt.compare(p_word, result[0].p_word);
         if(result.length==0){
             console.log("user doesn't exist...")
             res.redirect("/login")
         }else{
-                if(p_word==result[0].p_word){
+                if(isMatch){
                     req.session.user_isLoggedIn = true;
                     req.session.m_number = result[0].m_number;
                     req.session.email = result[0].email;
