@@ -51,8 +51,19 @@ var pool = mysql2.createPool({
     timezone: "+00:00",
 });
 
-// save session log
+//// jwt secret
+const JWT_SECRET = "secret...";
+const transporter = nodemailer.createTransport({
+    service: process.env.SYS_SERVICE,
+    auth: {
+        user: process.env.SYS_USER,
+        pass: process.env.SYS_PASSWORD,
+    },
+});
+ 
 
+
+// save session log
 var sessionOptions ={
     host: process.env.mysql_host,
     port: process.env.mysql_port,
@@ -81,10 +92,11 @@ app.post('/login', (req, res)=>{
         if(err) throw err;
         console.log(result) 
         var isMatch = await bcrypt.compare(p_word, result[0].p_word);
-        if(result.length==0){
-            console.log("user doesn't exist...")
+        if(result.length == 0){
+            req.flash("info","Email already exist...");
             res.redirect("/login")
         }else{
+            try {
                 if(isMatch){
                     req.session.user_isLoggedIn = true;
                     req.session.m_number = result[0].m_number;
@@ -98,24 +110,17 @@ app.post('/login', (req, res)=>{
                     console.log("ROLE: "+ req.session.role)
                     console.log("Login successfully!")
                     res.redirect("/fill-up") 
-                }else{
-                    console.log("Wrong Email or Password...")
-                    res.redirect("/login");
                 }
+            }catch(e){
+                console.log(e)
+                res.redirect("/login");
             }
+        }
         
     });
 });  
 
-const JWT_SECRET = "secret...";
-const transporter = nodemailer.createTransport({
-    service: process.env.SYS_SERVICE,
-    auth: {
-        user: process.env.SYS_USER,
-        pass: process.env.SYS_PASSWORD,
-    },
-});
- 
+
 // forgot password page
 app.get('/forgot-password', (req, res)=>{
     res.render("forgot-password");
@@ -142,7 +147,7 @@ app.post('/forgot-password', (req, res, next)=>{
             const token = jwt.sign(payload, secret, {
                 expiresIn: "15m"// 15 minutes to be exact
             });
-            const link = `$http://localhost:3000/reset-pasword/${result[0].m_number}/${token}`;
+            const link = `${process.env.DOMAIN}/reset-pasword/${result[0].m_number}/${token}`;
             const options = {
                 from: process.env.SYS_EMAIL_FROM,
                 to: email,
@@ -461,10 +466,10 @@ app.post('/pending/update', (req, res)=>{
 // log out
 app.get('/log-out', (req, res)=>{
     req.session.destroy();
-    res.redirect("login");
+    res.render("login");
 });
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////// post request to add new transaction for walk-in applicants ////////////////////////
 app.post('/session/add-transaction', (req, res)=>{

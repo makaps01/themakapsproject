@@ -259,25 +259,28 @@
                                 <table class="table" id="dataTable" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>System ID</th>
                                             <th>Mobile Number</th>
                                             <th>Year Admitted</th>
                                             <th>Full Name</th>
                                             <th>Email</th>
-                                            <th>Password</th>
                                             <th>Birthday</th>
-                                            <th>Campus</th>
+                                      
+                                         
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <% for(var i=0; i < accounts.length; i++) { %>
                                         <tr>
+                                            <td><%= accounts[i].sys_id %></td>
                                             <td><%= accounts[i].m_number %></td>
                                             <td><%= accounts[i].y_admitted %></td>
                                             <td><%= accounts[i].full_name %></td>
                                             <td><%= accounts[i].email %></td>
-                                            <td><%= accounts[i].p_word %></td>
                                             <td><%= accounts[i].birthday %></td>
-                                            <td><%= accounts[i].campus %></td>
+                                       
+
+                                                                                   
                                         </tr>
                                    <% } %>
                                     </tbody>
