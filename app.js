@@ -91,12 +91,12 @@ app.post('/login', (req, res)=>{
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],async(err, result)=>{
         if(err) throw err;
         console.log(result) 
-        var isMatch = await bcrypt.compare(p_word, result[0].p_word);
         if(result.length == 0){
             req.flash("info","Email already exist...");
             res.redirect("/login")
         }else{
             try {
+                var isMatch = await bcrypt.compare(p_word, result[0].p_word);
                 if(isMatch){
                     req.session.user_isLoggedIn = true;
                     req.session.m_number = result[0].m_number;
@@ -142,12 +142,12 @@ app.post('/forgot-password', (req, res, next)=>{
             const secret = JWT_SECRET + userPassword;
             const payload = {
                 email: result[0].email,
-                userNumber: result[0].m_number,
+                userID: result[0].sys_id,
             };
             const token = jwt.sign(payload, secret, {
                 expiresIn: "15m"// 15 minutes to be exact
             });
-            const link = `${process.env.DOMAIN}/reset-pasword/${result[0].m_number}/${token}`;
+            const link = `${process.env.DOMAIN}/reset-pasword/${result[0].sys_id}/${token}`;
             const options = {
                 from: process.env.SYS_EMAIL_FROM,
                 to: email,
@@ -167,25 +167,45 @@ app.post('/forgot-password', (req, res, next)=>{
     });
 });
 
-app.get('/reset-password/:m_number/:token', (req, res, next)=>{
-    const {m_number, token } = req.params;
-
-    if(m_number !== result[0].m_number) {
-        res.send("invalid number...")
-        return;
-    }
-    const secret = JWT_SECRET + result[0].p_word;
-    try{
+app.get('/reset-password/:m_number/:token', (req, res)=>{
+    const { userID, token } = req.params;
+    const secret = JWT_SECRET + result[0].sys_id;
+    try{    
         const payload = jwt.verify(token, secret);
-        res.render('reset-password', {email: email }); 
-    }catch(error) {
+        res.render('reset-password', { email: email });
+    }catch{
         console.log(error.message);
         res.send('session expired');
     }
 });
 
-app.post("/reset-password/:m_number/:token", (req, res, next)=>{
-    
+app.post("/reset-password/:m_number/:token", (req, res)=>{
+    var { userID, token } = req.params;
+    var { pword, pword2 } = req.body;
+
+    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email], async (err, result)=>{
+        if(err) throw err;
+        console.log(result)
+        if (pword !== pword2){
+            req.flash("info", "Password does not match");
+            res.render("reset-passworrd");
+        }else{
+            try{
+                var salt = bcrypt.genSaltSync(10)
+                var hashedPassword = await bcrypt.hash(pword, salt);
+                let userPassword = hashedPassword;
+                pool.query(`UPDATE tbl_sti_register set p_word=? WHERE sys_id=?`,[userPassword, userID],(err, result)=>{
+                    if(err) throw err;
+                     console.log(result)
+                     req.flash("info", "Password reset success...")
+                     res.render("/login")
+                });
+            }catch (e){
+                console.log(e)
+                res.redirect("/login")
+            }
+        }
+    });
 });
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard',user_isAdmin(), (req, res)=>{
