@@ -230,7 +230,7 @@ app.post('/fill-up',(req, res)=>{
     filename = uuidv4()+"_"+doc.name;
     const sql = `INSERT INTO tbl_sti_documents set ?`;
     let document={
-        image_id: filename,
+        img_id: filename,
         doc_type: doc_type,
         serial_no: serial_no,
         m_number: m_number,
@@ -245,7 +245,7 @@ app.post('/fill-up',(req, res)=>{
         if(err) throw err;
         console.log(result)
             destination = "public/img/";
-            doc.mv(destination + file_name, (err)=>{
+            doc.mv(destination + filename, (err)=>{
             if (err) console.log(err);
             res.render("view", {
                 docs: result
