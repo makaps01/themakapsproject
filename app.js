@@ -126,45 +126,46 @@ app.get('/forgot-password', (req, res)=>{
     res.render("forgot-password");
 });
  
-app.post('/forgot-password', (req, res, next)=>{
-    const {email} = req.body;
-    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
+app.post('/forgot-password', (req, res)=>{
+    const { email } = req.body;
+    console.log(req.body)
+    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email], async (err, result)=>{
         if(err) throw err;
-
-        if(result.length == 0) {
-            console.log("user not registered...");
+        console.log(result)
+        if(result[0].length == 0) {
+            req.flash("info", "User not registered..");
             res.redirect("/forgot-password");
         }
-
-        else{
-            res.render("reset-confirmation");
-            userPassword = result[0].p_word;
-            const secret = JWT_SECRET + userPassword;
+        if(result[0].length !== 0){
+            const secret = JWT_SECRET + result[0].p_word;
             const payload = {
                 email: result[0].email,
                 userID: result[0].sys_id,
             };
             const token = jwt.sign(payload, secret, {
-                expiresIn: "15m"// 15 minutes to be exact
+                expiresIn: "15m"/// 15 minutes
             });
-            const link = `${process.env.DOMAIN}/reset-pasword/${result[0].sys_id}/${token}`;
+            const link = `${process.env.DOMAIN}/reset-password?id=${result[0].sys_id}&email=${result[0].email}&token=${token}`;
             const options = {
                 from: process.env.SYS_EMAIL_FROM,
                 to: email,
-                subject: "Here is your password recovery/ link!",
-                text: "requested password link " + link,
+                subject: "Reset Password Authentication",
+                text: "reset password: " +link
             };
-
-            transporter.sendMail(options,(err, info)=>{
-                if (err) {
-                    console.log(err);
-                    return;
-                }else{
+            transporter.sendMail(options, (err, info)=>{
+                if(!err){
                     console.log("sent: " + info.response);
+                    res.redirect("/reset-confirmation")
                 }
+                console.log(err);
+                return;
             });
         }
     });
+});
+
+app.get('/reset-confirmation',(req, res)=>{
+    res.render("reset-confirmation");
 });
 
 app.get('/reset-password/:m_number/:token', (req, res)=>{
@@ -350,7 +351,6 @@ app.get('/students', (req, res)=>{
         });
     });
 });
-
 //// add neww student to database(from 2008-present)
 app.post('/students/add-new',(req, res)=>{
     var{f_name, course, form137, form138, birth_certificate, ojt_report, grading_sheet, school_year} = req.body;
@@ -384,7 +384,9 @@ app.post('/students/add-new',(req, res)=>{
         }
     });
 });
-// session log get request
+
+
+////////////////////////////////// session log get request for walkin ////////////////////////////////////////
 app.get('/session-log', (req, res)=>{
     pool.query("SELECT * FROM tbl_sti_documents WHERE status='pending'",(err, walkin)=>{
         if(err) throw err;
@@ -392,6 +394,45 @@ app.get('/session-log', (req, res)=>{
             walkin,
         });
     });
+});
+
+//post request to add new transaction for walkin applicants 
+app.post('/session/add-transaction', (req, res)=>{
+    var { doc_type, m_number, y_admitted, full_name, email} = req.body;
+    var date = new Date();
+    var serial_no = 'A#######';
+    var remarks = 'No remarks';
+    var status= 'pending';
+    
+    try{
+        var doc = req.files.upfile;
+        filename = uuidv4()+"_"+doc.name;
+        const sql = `INSERT INTO tbl_sti_documents set ?`;
+
+        let walkin={
+            img_id: filename,
+            doc_type: doc_type,
+            serial_no: serial_no,
+            m_number: m_number,
+            y_admitted: y_admitted,
+            full_name: full_name,
+            email: email,
+            date: date,
+            status: status,
+            remarks: remarks
+        } 
+        pool.query(sql, walkin, (err, result)=>{
+            if(err) throw err;
+            console.log(result)
+            destination = "public/img/";
+            doc.mv(destination + filename, (err)=>{
+                if(err) console.log(err);
+                res.render("/session-log");
+            });
+        });
+    } catch(error){
+        var doc = "";
+    }
 });
 
 // acocunts of user get request
@@ -486,7 +527,9 @@ app.post('/pending/update', (req, res)=>{
 // log out
 app.get('/log-out', (req, res)=>{
     req.session.destroy();
+    console.log("Session Terminated...")
     res.render("login");
+
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -527,4 +570,10 @@ app.get('/damaged-docs',(req, res)=>{
             data
         });
     });
+
+});
+
+
+app.post('/damaged-docs',(req, res)=>{
+
 });

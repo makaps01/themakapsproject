@@ -75,8 +75,9 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/pending" style="color: darkorange;">Pending</a>
-                        <a class="collapse-item" href="/completed" style="color: green;">Completed</a>
+                        <a class="collapse-item" href="/pending">Pending Documents</a>
+                        <a class="collapse-item" href="/pending">Damaged Documents</a>
+                        <a class="collapse-item" href="/completed">Completed Documents</a>
                     </div>
                 </div>
             </li>
@@ -90,9 +91,9 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/students">Students</a>
-                        <a class="collapse-item" href="/session-log">Doc. Req. History</a>
-                        <a class="collapse-item" href="/accounts">Accounts</a>
+                        <a class="collapse-item" href="/students">Student Master Lists</a>
+                        <a class="collapse-item" href="/session-log">Walkin Request</a>
+                        <a class="collapse-item" href="/accounts">Account Lists</a>
                     </div>
                 </div>
             </li>
@@ -185,8 +186,8 @@
                             <!---modal button-->
                             <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddAccountModal">Add Tansaction</button>
                             <!----------------->
-                            <!---modal form-->
                             <form action="/session/add-transaction" method="post">
+                            <!---modal form-->
                             <div class="modal fade" id="AddAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
@@ -196,9 +197,11 @@
                                                 <Span aria-hidden="true">&times;</Span>
                                             </button>
                                         </div>
+                                        
                                         <div class="modal-body" id="account">
                                             <!---content of modal here-->                        
-                                            <div class="form-group">
+                                            <div class="form-group row">
+                                            <div class="col-sm-6">
                                                 <label for="formControlSelectDocs">Select Document type</label>
                                                 <select name="doc_type" class="form-control">
                                                     <option>Certificate of Grades</option>
@@ -209,6 +212,12 @@
                                                     <option>English Medium Certificate</option>
                                                   </select>
                                             </div>
+                                                <div class="col-sm-6">
+                                                    <label for="file">Upload Image of Request</label>
+                                                    <input type="file" id="customFile" name="upfile" accept="image/*" class="form-control form-control-user " required> 
+                                                </div>
+                                            </div>
+                                            
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <label for="form-control" class="form-block">Year admitted</label>
@@ -230,15 +239,16 @@
                                                  required>
                                             </div>
                                             <hr>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                              </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save</button>
-                                          </div>
+                                    </form>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        
                             <!------------>
                         </div>
                         
@@ -249,35 +259,29 @@
                                     <thead style="color: blue;">
                                         <tr>
                                             <th>Transaction ID</th>
+                                            <th>Document Image</th>
                                             <th>Document Type</th>
-                                            <th>Serial Number</th>
+                                            <th>Email</th>
                                             <th>Full name</th>
                                             <th>Mobile number</th>
                                             <th>Date</th>
                                             <th>Status</th>
                                             <th>Remarks</th>
-                                            <th>Action</th>
+                                
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <% for(var i=0; i < walkin.length; i++) { %> 
                                             <tr>
-                                                <td><%= walkin[i].transaction_no %></td>
+                                                <td><%= walkin[i].tansaction_no %></td>
                                                 <td><%= walkin[i].doc_type %></td>
-                                                <td><%= walkin[i].serial_no %></td>
+                                                <td><%= walkin[i].email %></td>
                                                 <td><%= walkin[i].full_name %></td>
                                                 <td><%= walkin[i].email %></td>
                                                 <td><%= walkin[i].date %></td>
                                                 <td style="color: orangered;"><%= walkin[i].status %></td>
                                                 <td><%= walkin[i].remarks %></td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <a href="#" class="btn btn-primary">Edit</a>
-                                                        <a href="#"class="btn btn-primary">View</a>
-                                                    </div>
-                                                 
-                                                </td>
-                                            </tr>
+                                
                                        <% } %>
                                     </tbody>
                                 </table>
