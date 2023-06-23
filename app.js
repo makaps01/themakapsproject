@@ -16,7 +16,7 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const fileUpload = require("express-fileupload");
 const nodemailer = require('nodemailer');
-const multer = require('multer');
+const twilio = require('twilio');
 
 
 const {
@@ -246,7 +246,7 @@ app.get('/fill-up',role_client(), (req, res)=>{
 // post request for new documents
 app.post('/fill-up',(req, res)=>{
     var { doc_type, m_number, y_admitted, full_name, email} = req.body;
-    var date = new Date();
+    var date = new Date(setTime(1332403882588));
     var serial_no = 'A#######';
     var remarks = 'No remarks';
     var status= 'pending';
@@ -390,7 +390,7 @@ app.post('/students/add-new',(req, res)=>{
 app.get('/session-log', (req, res)=>{
     pool.query("SELECT * FROM tbl_sti_documents WHERE status='pending'",(err, walkin)=>{
         if(err) throw err;
-        res.render("session",{
+        res.render("walkin",{
             walkin,
         });
     });
@@ -513,14 +513,26 @@ app.get('/pending/edit/:transactionID', (req, res)=>{
 });
 // post request to update documents
 app.post('/pending/update', (req, res)=>{
-    var {serial_no, status, remarks} = req.body;
+    var {serial_no, status, remarks} = req.body;   
     pool.query(`UPDATE tbl_sti_documents SET serial_no=?, status=?, remarks=?;`,[serial_no, status, remarks],(err, result)=>{
         if(err) throw err;
+        try{
+
+            async function sendSMS() {
+                
+            }
+
             console.log(result)
-                res.redirect("/pending")
+            res.redirect("/pending")
+        }
+        catch{
+
+        }
+
+            
             });
         });
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////    /////////////////////////////////////////////////////////
 
 
 ////////////////////////////////////////////////// LOG OUT MODAL////////////////////////////////////////
@@ -541,24 +553,39 @@ app.post('/session/add-transaction', (req, res)=>{
    var serial_no = 'A#######';
     var remarks = 'No remarks';
     var status= 'pending'; 
-   const sql = `INSERT INTO tbl_sti_documents set ?`;
-    let new_transaction = {
-        doc_type: doc_type,
-        serial_no: serial_no,
-        m_number: m_number,
-        y_admitted: y_admitted,
-        full_name: full_name,
-        email: email,
-        date: date,
-        status: status,
-        remarks: remarks
+   
+    try {
+        var doc = req.files.upfile;
+        filename = uuid()+"_"+doc.name;
+        const sql = `INSERT INTO tbl_sti_documents set ?`;
+        let walkin={
+            img_id: filename,
+            doc_type: doc_type,
+            serial_no: serial_no,
+            m_number: m_number,
+            y_admitted: y_admitted,
+            full_name: full_name,
+            email: email,
+            date: date,
+            status: status,
+            remarks: remarks
+        }
+        pool.query(sql, walkin,(err, result)=>{
+            if(err) throw err;
+            console.log(result)
+                destination = "public/img/";
+                doc.mv(destination + filename, (err)=>{
+                    if (err) console.log(err);
+                    res.render("walkin",{
+                        walkin: result
+                    });
+                });
+        });
+    } 
+    catch{
+
     }
 
-    pool.query(sql, new_transaction,(err, result)=>{
-        if(err) throw err;
-        console.log(result)
-        res.redirect("/session-log")
-    });
 });
 
 
