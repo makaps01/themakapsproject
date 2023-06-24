@@ -178,7 +178,7 @@ app.get('/reset-password/:m_number/:token', (req, res)=>{
         console.log(error.message);
         res.send('session expired');
     }
-});
+} );
 
 app.post("/reset-password/:m_number/:token", (req, res)=>{
     var { userID, token } = req.params;
