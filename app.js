@@ -517,7 +517,6 @@ app.post('/pending/update', (req, res)=>{
     pool.query(`UPDATE tbl_sti_documents SET serial_no=?, status=?, remarks=?;`,[serial_no, status, remarks],(err, result)=>{
         if(err) throw err;
         console.log(result)
-        try{
             const mailSender = {
                from: process.env.SYS_NAME,
                to: email,
@@ -533,10 +532,6 @@ app.post('/pending/update', (req, res)=>{
                     res.redirect("/pending")
                 }
             });
-        }catch(error){
-            res.send('no email has been sent');
-            console.log(error);
-        }
             });
         });
 ////////////////////////////////////////////////    /////////////////////////////////////////////////////////
