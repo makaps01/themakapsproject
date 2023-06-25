@@ -512,28 +512,29 @@ app.get('/pending/edit/:transactionID', (req, res)=>{
 });
 // post request to update documents
 app.post('/pending/update', (req, res)=>{
-    var {serial_no, status, remarks} = req.body;
-    var email = req.body;   
-    pool.query(`UPDATE tbl_sti_documents SET serial_no=?, status=?, remarks=?;`,[serial_no, status, remarks],(err, result)=>{
+    var {transaction_no, serial_no, status, email, remarks} = req.body;   
+    pool.query(`UPDATE tbl_sti_documents SET serial_no=?, status=?, remarks=? WHERE transaction_no=?;`,[serial_no, status, remarks, transaction_no],(err, result)=>{
         if(err) throw err;
         console.log(result)
-            const mailSender = {
-               from: process.env.SYS_NAME,
-               to: email,
-               subject: 'Document Status Update',
-               text:'Your Document is ready, please visit the office immediately'   
-            };
-            // use transporter to send email
-            transporter.sendMail(mailSender, function(error, info){
-                if(error) {
-                    console.log(error);
-                }else {
-                    console.log('Email sent:'+ info.response);
-                    res.redirect("/pending")
-                }
-            });
-            });
-        });
+        
+        var mailOptions = {
+            from: process.env.SYS_name,
+            to: email,
+            subject:'STI Documents Update Notisfication!',
+            text: 'Document is ready for pickup, please visit the office immediately'
+        }
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                console.log(error);
+            }else{
+                console.log('Email sent: ' + info.response);
+                res.redirect("/pending")
+            }
+        })
+
+ });
+});
 ////////////////////////////////////////////////    /////////////////////////////////////////////////////////
 
 
