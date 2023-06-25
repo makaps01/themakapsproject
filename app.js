@@ -120,12 +120,11 @@ app.post('/login', (req, res)=>{
     });
 });  
 
-
 // forgot password page
 app.get('/forgot-password', (req, res)=>{
     res.render("forgot-password");
 });
- 
+
 app.post('/forgot-password', (req, res)=>{
     const { email } = req.body;
     console.log(req.body)
@@ -246,7 +245,7 @@ app.get('/fill-up',role_client(), (req, res)=>{
 // post request for new documents
 app.post('/fill-up',(req, res)=>{
     var { doc_type, m_number, y_admitted, full_name, email} = req.body;
-    var date = new Date(setTime(1332403882588));
+    var date = new Date();
     var serial_no = 'A#######';
     var remarks = 'No remarks';
     var status= 'pending';
@@ -513,23 +512,31 @@ app.get('/pending/edit/:transactionID', (req, res)=>{
 });
 // post request to update documents
 app.post('/pending/update', (req, res)=>{
-    var {serial_no, status, remarks} = req.body;   
+    var {serial_no, status, remarks} = req.body;
+    var email = req.body;   
     pool.query(`UPDATE tbl_sti_documents SET serial_no=?, status=?, remarks=?;`,[serial_no, status, remarks],(err, result)=>{
         if(err) throw err;
+        console.log(result)
         try{
-
-            async function sendSMS() {
-                
-            }
-
-            console.log(result)
-            res.redirect("/pending")
+            const mailSender = {
+               from: process.env.SYS_NAME,
+               to: email,
+               subject: 'Document Status Update',
+               text:'Your Document is ready, please visit the office immediately'   
+            };
+            // use transporter to send email
+            transporter.sendMail(mailSender, function(error, info){
+                if(error) {
+                    console.log(error);
+                }else {
+                    console.log('Email sent:'+ info.response);
+                    res.redirect("/pending")
+                }
+            });
+        }catch(error){
+            res.send('no email has been sent');
+            console.log(error);
         }
-        catch{
-
-        }
-
-            
             });
         });
 ////////////////////////////////////////////////    /////////////////////////////////////////////////////////
@@ -599,7 +606,6 @@ app.get('/damaged-docs',(req, res)=>{
     });
 
 });
-
 
 app.post('/damaged-docs',(req, res)=>{
 
