@@ -75,8 +75,9 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/pending" style="color: darkorange;">Pending Documents</a>
-                        <a class="collapse-item" href="/completed" style="color: green;">Completed Documents</a>
+                        <a class="collapse-item" href="/pending">Pending Documents</a>
+                        <a class="collapse-item" href="/damaged-docs">Damaged Documents</a>
+                        <a class="collapse-item" href="/completed">Completed Documents</a>
                     </div>
                 </div>
             </li>
@@ -91,7 +92,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/students">Student Master Lists</a>
-                        <a class="collapse-item" href="/session-log">Document Req. History</a>
+                        <a class="collapse-item" href="/session-log">Walkin Request</a>
                         <a class="collapse-item" href="/accounts">Account Lists</a>
                     </div>
                 </div>
@@ -181,7 +182,10 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-2 border-left-primary">
-
+                            <div class="card-header py-3">
+                                <h3 class="m-0 font-weight-bold text-primary">Registered Accounts</h3> 
+                                 <!------------>
+                             </div>
                             <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddAccountModal">Add Account</button>
                             
                             <!---modal button-->
@@ -252,7 +256,6 @@
                         </form>
                             <!------------>
                         </div>
-                        
                         <!---Data table example-->
                         <div class="card-body border-left-primary border-bottom-primary">
                             <div class="table-responsive">

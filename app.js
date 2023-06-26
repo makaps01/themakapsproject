@@ -245,16 +245,17 @@ app.get('/fill-up',role_client(), (req, res)=>{
 // post request for new documents
 app.post('/fill-up',(req, res)=>{
     var { doc_type, m_number, y_admitted, full_name, email} = req.body;
-    var date = new Date();
+    var date = new Date().toISOString().split('T')[0];
     var serial_no = 'A#######';
     var remarks = 'No remarks';
     var status= 'pending';
-    
+    var transaction_type = 'online';  
     try{
     var doc = req.files.upfile;
     filename = uuidv4()+"_"+doc.name;
     const sql = `INSERT INTO tbl_sti_documents set ?`;
     let document={
+        transaction_type: transaction_type,
         img_id: filename,
         doc_type: doc_type,
         serial_no: serial_no,
@@ -387,10 +388,10 @@ app.post('/students/add-new',(req, res)=>{
 
 ////////////////////////////////// session log get request for walkin ////////////////////////////////////////
 app.get('/session-log', (req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_documents WHERE status='pending'",(err, walkin)=>{
+    pool.query("SELECT * FROM tbl_sti_documents WHERE transaction_type='walkin'",(err, data)=>{
         if(err) throw err;
         res.render("walkin",{
-            walkin,
+            data
         });
     });
 });
@@ -398,17 +399,17 @@ app.get('/session-log', (req, res)=>{
 //post request to add new transaction for walkin applicants 
 app.post('/session/add-transaction', (req, res)=>{
     var { doc_type, m_number, y_admitted, full_name, email} = req.body;
-    var date = new Date();
+    var date = new Date().toISOString().split('T')[0];
     var serial_no = 'A#######';
     var remarks = 'No remarks';
     var status= 'pending';
-    
+    var transaction_type = 'walkin';
     try{
         var doc = req.files.upfile;
         filename = uuidv4()+"_"+doc.name;
         const sql = `INSERT INTO tbl_sti_documents set ?`;
-
         let walkin={
+            transaction_type: transaction_type,
             img_id: filename,
             doc_type: doc_type,
             serial_no: serial_no,
@@ -426,7 +427,7 @@ app.post('/session/add-transaction', (req, res)=>{
             destination = "public/img/";
             doc.mv(destination + filename, (err)=>{
                 if(err) console.log(err);
-                res.render("/session-log");
+                res.redirect("/session-log");
             });
         });
     } catch(error){
@@ -518,10 +519,10 @@ app.post('/pending/update', (req, res)=>{
         console.log(result)
         
         var mailOptions = {
-            from: process.env.SYS_name,
+            from: process.env.SYS_USER,
             to: email,
             subject:'STI Documents Update Notisfication!',
-            text: 'Document is ready for pickup, please visit the office immediately'
+            text: 'Document is ready for pickup, please visit the office immediately. Thank you and Godbless!'
         }
 
         transporter.sendMail(mailOptions, function(error, info){
@@ -591,10 +592,46 @@ app.post('/session/add-transaction', (req, res)=>{
 
 });
 
+///////////////// edit walkin transaction////////////////////////////////
+app.get('/walkin/edit/:trans_no', (req, res)=>{
+    trans_no = req.params.trans_no;
+    pool.query("SELECT * FROM tbl_sti_documents WHERE transaction_no=?", [trans_no],(err, data)=>{
+        if(err) throw err;
+        res.render("walkin-update",{
+            data
+        });
+    });
+});
 
+app.post('/walkin/update', (req, res)=>{
+    var { transaction_no, serial_no, email, status, remarks } = req.body;
+    
+
+    pool.query(`UPDATE tbl_sti_documents SET serial_no=?, status=?, remarks=? WHERE transaction_no=?;`, [serial_no, status, remarks, transaction_no],(err, result)=>{
+    if(err) throw err;
+    console.log(result)
+
+
+    var sendemail = {
+        from: process.env.SYS_USER,
+        to: email,
+        subject:'STI Documents Update Notisfication!',
+        text: 'Document is ready for pickup, please visit the office immediately. Thank you and Godbless!'
+    }
+
+    transporter.sendMail(sendemail, function(error, info){
+        if(error){
+            console.log(error);
+        }else{
+            console.log('Email sent: ' + info.response);
+            res.redirect("/pending")
+        }
+    });
+    });
+});
 /////////////////////////////////////////////// ROUTE FOR DAMAGED DOCUMENTS ////////////////////////////////
 app.get('/damaged-docs',(req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_documents WHERE status='damaged'",(err, data)=>{
+    pool.query("SELECT * FROM tbl_sti_documents WHERE transaction_type='invalid'",(err, data)=>{
         if(err) throw err;
         res.render("damaged-docs",{
             data
@@ -603,6 +640,34 @@ app.get('/damaged-docs',(req, res)=>{
 
 });
 
-app.post('/damaged-docs',(req, res)=>{
+app.post('/damaged-docs/add',(req, res)=>{
+    var { doc_type, serial_no, full_name, remarks, status } = req.body;
+    var  transaction_type = 'invalid';
+    var img_id = 'N/A';
+    var m_number = '09000000000';
+    var email = 'N/A';
+    var y_admitted = '2023';
+    var date = new Date().toISOString().split('T')[0];
 
+        const sql = `INSERT INTO tbl_sti_documents set ?`;
+        let damaged = {
+            img_id: img_id,
+            transaction_type: transaction_type,
+            doc_type: doc_type,
+            serial_no: serial_no,
+            m_number: m_number,
+            y_admitted: y_admitted,
+            full_name: full_name,
+            email: email,
+            date: date,
+            status: status,
+            remarks: remarks
+        }
+        pool.query(sql, damaged, (err, result)=>{
+            if(err) throw err;
+            console.log(result)
+            res.redirect("/damaged-docs",{
+                data: result
+            });
+        });
 });

@@ -182,6 +182,10 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-1">
+                            <div class="card-header py-3">
+                                <h3 class="m-0 font-weight-bold text-primary">Walkin Records</h3> 
+                                 <!------------>
+                             </div>
                             <!---modal button-->
                             <button class="btn btn-primary mb-2 mt-2" type="button" data-toggle="modal" data-target="#AddAccountModal">Add Tansaction</button>
                             <!----------------->
@@ -271,15 +275,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% for(var i=0; i < walkin.length; i++) { %> 
+                                        <% for(var i=0; i < data.length; i++) { %> 
                                             <tr>
-                                                <td><%= walkin[i].transaction_no %></td>
-                                                <td><%= walkin[i].doc_type %></td>
-                                                <td><%= walkin[i].email %></td>
-                                                <td><%= walkin[i].full_name %></td>
-                                                <td><%= walkin[i].date %></td>
-                                                <td style="color: orangered;"><%= walkin[i].status %></td>
-                                                <td><%= walkin[i].remarks %></td>
+                                                <td>
+                                                    <a href="#" onclick="walkin_edit(' <%= data[i].transaction_no %> ')">
+                                                        <%= data[i].transaction_no %></a>
+
+                                                        <script>
+                                                            function walkin_edit(trans_no){
+                                                                window.location.href = " <% process.env.DOMAIN %>/walkin/edit/"+ trans_no;
+                                                            }
+                                                        </script>
+                                                </td>
+                                                <td><%= data[i].doc_type %></td>
+                                                <td><%= data[i].email %></td>
+                                                <td><%= data[i].full_name %></td>
+                                                <td><%= data[i].date %></td>
+                                                <td style="color: orangered;"><%= data[i].status %></td>
+                                                <td><%= data[i].remarks %></td>
                                 
                                        <% } %>
                                     </tbody>
