@@ -255,6 +255,7 @@ app.post('/fill-up',(req, res)=>{
     filename = uuidv4()+"_"+doc.name;
     const sql = `INSERT INTO tbl_sti_documents set ?`;
     let document={
+        user_role: role,
         transaction_type: transaction_type,
         img_id: filename,
         doc_type: doc_type,
