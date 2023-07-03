@@ -472,7 +472,23 @@ app.post('/accounts/add-account',(req,res)=>{
             pool.query(sql, new_account,(err, result)=>{
                 if(err) throw err;
                 console.log(result)
-                res.redirect("/accounts")
+
+                var mailOptions = {
+                    from: process.env.SYS_USER,
+                    to: email,
+                    subject: 'Thank you for your registration',
+                    text: 'Please make sure that this email will be active, thank you'
+                }
+
+                transporter.sendMail(mailOptions, function (error, info){
+                    if(error){
+                        console.log(error);
+                    }else{
+                        console.log('Email sent: '+ info.response);
+                        res.redirect("/accounts")
+                    }
+                })
+                
             });
         }
     }
