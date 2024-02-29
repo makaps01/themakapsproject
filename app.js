@@ -92,7 +92,7 @@ app.post('/login', (req, res)=>{
         if(err) throw err;
         console.log(result) 
         if(result.length == 0){
-            req.flash("info","Email already exist...");
+
             res.redirect("/login")
         }else{
             try {
@@ -109,7 +109,7 @@ app.post('/login', (req, res)=>{
                     console.log("BIRTHDAY: "+ req.session.birthday)
                     console.log("ROLE: "+ req.session.role)
                     console.log("Login successfully!")
-                    res.redirect("/fill-up") 
+                    res.redirect("/dashboard") 
                 }
             }catch(e){
                 console.log(e)
@@ -448,8 +448,8 @@ app.get('/accounts', (req, res)=>{
 // add new account in database - 
 // logIN ACCOUNT TO BE SPECIFIC
 app.post('/accounts/add-account',(req,res)=>{
-    var{m_number, y_admitted, full_name, email, birthday, p_word, campus} = req.body;
-    var role= 'student';
+    var{m_number, y_admitted, full_name, email, password} = req.body;
+    var role= 'admin';
     pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
     if(err) throw err;
 
@@ -465,8 +465,7 @@ app.post('/accounts/add-account',(req,res)=>{
                 full_name: full_name,
                 email: email,
                 birthday: birthday,
-                p_word: p_word,
-                campus: campus,
+                p_word: password,
                 role: role
             }
             pool.query(sql, new_account,(err, result)=>{
