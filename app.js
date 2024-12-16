@@ -89,7 +89,7 @@ app.get('/login', (req, res)=>{
 app.post('/login', (req, res)=>{
     const userRole = req.session.role;
     var {email, p_word} = req.body;
-    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],async(err, result)=>{
+    pool.query("SELECT * FROM drm_login WHERE email=?",[email],async(err, result)=>{
         if(err) throw err;
         console.log(result) 
         if(result.length == 0){
