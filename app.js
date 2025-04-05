@@ -306,7 +306,7 @@ app.post('/register', async (req, res)=>{
     var {m_number, y_admitted, full_name, email, birthday, p_word, campus} = req.body;
     var role = 'student';
 
-    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],async (err, result)=>{
+    pool.query("SELECT * FROM drm_reg_log WHERE email=?",[email],async (err, result)=>{
         if(err) throw err;
         
         if(result[0] == email ){
@@ -318,7 +318,7 @@ app.post('/register', async (req, res)=>{
                 var salt = bcrypt.genSaltSync(10)
                 var hashedPassword = await bcrypt.hash(p_word, salt);
                 let userPassword = hashedPassword;
-                const sql = `INSERT INTO tbl_sti_register set ?`;
+                const sql = `INSERT INTO drm_reg_log set ?`;
 
                 let register ={
                     m_number: m_number,
