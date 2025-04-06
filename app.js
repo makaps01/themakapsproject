@@ -103,14 +103,21 @@ app.post('/login', (req, res)=>{
                     req.session.m_number = result[0].m_number;
                     req.session.email = result[0].email;
                     req.session.role = result[0].role;
-                    req.session.campus = result[0].campus;
-                    req.session.birthday = result[0].birthday;
                     console.log("LOGIN SET TO: "+ req.session.user_isLoggedIn)
                     console.log("EMAIL: "+ req.session.email)
-                    console.log("BIRTHDAY: "+ req.session.birthday)
                     console.log("ROLE: "+ req.session.role)
                     console.log("Login successfully!")
-                    res.redirect("/dashboard") 
+                    res.redirect("/fill-up") 
+                }else{
+                    req.session.user_isLoggedIn = true;
+                    req.session.m_number = result[0].m_number;
+                    req.session.email = result[0].email;
+                    req.session.role = result[0].role;
+                    console.log("LOGIN SET TO: "+ req.session.user_isLoggedIn)
+                    console.log("EMAIL: "+ req.session.email)
+                    console.log("ROLE: "+ req.session.role)
+                    console.log("Login successfully!")
+                    res.redirect("/dashboard")
                 }
             }catch(e){
                 console.log(e)
@@ -129,7 +136,7 @@ app.get('/forgot-password', (req, res)=>{
 app.post('/forgot-password', (req, res)=>{
     const { email } = req.body;
     console.log(req.body)
-    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email], async (err, result)=>{
+    pool.query("SELECT * FROM drm_reg_log WHERE email=?",[email], async (err, result)=>{
         if(err) throw err;
         console.log(result)
         if(result[0].length == 0) {
@@ -184,7 +191,7 @@ app.post("/reset-password/:m_number/:token", (req, res)=>{
     var { userID, token } = req.params;
     var { pword, pword2 } = req.body;
 
-    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email], async (err, result)=>{
+    pool.query("SELECT * FROM drm_reg_log WHERE email=?",[email], async (err, result)=>{
         if(err) throw err;
         console.log(result)
         if (pword !== pword2){
@@ -195,7 +202,7 @@ app.post("/reset-password/:m_number/:token", (req, res)=>{
                 var salt = bcrypt.genSaltSync(10)
                 var hashedPassword = await bcrypt.hash(pword, salt);
                 let userPassword = hashedPassword;
-                pool.query(`UPDATE tbl_sti_register set p_word=? WHERE sys_id=?`,[userPassword, userID],(err, result)=>{
+                pool.query(`UPDATE drm_reg_log set p_word=? WHERE sys_id=?`,[userPassword, userID],(err, result)=>{
                     if(err) throw err;
                      console.log(result)
                      req.flash("info", "Password reset success...")
@@ -210,7 +217,7 @@ app.post("/reset-password/:m_number/:token", (req, res)=>{
 });
 ///////////////////admin dashboard // //////////////////////////
 app.get('/dashboard',user_isAdmin(), (req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_register;",(err, result)=>{
+    pool.query("SELECT * FROM drm_reg_log;",(err, result)=>{
     if(err) throw err;
     pool.query("SELECT * FROM tbl_sti_documents;SELECT COUNT(*) as v1 FROM tbl_sti_documents",(err, access)=>{
       if(err) throw err;
@@ -218,7 +225,7 @@ app.get('/dashboard',user_isAdmin(), (req, res)=>{
             if(err) throw err;
             pool.query(`SELECT * FROM tbl_sti_documents WHERE status="completed"; SELECT COUNT(*) as v3 FROM tbl_sti_documents WHERE status="completed"`, (err, complete)=>{
                 if(err) throw err;
-                pool.query(`SELECT COUNT(*) as v4 FROM tbl_sti_register;`, (err, ttl_users)=>{
+                pool.query(`SELECT COUNT(*) as v4 FROM drm_reg_log;`, (err, ttl_users)=>{
                     if(err) throw err;
                     res.render("index", {
                         access: access[0], total_doc: access[1][0].v1,
@@ -236,7 +243,7 @@ app.get('/dashboard',user_isAdmin(), (req, res)=>{
 ////////////////////////// CLIENT DASHBOARD //////////////////////
 // get request for fill up
 app.get('/fill-up',role_client(), (req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_register WHERE email=?", [req.session.email], (err, result)=>{
+    pool.query("SELECT * FROM drm_reg_log WHERE email=?", [req.session.email], (err, result)=>{
         if (err) throw err;
         res.render("fill-up",{
             regform : result
@@ -303,7 +310,7 @@ app.get('/register', (req, res)=> {
 
 // POST REQUEST FOR REGISTRATION
 app.post('/register', async (req, res)=>{
-    var {m_number, y_admitted, full_name, email, birthday, p_word, campus} = req.body;
+    var {m_number, y_admitted, full_name, email, p_word} = req.body;
     var role = 'student';
 
     pool.query("SELECT * FROM drm_reg_log WHERE email=?",[email],async (err, result)=>{
@@ -325,18 +332,14 @@ app.post('/register', async (req, res)=>{
                     y_admitted: y_admitted,
                     full_name: full_name,
                     email: email,
-                    birthday: birthday,
                     p_word: userPassword,
-                    campus: campus,
                     role: role
                 }
                 pool.query(sql, register,(err, result)=>{
                     if(err) throw err;
                     console.log(result)
                     res.redirect("/login")
-
                 });
-
             } catch (e){
                 console.log(e);
                 res.redirect("/register");
@@ -439,7 +442,7 @@ app.post('/session/add-transaction', (req, res)=>{
 
 // acocunts of user get request
 app.get('/accounts', (req, res)=>{
-    pool.query("SELECT * FROM tbl_sti_register",(err, accounts)=>{
+    pool.query("SELECT * FROM drm_reg_log",(err, accounts)=>{
         if(err) throw err;
         res.render("accounts",{
             accounts,
@@ -451,7 +454,7 @@ app.get('/accounts', (req, res)=>{
 app.post('/accounts/add-account',(req,res)=>{
     var{m_number, y_admitted, full_name, email, password} = req.body;
     var role= 'admin';
-    pool.query("SELECT * FROM tbl_sti_register WHERE email=?",[email],(err, result)=>{
+    pool.query("SELECT * FROM drm_reg_log WHERE email=?",[email],(err, result)=>{
     if(err) throw err;
 
     if(email==result[0].email){
@@ -459,13 +462,12 @@ app.post('/accounts/add-account',(req,res)=>{
         res.redirect("/accounts")
     }else{
         if(result.length==0){
-            const sql =  `INSERT INTO tbl_sti_register set ?`;
+            const sql =  `INSERT INTO drm_reg_log set ?`;
             let new_account ={
                 m_number: m_number,
                 y_admitted: y_admitted,
                 full_name: full_name,
                 email: email,
-                birthday: birthday,
                 p_word: password,
                 role: role
             }
