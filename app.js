@@ -311,7 +311,7 @@ app.get('/register', (req, res)=> {
 // POST REQUEST FOR REGISTRATION
 app.post('/register', async (req, res)=>{
     var {m_number, y_admitted, full_name, email, p_word} = req.body;
-    var role = 'student';
+    var role = 'admin';
 
     pool.query("SELECT * FROM drm_reg_log WHERE email=?",[email],async (err, result)=>{
         if(err) throw err;
